@@ -2,51 +2,52 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class View extends JPanel {
-    public static final int HEIGHT = 1000;
+    public static final int HEIGHT = 700;
     public static final int WIDTH = 1000;
-    public int hexLength = 100;
-
+    private Image hexagonImage;
+    private Image selectedHexagonImage;
+    private Image wallpaper;
     Model model;
 
     public View(Model m) throws IOException {
-        model = m;
+        this.model = m;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        for (int i = 0; i < 10; i ++) {
-            for (int j = 0; j < 10; j ++) {
-                Hexagon hex = new Hexagon(hexLength * i, hexLength * j, hexLength);
-                add(hex);
-                //System.out.printf("cc%d\n", j + (10 * i));
+        BufferedImage image = ImageIO.read(new File("Assets\\hexa.png"));
+
+        this.wallpaper = ImageIO.read(new File("Assets\\Swomp2.jpg"));
+        this.hexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
+        image = ImageIO.read(new File("Assets\\Shrek.png"));
+        this.selectedHexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
+    }
+
+    public void paint(Graphics g) {
+        int shift = 10;
+        g.drawImage(wallpaper, 0, 0, WIDTH, HEIGHT, this);
+        for (ArrayList<Cell> hexagonList : model.grid.cells) {
+            for (Cell hexagon : hexagonList) {
+                Image image = hexagonImage;
+
+                if (hexagon.isSelected) {
+                    image = selectedHexagonImage;
+                }
+                if (hexagon.posY % 2 == 0) {
+                    g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift, (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
+                } else {
+                    g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift + model.cellSize / 2-(6-shift/2), (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
+                }
+
             }
         }
-        setLayout(new GridLayout(10, 10));
     }
 }
 
 
-
-class Hexagon extends JPanel {
-    public int imgWidth, imgHeight;
-    public float aspectRatio;
-    public Hexagon(int x, int y, int length) throws IOException {
-        //System.out.println("cc début");
-        BufferedImage image = ImageIO.read(new File("Assets\\TOPS.jpg"));
-        imgWidth = image.getWidth();
-        imgHeight = image.getHeight();
-        aspectRatio = (float)imgHeight / (float)imgWidth;
-
-        Image resizedImage = image.getScaledInstance(length, (int) (aspectRatio * length), Image.SCALE_SMOOTH);
-        ImageIcon icon = new ImageIcon(resizedImage);
-        //System.out.println("cc1");
-        JLabel label = new JLabel(icon);
-        //System.out.println("cc2");
-        add(label);
-        //System.out.println("cc fin");
-    }
-}
 
 
 /*

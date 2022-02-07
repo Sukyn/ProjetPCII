@@ -1,20 +1,16 @@
 import java.util.ArrayList;
 
 public class Model {
-    public int gridHeight = View.HEIGHT;
-    public int gridWidth = View.WIDTH;
-    public int cellSize = 100;
-
-    public Model() {
-        Grid grid = new Grid(gridHeight / cellSize, gridWidth / cellSize);
-
+    public static int cellSize = 100;
+    public Grid grid;
+    public Model(int x, int y) {
+         this.grid = new Grid(x, y);
     }
 
 }
 
 
 class Grid {
-    final int radius = 7;
     final int height;
     final int width;
     ArrayList< ArrayList< Cell > > cells;
@@ -31,6 +27,9 @@ class Grid {
 
             for (int j = 0; j < width; j++){
                 cells.get(i).add(new Cell(i, j));
+                if (i == height/2 && j == width/2) {
+                    cells.get(i).get(j).isSelected = true;
+                }
             }
         }
     }
@@ -39,18 +38,18 @@ class Grid {
      * TODO */
     private ArrayList<Cell> getNeighbors(Cell target) {
         ArrayList<Cell> neighbors = new ArrayList<>();
-        neighbors.add(cells.get(target.pos_x).get(target.pos_y + 1));
-        neighbors.add(cells.get(target.pos_x).get(target.pos_y - 1));
-        if (target.pos_x%2 == 0) {
-            neighbors.add(cells.get(target.pos_x+1).get(target.pos_y + 1));
-            neighbors.add(cells.get(target.pos_x+1).get(target.pos_y));
-            neighbors.add(cells.get(target.pos_x-1).get(target.pos_y + 1));
-            neighbors.add(cells.get(target.pos_x-1).get(target.pos_y));
+        neighbors.add(cells.get(target.posX).get(target.posY + 1));
+        neighbors.add(cells.get(target.posX).get(target.posY - 1));
+        if (target.posX %2 == 0) {
+            neighbors.add(cells.get(target.posX +1).get(target.posY + 1));
+            neighbors.add(cells.get(target.posX +1).get(target.posY));
+            neighbors.add(cells.get(target.posX -1).get(target.posY + 1));
+            neighbors.add(cells.get(target.posX -1).get(target.posY));
         } else {
-            neighbors.add(cells.get(target.pos_x+1).get(target.pos_y - 1));
-            neighbors.add(cells.get(target.pos_x+1).get(target.pos_y));
-            neighbors.add(cells.get(target.pos_x-1).get(target.pos_y - 1));
-            neighbors.add(cells.get(target.pos_x-1).get(target.pos_y));
+            neighbors.add(cells.get(target.posX +1).get(target.posY - 1));
+            neighbors.add(cells.get(target.posX +1).get(target.posY));
+            neighbors.add(cells.get(target.posX -1).get(target.posY - 1));
+            neighbors.add(cells.get(target.posX -1).get(target.posY));
         }
         return neighbors;
     }
@@ -61,21 +60,32 @@ class Grid {
 }
 
 class Cell {
-    public int pos_x;
-    public int pos_y;
+    public int posX;
+    public int posY;
+    public boolean isSelected = false;
     public Cell(int x, int y) {
-        this.pos_x = x;
-        this.pos_y = y;
+        this.posX = x;
+        this.posY = y;
     }
 }
 
 class Character {
     public int xPos, yPos;
+    /** constructor */
     public Character(int x, int y) {
         xPos = x;
         yPos = y;
     }
 
+    /** A getter for x position */
+    public int getPosX(){ return xPos; }
+    /** A getter for y position */
+    public int getPosY(){ return yPos; }
+
+    /** Method to move the character
+     * params int xTarget, wanted x position
+     * int yTarget, wanted y position
+     * */
     public void moveCharModel(int xTarget, int yTarget) {
         this.xPos = xTarget;
         this.yPos = yTarget;

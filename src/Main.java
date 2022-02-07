@@ -3,18 +3,9 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String [] args) throws IOException {
-        Model model = new Model();
+        Model model = new Model(View.WIDTH/Model.cellSize+1,View.HEIGHT*4/(Model.cellSize*3)+1);
         View view = new View(model);
-        Controler controler = new Controler(view);
-
-
-        //testing
-//        Shrek shrek = new Shrek(0, 0);
-//        System.out.println(shrek.xPos);
-//        shrek.moveCharModel(10, 10);
-//        System.out.println(shrek.yPos);
-
-
+        // Controler controller = new Controler(view);
 
         /* Creating of a new JFrame, with default close operation set */
         JFrame shrex = new JFrame("SHREX");
