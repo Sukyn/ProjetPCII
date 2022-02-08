@@ -5,7 +5,7 @@ public class Main {
     public static void main(String [] args) throws IOException {
         Model model = new Model(View.WIDTH/Model.cellSize+1,View.HEIGHT*4/(Model.cellSize*3)+1);
         View view = new View(model);
-        // Controler controller = new Controler(view);
+        Controller controller = new Controller(view, model);
 
         /* Creating of a new JFrame, with default close operation set */
         JFrame shrex = new JFrame("SHREX");

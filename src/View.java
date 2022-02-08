@@ -10,40 +10,66 @@ import java.util.ArrayList;
 public class View extends JPanel {
     public static final int HEIGHT = 700;
     public static final int WIDTH = 1000;
+    public static final int shift = 10;
     private Image hexagonImage;
     private Image selectedHexagonImage;
     private Image wallpaper;
     Model model;
 
+    /** constructor */
     public View(Model m) throws IOException {
+        /* assigns model value from parameter */
         this.model = m;
+        /* set window default size*/
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        BufferedImage image = ImageIO.read(new File("Assets\\hexa.png"));
 
-        this.wallpaper = ImageIO.read(new File("Assets\\Swomp2.jpg"));
+        /* opens the different images we will use */
+        BufferedImage image = ImageIO.read(new File("Assets/hexa.png"));
+        this.wallpaper = ImageIO.read(new File("Assets/Swomp2.jpg"));
         this.hexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
-        image = ImageIO.read(new File("Assets\\Shrek.png"));
+        image = ImageIO.read(new File("Assets/Shrek.png"));
         this.selectedHexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
     }
 
+    /** Method paint
+     * draw all the content in the window
+     * @param g, Graphics
+     */
     public void paint(Graphics g) {
-        int shift = 10;
+        super.repaint();
         g.drawImage(wallpaper, 0, 0, WIDTH, HEIGHT, this);
+        drawGrid(g);
+    }
+
+    /** Method drawHexagon
+     * draw an hexagon in the window depending on a cell and an image
+     * @param g, Graphics
+     * @param hexagon, Cell
+     * @param image, Image
+     */
+    private void drawHexagon(Graphics g, Cell hexagon, Image image) {
+        if (hexagon.posY % 2 == 0) {
+            g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift, (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
+        } else {
+            g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift + model.cellSize / 2-(6-shift/2), (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
+        }
+    }
+
+    /** Method drawGrid
+     * Draws the grid in the window
+     * @param g, Graphics
+     */
+    private void drawGrid(Graphics g){
+        /*we go through the grid and call drawHexagon  to draw the different cells*/
         for (ArrayList<Cell> hexagonList : model.grid.cells) {
             for (Cell hexagon : hexagonList) {
-                Image image = hexagonImage;
-
-                if (hexagon.isSelected) {
-                    image = selectedHexagonImage;
-                }
-                if (hexagon.posY % 2 == 0) {
-                    g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift, (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
-                } else {
-                    g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift + model.cellSize / 2-(6-shift/2), (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
-                }
-
+                drawHexagon(g, hexagon, hexagonImage);
             }
         }
+        /* if there is a selected cell we draw the adequate sprite */
+        try {
+            drawHexagon(g, model.grid.selectedCell, selectedHexagonImage);
+        } catch (NullPointerException ignored){}
     }
 }
 

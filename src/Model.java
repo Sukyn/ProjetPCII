@@ -14,7 +14,7 @@ class Grid {
     final int height;
     final int width;
     ArrayList< ArrayList< Cell > > cells;
-
+    public Cell selectedCell;
     /** Constructeur */
     public Grid(int height, int width){
         /* on initialise les variables height et width */
@@ -26,9 +26,11 @@ class Grid {
             cells.add( new ArrayList<>());
 
             for (int j = 0; j < width; j++){
-                cells.get(i).add(new Cell(i, j));
+                Cell c = new Cell(i, j);
+                cells.get(i).add(c);
                 if (i == height/2 && j == width/2) {
-                    cells.get(i).get(j).isSelected = true;
+                    c.isSelected = true;
+                    selectedCell = c;
                 }
             }
         }
@@ -57,15 +59,39 @@ class Grid {
     public Cell getCenter() {
         return cells.get(height/2).get(width/2);
     }
+
+    void setSelectedCell(int x, int y){
+        double dist = Model.cellSize/2. + View.shift + 10;
+        Cell closestCell = selectedCell;
+        for (ArrayList<Cell> cellList : cells) {
+            for (Cell cell : cellList) {
+                double comp = Math.sqrt(Math.pow(x-cell.posCenterX, 2) + Math.pow(y-cell.posCenterY, 2));
+                if ( comp < dist){
+                    dist = comp;
+                    closestCell = cell;
+                }
+            }
+        }
+        selectedCell = closestCell;
+    }
 }
 
 class Cell {
     public int posX;
     public int posY;
+    public int posCenterX;    public int posCenterY;
     public boolean isSelected = false;
     public Cell(int x, int y) {
         this.posX = x;
         this.posY = y;
+        if (posY%2 == 0){
+            this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * View.shift + Model.cellSize/2;
+        } else {
+            this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * View.shift + Model.cellSize/2 - (6-View.shift/2) + Model.cellSize/2;
+        }
+        this.posCenterY = (3 * Model.cellSize / 4) * (this.posY - 1) + this.posY * View.shift + Model.cellSize/2;
+
+
     }
 }
 
