@@ -1,3 +1,7 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Model {
@@ -31,6 +35,13 @@ class Grid {
                 if (i == height/2 && j == width/2) {
                     c.isSelected = true;
                     selectedCell = c;
+                    Image image = null;
+                    try {
+                        image = ImageIO.read(new File("Assets/Shrek.png"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    c.setCellContent(new Character(c, image));
                 }
             }
         }
@@ -80,6 +91,7 @@ class Cell {
     public int posX;
     public int posY;
     public int posCenterX;    public int posCenterY;
+    public CellContent content;
     public boolean isSelected = false;
     public Cell(int x, int y) {
         this.posX = x;
@@ -93,38 +105,55 @@ class Cell {
 
 
     }
-}
 
-class Character {
-    public int xPos, yPos;
-    /** constructor */
-    public Character(int x, int y) {
-        xPos = x;
-        yPos = y;
+    public void setCellContent(CellContent newContent){
+        content = newContent;
     }
 
-    /** A getter for x position */
-    public int getPosX(){ return xPos; }
-    /** A getter for y position */
-    public int getPosY(){ return yPos; }
+    public  CellContent getCellContent(){
+        return  content;
+    }
+}
+
+
+class CellContent {
+    public Cell contentPosition;
+    public Image sprite;
+    public CellContent(Cell c, Image s){
+        contentPosition = c;
+        sprite = s;
+    }
+
+    public void setContentPosition(Cell c){
+        contentPosition = c;
+    }
+
+    public Image getSprite(){
+        return sprite;
+    }
+}
+
+
+class Character extends CellContent{
+    /** constructor */
+    public Character(Cell c, Image s) {
+        super(c, s);
+    }
+
 
     /** Method to move the character
      * params int xTarget, wanted x position
      * int yTarget, wanted y position
      * */
-    public void moveCharModel(int xTarget, int yTarget) {
-        this.xPos = xTarget;
-        this.yPos = yTarget;
+    public void moveCharModel(Cell c) {
+        super.setContentPosition(c);
     }
 
 
 }
 
-
+/*
 class Shrek extends Character {
-    public Shrek(int x, int y) {
-        super(x, y);
-    }
 
 }
-
+*/

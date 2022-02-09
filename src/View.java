@@ -24,10 +24,10 @@ public class View extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         /* opens the different images we will use */
-        BufferedImage image = ImageIO.read(new File("Assets/hexa.png"));
         this.wallpaper = ImageIO.read(new File("Assets/Swomp2.jpg"));
+        BufferedImage image = ImageIO.read(new File("Assets/hexa.png"));
         this.hexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
-        image = ImageIO.read(new File("Assets/Shrek.png"));
+        image = ImageIO.read(new File("Assets/hexaSelected.png"));
         this.selectedHexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
     }
 
@@ -60,16 +60,32 @@ public class View extends JPanel {
      * @param g, Graphics
      */
     private void drawGrid(Graphics g){
-        /*we go through the grid and call drawHexagon  to draw the different cells*/
+        /*we go through the grid and call drawHexagon to draw the different cells*/
         for (ArrayList<Cell> hexagonList : model.grid.cells) {
             for (Cell hexagon : hexagonList) {
                 drawHexagon(g, hexagon, hexagonImage);
+                if (hexagon.getCellContent() != null)
+                    drawContent(g, hexagon.getCellContent());
+
             }
         }
         /* if there is a selected cell we draw the adequate sprite */
         try {
             drawHexagon(g, model.grid.selectedCell, selectedHexagonImage);
-        } catch (NullPointerException ignored){}
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    /** Method drawContent
+     * draws a cell content depending on it's sprite
+     * @param g
+     */
+    private void drawContent(Graphics g, CellContent content){
+        int posX = content.contentPosition.posCenterX - Model.cellSize/2;
+        int posY = content.contentPosition.posCenterY - Model.cellSize/2;
+        g.drawImage(content.getSprite(), posX, posY, Model.cellSize, Model.cellSize, this);
+
     }
 }
 
