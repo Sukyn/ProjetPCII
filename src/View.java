@@ -2,7 +2,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,10 +81,7 @@ public class View extends JPanel {
      * @param g
      */
     private void drawContent(Graphics g, CellContent content){
-        int posX = content.contentPosition.posCenterX - Model.cellSize/2;
-        int posY = content.contentPosition.posCenterY - Model.cellSize/2;
-        g.drawImage(content.getSprite(), posX, posY, Model.cellSize, Model.cellSize, this);
-
+        g.drawImage(content.getSprite(), content.contentPosX, content.contentPosY, Model.cellSize, Model.cellSize, this);
     }
 }
 

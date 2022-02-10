@@ -21,8 +21,10 @@ public class Controller implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == BUTTON1){
-            model.grid.setSelectedCell(e.getX(), e.getY());
+        if (e.getButton() == BUTTON1) {
+            model.grid.setSelectedCell(model.grid.getClosestCell(e.getX(), e.getY()));
+        } else if (e.getButton() == BUTTON3 && model.grid.selectedCell.getCellContent() != null && model.grid.selectedCell.getCellContent().getClass() == Character.class){
+            model.grid.selectedCell.getCellCharacterContent().moveCharModel(model.grid.getClosestCell(e.getX(), e.getY()));
         }
     }
 

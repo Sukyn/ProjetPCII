@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class Model {
     public static int cellSize = 100;
     public Grid grid;
-    public Model(int x, int y) {
-         this.grid = new Grid(x, y);
+    public Model(int height, int width) {
+         this.grid = new Grid(height, width);
     }
 
 }
@@ -41,7 +41,7 @@ class Grid {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    c.setCellContent(new Character(c, image));
+                    c.setCellContent(new Character(c, image, 0.01));
                 }
             }
         }
@@ -71,7 +71,12 @@ class Grid {
         return cells.get(height/2).get(width/2);
     }
 
-    void setSelectedCell(int x, int y){
+    public void setSelectedCell(Cell c){
+        selectedCell = c;
+        System.out.println(c.getCellContent());
+    }
+
+    public Cell getClosestCell(int x, int y){
         double dist = Model.cellSize/2. + View.shift + 10;
         Cell closestCell = selectedCell;
         for (ArrayList<Cell> cellList : cells) {
@@ -83,7 +88,7 @@ class Grid {
                 }
             }
         }
-        selectedCell = closestCell;
+        return closestCell;
     }
 }
 
@@ -113,19 +118,32 @@ class Cell {
     public  CellContent getCellContent(){
         return  content;
     }
+
+    public  Character getCellCharacterContent(){
+        if (content.getClass() == Character.class)
+            return (Character) content;
+        else
+            return null;
+    }
 }
 
-
 class CellContent {
-    public Cell contentPosition;
+    public Cell contentCellPosition;
+    public int contentPosX, contentPosY;
     public Image sprite;
     public CellContent(Cell c, Image s){
-        contentPosition = c;
+        contentCellPosition = c;
+        contentPosX = c.posCenterX - Model.cellSize/2;
+        contentPosY = c.posCenterY - Model.cellSize/2;
         sprite = s;
     }
 
-    public void setContentPosition(Cell c){
-        contentPosition = c;
+    public void setContentCellPosition(Cell c){
+        contentCellPosition = c;
+    }
+
+    public Cell getContentCellPosition(){
+        return contentCellPosition;
     }
 
     public Image getSprite(){
@@ -135,23 +153,57 @@ class CellContent {
 
 
 class Character extends CellContent{
+    double speed;
     /** constructor */
-    public Character(Cell c, Image s) {
+    public Character(Cell c, Image s, double moveSpeed) {
         super(c, s);
+        speed = moveSpeed;
     }
-
 
     /** Method to move the character
      * params int xTarget, wanted x position
      * int yTarget, wanted y position
      * */
     public void moveCharModel(Cell c) {
-        super.setContentPosition(c);
+        //new Move (this, super.getContentCellPosition(), c).start();
+        super.getContentCellPosition().setCellContent(null);
+        // mettre en commentaire les deux prochaines lignes si on remet le thread
+        super.setContentCellPosition(c);
+        super.getContentCellPosition().setCellContent(this);
     }
-
-
 }
 
+class Move extends Thread{
+    Character movingChar;
+    Cell initialPos, finalPos;
+    double coefDirX;
+    double coefDirY;
+    public Move(Character c, Cell start, Cell end){
+        super();
+        this.initialPos = start;
+        this.finalPos = end;
+        this.movingChar = c;
+        this.coefDirX = (finalPos.posCenterX - initialPos.posCenterX)/100.;
+        this.coefDirY = (finalPos.posCenterY - initialPos.posCenterY)/100.;
+    }
+
+    @Override
+    public void run(){
+        while (movingChar.contentPosX != finalPos.posCenterX - Model.cellSize/2 && movingChar.contentPosY != finalPos.posCenterY - Model.cellSize/2){
+            if (coefDirX > 0 && movingChar.contentPosX + movingChar.speed * coefDirX < finalPos.posCenterX - Model.cellSize/2 || coefDirX < 0 && movingChar.contentPosX + movingChar.speed * coefDirX > finalPos.posCenterX - Model.cellSize/2) {
+                movingChar.contentPosX += movingChar.speed * coefDirX;
+            } else {
+                movingChar.contentPosX = finalPos.posCenterX - Model.cellSize/2;
+            }
+            if (coefDirY > 0 && movingChar.contentPosY + movingChar.speed* coefDirY < finalPos.posCenterY - Model.cellSize/2 || coefDirY < 0 && movingChar.contentPosY + movingChar.speed* coefDirY > finalPos.posCenterY - Model.cellSize/2) {
+                movingChar.contentPosY += movingChar.speed * coefDirY;
+            } else {
+                movingChar.contentPosY = finalPos.posCenterY - Model.cellSize/2;
+            }
+        }
+        movingChar.setContentCellPosition(finalPos);
+    }
+}
 /*
 class Shrek extends Character {
 
