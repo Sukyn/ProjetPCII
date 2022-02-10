@@ -169,6 +169,8 @@ class Character extends CellContent{
         super.getContentCellPosition().setCellContent(null);
         // mettre en commentaire les deux prochaines lignes si on remet le thread
         super.setContentCellPosition(c);
+        super.contentPosX = c.posCenterX - Model.cellSize/2;
+        super.contentPosY = c.posCenterY - Model.cellSize/2;
         super.getContentCellPosition().setCellContent(this);
     }
 }
@@ -190,12 +192,12 @@ class Move extends Thread{
     @Override
     public void run(){
         while (movingChar.contentPosX != finalPos.posCenterX - Model.cellSize/2 && movingChar.contentPosY != finalPos.posCenterY - Model.cellSize/2){
-            if (coefDirX > 0 && movingChar.contentPosX + movingChar.speed * coefDirX < finalPos.posCenterX - Model.cellSize/2 || coefDirX < 0 && movingChar.contentPosX + movingChar.speed * coefDirX > finalPos.posCenterX - Model.cellSize/2) {
+            if (coefDirX > 0 && movingChar.contentPosX + movingChar.speed * coefDirX < finalPos.posCenterX - Model.cellSize/2. || coefDirX < 0 && movingChar.contentPosX + movingChar.speed * coefDirX > finalPos.posCenterX - Model.cellSize/2.) {
                 movingChar.contentPosX += movingChar.speed * coefDirX;
             } else {
                 movingChar.contentPosX = finalPos.posCenterX - Model.cellSize/2;
             }
-            if (coefDirY > 0 && movingChar.contentPosY + movingChar.speed* coefDirY < finalPos.posCenterY - Model.cellSize/2 || coefDirY < 0 && movingChar.contentPosY + movingChar.speed* coefDirY > finalPos.posCenterY - Model.cellSize/2) {
+            if (coefDirY > 0 && movingChar.contentPosY + movingChar.speed* coefDirY < finalPos.posCenterY - Model.cellSize/2. || coefDirY < 0 && movingChar.contentPosY + movingChar.speed* coefDirY > finalPos.posCenterY - Model.cellSize/2.) {
                 movingChar.contentPosY += movingChar.speed * coefDirY;
             } else {
                 movingChar.contentPosY = finalPos.posCenterY - Model.cellSize/2;
