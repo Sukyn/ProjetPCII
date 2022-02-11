@@ -17,7 +17,9 @@ public class Main {
         shrex.add(view);
 
         Timer timer = new Timer();
-        timer.schedule(model.move, 0, 100);
+        for (Character chara : model.chars) {
+            timer.schedule(chara.move, 0, 100);
+        }
 
         /* Displaying view */
         shrex.pack();

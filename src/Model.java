@@ -9,27 +9,31 @@ public class Model {
     public static int cellSize = 100;
 
     public Grid grid;
-    public Move move;
+
     public ArrayList<Character> chars = new ArrayList<>();
     public Model(int height, int width) {
         this.grid = new Grid(height, width);
-        Image image = null;
-        try {
-            image = ImageIO.read(new File("Assets/Shrek.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         //c.setCellContent();
         Cell c = grid.cells.get(height/2).get(width/2);
         c.isSelected = true;
         grid.selectedCell = c;
-        Character shrek = new Character(c, image, 1);
-        c.setCellContent(shrek);
-        chars.add(shrek);
-        move = grid.selectedCell.getCellCharacterContent().moveCharModel();
+        addChar("Assets/Shrek.png", height/2, width/2, 1);
+        addChar("Assets/Fiona.png", height/2, width/2+1, 1);
     }
 
-
+    private void addChar(String file, int posX, int posY, int moveSpeed) {
+        Image image = null;
+        Cell cell = grid.cells.get(posX).get(posY);
+        try {
+            image = ImageIO.read(new File(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Character chara = new Character(cell, image, moveSpeed);
+        cell.setCellContent(chara);
+        chars.add(chara);
+    }
 }
 
 
@@ -174,6 +178,7 @@ class CellContent {
     public Cell contentCellPosition;
     public float contentPosX, contentPosY;
     public Image sprite;
+    Move move;
     /** construtor */
     public CellContent(Cell c, Image s){
         this.contentCellPosition = c;
@@ -210,10 +215,12 @@ class CellContent {
 
 class Character extends CellContent{
     double speed;
+
     /** constructor */
     public Character(Cell c, Image s, double moveSpeed) {
         super(c, s);
         speed = moveSpeed;
+        this.move = moveCharModel();
     }
 
     /** Method to move the character
