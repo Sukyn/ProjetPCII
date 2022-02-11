@@ -17,8 +17,8 @@ public class Model {
         Cell c = grid.cells.get(height/2).get(width/2);
         c.isSelected = true;
         grid.selectedCell = c;
-        addChar("Assets/Shrek.png", height/2, width/2, 6);
-        addChar("Assets/Fiona.png", height/2, width/2+1, 10);
+        addChar("Assets/Shrek.png", height/2, width/2, 6, 50, 20);
+        addChar("Assets/Fiona.png", height/2, width/2+1, 10, 10, 15);
         addItem("Assets/Buche.png",height/2, width/2-1);
         addItem("Assets/Buche.png",height/2+2, width/2+1);
         addItem("Assets/Buche.png",height/2-2, width/2+1);
@@ -28,7 +28,7 @@ public class Model {
         addItem("Assets/Rock.png",height/2+4, width/2+1);
     }
 
-    private void addChar(String file, int posX, int posY, int moveSpeed) {
+    private void addChar(String file, int posX, int posY, int speed, int strength, int health) {
         Image image = null;
         Cell cell = grid.cells.get(posX).get(posY);
         try {
@@ -36,7 +36,7 @@ public class Model {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Character chara = new Character(cell, image, moveSpeed);
+        Character chara = new Character(cell, image, speed, strength, health);
         cell.setCellContent(chara);
         chars.add(chara);
     }
@@ -239,11 +239,20 @@ class CellContent {
 
 class Character extends CellContent{
     double speed;
-
+    int health;
+    int strength;
+    double basicSpeed;
+    int basicHealth;
+    int basicStrength;
     /** constructor */
-    public Character(Cell c, Image s, double moveSpeed) {
+    public Character(Cell c, Image s, double moveSpeed, int health, int strength) {
         super(c, s);
-        speed = moveSpeed;
+        this.speed = moveSpeed;
+        this.health = health;
+        this.strength = strength;
+        this.basicSpeed = moveSpeed;
+        this.basicHealth = health;
+        this.basicStrength = strength;
         this.move = moveCharModel();
     }
 
@@ -254,6 +263,8 @@ class Character extends CellContent{
     public Move moveCharModel() {
         return new Move (this, super.getContentCellPosition());
     }
+    public void boostSpeed(double boost) { speed += boost; }
+    public void resetSpeed() { speed = basicSpeed; }
 }
 
 class Move extends TimerTask {
@@ -263,7 +274,6 @@ class Move extends TimerTask {
     double coefDirY;
     boolean isMoving = false;
     public Move(Character c, Cell start){
-
         super();
         this.initialPos = start;
         this.finalPos = start;
@@ -282,49 +292,14 @@ class Move extends TimerTask {
     }
     @Override
     public void run()  {
-        if (isMoving && (Math.abs(finalPos.posCenterX - movingChar.contentPosX - Model.cellSize/2) >= 5) || Math.abs(finalPos.posCenterY - movingChar.contentPosY - Model.cellSize/2) >= 5){
-            /*
-            if (coefDirX > 0 && movingChar.contentPosX + movingChar.speed * coefDirX < finalPos.posCenterX - Model.cellSize/2. || coefDirX < 0 && movingChar.contentPosX + movingChar.speed * coefDirX > finalPos.posCenterX - Model.cellSize/2.) {
+        if (isMoving && (coefDirX > 0 && finalPos.posCenterX > movingChar.contentPosX + Model.cellSize/2)
+                         || (coefDirX < 0 && finalPos.posCenterX < movingChar.contentPosX + Model.cellSize/2)
+                         || (coefDirY > 0 && finalPos.posCenterY > movingChar.contentPosY + Model.cellSize/2)
+                         || (coefDirY < 0 && finalPos.posCenterY < movingChar.contentPosY + Model.cellSize/2)){
+            if ((coefDirX > 0 && finalPos.posCenterX > movingChar.contentPosX + Model.cellSize/2) || (coefDirX < 0 && finalPos.posCenterX < movingChar.contentPosX + Model.cellSize/2))
                 movingChar.contentPosX += movingChar.speed * coefDirX;
-            } else {
-                movingChar.contentPosX = finalPos.posCenterX - Model.cellSize/2;
-            }
-            if (coefDirY > 0 && movingChar.contentPosY + movingChar.speed* coefDirY < finalPos.posCenterY - Model.cellSize/2. || coefDirY < 0 && movingChar.contentPosY + movingChar.speed* coefDirY > finalPos.posCenterY - Model.cellSize/2.) {
+            if ((coefDirY > 0 && finalPos.posCenterY > movingChar.contentPosY + Model.cellSize/2) || (coefDirY < 0 && finalPos.posCenterY < movingChar.contentPosY + Model.cellSize/2))
                 movingChar.contentPosY += movingChar.speed * coefDirY;
-            } else {
-                movingChar.contentPosY = finalPos.posCenterY - Model.cellSize/2;
-                movingChar.setContentCellPosition(finalPos);
-                initialPos.setCellContent(null);
-                finalPos.setCellContent(movingChar);
-            }
-
-             */
-            if (Math.abs(finalPos.posCenterX - movingChar.contentPosX - Model.cellSize/2) >= 5) {
-                movingChar.contentPosX += movingChar.speed * coefDirX;
-
-            }
-            if (Math.abs(finalPos.posCenterY - movingChar.contentPosY - Model.cellSize/2) >= 5) {
-                movingChar.contentPosY += movingChar.speed * coefDirY;
-            }
-            /*
-            System.out.print(coefDirX);
-            System.out.print(" ");
-            System.out.print(coefDirY);
-            System.out.print(" ");
-            System.out.print(movingChar.contentPosX);
-            System.out.print(" ");
-            System.out.print(movingChar.contentPosY);
-            System.out.print(" ");
-            System.out.print(initialPos.posCenterX);
-            System.out.print(" ");
-            System.out.print(initialPos.posCenterY);
-            System.out.print(" ");
-            System.out.print(finalPos.posCenterX);
-            System.out.print(" ");
-            System.out.print(finalPos.posCenterY);
-            System.out.println(" ");
-
-             */
         }
         else if (isMoving) {
             movingChar.setContentCellPosition(finalPos);
@@ -335,5 +310,4 @@ class Move extends TimerTask {
             finalPos.isTargeted = false;
         }
     }
-
 }

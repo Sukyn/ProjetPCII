@@ -6,8 +6,10 @@ import static java.awt.event.MouseEvent.*;
 public class Controller implements MouseListener {
     View view;
     Model model;
+    int cpt;
     /** constructor */
     public Controller(View v, Model m) {
+        cpt = 0;
         view = v;
         model = m;
         view.addMouseListener(this);
@@ -28,6 +30,13 @@ public class Controller implements MouseListener {
         } else if (e.getButton() == BUTTON3 && model.grid.selectedCell.getCellContent() != null && model.grid.selectedCell.getCellContent().getClass() == Character.class){
             if (model.grid.getClosestCell(e.getX(), e.getY()).getCellContent() == null && !model.grid.selectedCell.getCellContent().move.isMoving && !model.grid.getClosestCell(e.getX(), e.getY()).isTargeted) {
                 model.grid.selectedCell.getCellContent().move.setDestination(model.grid.getClosestCell(e.getX(), e.getY()));
+                Character chara = (Character) model.grid.selectedCell.getCellContent();
+                if (cpt%3 == 0) {
+                    chara.boostSpeed(15);
+                } else {
+                    chara.resetSpeed();
+                }
+                cpt++;
             }
         }
     }
