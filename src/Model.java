@@ -22,6 +22,10 @@ public class Model {
         addItem("Assets/Buche.png",height/2, width/2-1);
         addItem("Assets/Buche.png",height/2+2, width/2+1);
         addItem("Assets/Buche.png",height/2-2, width/2+1);
+        addItem("Assets/Tree.png",height/2-3, width/2+1);
+        addItem("Assets/Rock.png",height/2, width/2+3);
+        addItem("Assets/Tree.png",height/2-2, width/2+3);
+        addItem("Assets/Rock.png",height/2+4, width/2+1);
     }
 
     private void addChar(String file, int posX, int posY, int moveSpeed) {
@@ -196,7 +200,7 @@ class Cell {
 
 class CellContent {
     public Cell contentCellPosition;
-    public float contentPosX, contentPosY;
+    public double contentPosX, contentPosY;
     public Image sprite;
     Move move;
     /** construtor */
