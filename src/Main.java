@@ -1,12 +1,14 @@
 import javax.swing.JFrame;
 import java.io.IOException;
+import java.util.Timer;
 
 public class Main {
     public static void main(String [] args) throws IOException {
-        Model model = new Model(View.WIDTH/Model.cellSize+1,View.HEIGHT*4/(Model.cellSize*3)+1);
+        int width = View.HEIGHT*4/(Model.cellSize*3)+1;
+        int height = View.WIDTH/Model.cellSize+1;
+        Model model = new Model(height,width);
         View view = new View(model);
-        Controller controller = new Controller(view, model);
-
+        new Controller(view, model);
         /* Creating of a new JFrame, with default close operation set */
         JFrame shrex = new JFrame("SHREX");
         shrex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -14,7 +16,8 @@ public class Main {
         /* Adding view to the JFrame */
         shrex.add(view);
 
-
+        Timer timer = new Timer();
+        timer.schedule(model.move, 0, 100);
 
         /* Displaying view */
         shrex.pack();

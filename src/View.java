@@ -10,9 +10,9 @@ public class View extends JPanel {
     public static final int HEIGHT = 700;
     public static final int WIDTH = 1000;
     public static final int shift = 10;
-    private Image hexagonImage;
-    private Image selectedHexagonImage;
-    private Image wallpaper;
+    private final Image hexagonImage;
+    private final Image selectedHexagonImage;
+    private final Image wallpaper;
     Model model;
 
     /** constructor */
@@ -25,16 +25,16 @@ public class View extends JPanel {
         /* opens the different images we will use */
         this.wallpaper = ImageIO.read(new File("Assets/Swomp2.jpg"));
         BufferedImage image = ImageIO.read(new File("Assets/hexa.png"));
-        this.hexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
+        this.hexagonImage = image.getScaledInstance(Model.cellSize, Model.cellSize, Image.SCALE_SMOOTH);
         image = ImageIO.read(new File("Assets/hexaSelected.png"));
-        this.selectedHexagonImage = image.getScaledInstance(m.cellSize, m.cellSize, Image.SCALE_SMOOTH);
+        this.selectedHexagonImage = image.getScaledInstance(Model.cellSize, Model.cellSize, Image.SCALE_SMOOTH);
     }
 
     /** Method paint
      * draw all the content in the window
      * @param g, Graphics
      */
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.repaint();
         g.drawImage(wallpaper, 0, 0, WIDTH, HEIGHT, this);
         drawGrid(g);
@@ -48,9 +48,9 @@ public class View extends JPanel {
      */
     private void drawHexagon(Graphics g, Cell hexagon, Image image) {
         if (hexagon.posY % 2 == 0) {
-            g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift, (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
+            g.drawImage(image, (hexagon.posX - 1) * Model.cellSize-hexagon.posX *12+hexagon.posX *shift, (3 * Model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
         } else {
-            g.drawImage(image, (hexagon.posX - 1) * model.cellSize-hexagon.posX *12+hexagon.posX *shift + model.cellSize / 2-(6-shift/2), (3 * model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
+            g.drawImage(image, (hexagon.posX - 1) * Model.cellSize-hexagon.posX *12+hexagon.posX *shift + Model.cellSize / 2-(6-shift/2), (3 * Model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift, this);
         }
     }
 
@@ -63,10 +63,10 @@ public class View extends JPanel {
         for (ArrayList<Cell> hexagonList : model.grid.cells) {
             for (Cell hexagon : hexagonList) {
                 drawHexagon(g, hexagon, hexagonImage);
-                if (hexagon.getCellContent() != null)
-                    drawContent(g, hexagon.getCellContent());
-
             }
+        }
+        for(Character chara : model.chars) {
+            drawChar(g, chara);
         }
         /* if there is a selected cell we draw the adequate sprite */
         try {
@@ -78,10 +78,15 @@ public class View extends JPanel {
 
     /** Method drawContent
      * draws a cell content depending on it's sprite
-     * @param g
+     * @param g : Graphics
      */
+    /*
     private void drawContent(Graphics g, CellContent content){
         g.drawImage(content.getSprite(), content.contentPosX, content.contentPosY, Model.cellSize, Model.cellSize, this);
+    }
+    */
+    private void drawChar(Graphics g, Character chara){
+        g.drawImage(chara.getSprite(), (int)chara.contentPosX, (int)chara.contentPosY, Model.cellSize, Model.cellSize, this);
     }
 }
 

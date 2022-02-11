@@ -3,13 +3,32 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 public class Model {
     public static int cellSize = 100;
+
     public Grid grid;
+    public Move move;
+    public ArrayList<Character> chars = new ArrayList<>();
     public Model(int height, int width) {
-         this.grid = new Grid(height, width);
+        this.grid = new Grid(height, width);
+        Image image = null;
+        try {
+            image = ImageIO.read(new File("Assets/Shrek.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //c.setCellContent();
+        Cell c = grid.cells.get(height/2).get(width/2);
+        c.isSelected = true;
+        grid.selectedCell = c;
+        Character shrek = new Character(c, image, 1);
+        c.setCellContent(shrek);
+        chars.add(shrek);
+        move = grid.selectedCell.getCellCharacterContent().moveCharModel();
     }
+
 
 }
 
@@ -27,28 +46,18 @@ class Grid {
         /* Creation of a list for the cells*/
         this.cells = new ArrayList<>(height);
         for (int i = 0; i < height; i++){
-            cells.add( new ArrayList<>());
-
+            cells.add(new ArrayList<>());
             for (int j = 0; j < width; j++){
                 Cell c = new Cell(i, j);
                 cells.get(i).add(c);
-                if (i == height/2 && j == width/2) {
-                    c.isSelected = true;
-                    selectedCell = c;
-                    Image image = null;
-                    try {
-                        image = ImageIO.read(new File("Assets/Shrek.png"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    c.setCellContent(new Character(c, image, 0.01));
-                }
             }
         }
     }
 
+
     /** Method to get neighbors of the Cell 
      * TODO */
+    /*
     private ArrayList<Cell> getNeighbors(Cell target) {
         ArrayList<Cell> neighbors = new ArrayList<>();
         neighbors.add(cells.get(target.posX).get(target.posY + 1));
@@ -66,10 +75,14 @@ class Grid {
         }
         return neighbors;
     }
+    */
 
+    /*
     public Cell getCenter() {
         return cells.get(height/2).get(width/2);
     }
+    */
+
 
     /** Method setSelectedCell
      * set the selected cell in the grid
@@ -159,7 +172,7 @@ class Cell {
 
 class CellContent {
     public Cell contentCellPosition;
-    public int contentPosX, contentPosY;
+    public float contentPosX, contentPosY;
     public Image sprite;
     /** construtor */
     public CellContent(Cell c, Image s){
@@ -207,34 +220,35 @@ class Character extends CellContent{
      * params int xTarget, wanted x position
      * int yTarget, wanted y position
      * */
-    public void moveCharModel(Cell c) {
-        //new Move (this, super.getContentCellPosition(), c).start();
-        super.getContentCellPosition().setCellContent(null);
-        // mettre en commentaire les prochaines lignes si on remet le thread
-        super.setContentCellPosition(c);
-        super.contentPosX = c.posCenterX - Model.cellSize/2;
-        super.contentPosY = c.posCenterY - Model.cellSize/2;
-        super.getContentCellPosition().setCellContent(this);
+    public Move moveCharModel() {
+        return new Move (this, super.getContentCellPosition());
     }
 }
 
-class Move extends Thread{
+class Move extends TimerTask {
     Character movingChar;
     Cell initialPos, finalPos;
     double coefDirX;
     double coefDirY;
-    public Move(Character c, Cell start, Cell end){
+    boolean isMoving = false;
+    public Move(Character c, Cell start){
+
         super();
         this.initialPos = start;
-        this.finalPos = end;
+        this.finalPos = start;
         this.movingChar = c;
-        this.coefDirX = (finalPos.posCenterX - initialPos.posCenterX)/100.;
-        this.coefDirY = (finalPos.posCenterY - initialPos.posCenterY)/100.;
     }
 
+    public void setDestination(Cell end) {
+        this.finalPos = end;
+        this.coefDirX = (finalPos.posCenterX - initialPos.posCenterX)/100.;
+        this.coefDirY = (finalPos.posCenterY - initialPos.posCenterY)/100.;
+        isMoving = true;
+    }
     @Override
-    public void run(){
-        while (movingChar.contentPosX != finalPos.posCenterX - Model.cellSize/2 && movingChar.contentPosY != finalPos.posCenterY - Model.cellSize/2){
+    public void run()  {
+        if (isMoving && (Math.abs(finalPos.posCenterX - movingChar.contentPosX - Model.cellSize/2) >= 5) || Math.abs(finalPos.posCenterY - movingChar.contentPosY - Model.cellSize/2) >= 5){
+            /*
             if (coefDirX > 0 && movingChar.contentPosX + movingChar.speed * coefDirX < finalPos.posCenterX - Model.cellSize/2. || coefDirX < 0 && movingChar.contentPosX + movingChar.speed * coefDirX > finalPos.posCenterX - Model.cellSize/2.) {
                 movingChar.contentPosX += movingChar.speed * coefDirX;
             } else {
@@ -244,13 +258,46 @@ class Move extends Thread{
                 movingChar.contentPosY += movingChar.speed * coefDirY;
             } else {
                 movingChar.contentPosY = finalPos.posCenterY - Model.cellSize/2;
+                movingChar.setContentCellPosition(finalPos);
+                initialPos.setCellContent(null);
+                finalPos.setCellContent(movingChar);
             }
+
+             */
+            if (Math.abs(finalPos.posCenterX - movingChar.contentPosX - Model.cellSize/2) >= 5) {
+                movingChar.contentPosX += movingChar.speed * coefDirX;
+
+            }
+            if (Math.abs(finalPos.posCenterY - movingChar.contentPosY - Model.cellSize/2) >= 5) {
+                movingChar.contentPosY += movingChar.speed * coefDirY;
+            }
+            /*
+            System.out.print(coefDirX);
+            System.out.print(" ");
+            System.out.print(coefDirY);
+            System.out.print(" ");
+            System.out.print(movingChar.contentPosX);
+            System.out.print(" ");
+            System.out.print(movingChar.contentPosY);
+            System.out.print(" ");
+            System.out.print(initialPos.posCenterX);
+            System.out.print(" ");
+            System.out.print(initialPos.posCenterY);
+            System.out.print(" ");
+            System.out.print(finalPos.posCenterX);
+            System.out.print(" ");
+            System.out.print(finalPos.posCenterY);
+            System.out.println(" ");
+
+             */
         }
-        movingChar.setContentCellPosition(finalPos);
+        else if (isMoving) {
+            movingChar.setContentCellPosition(finalPos);
+            initialPos.setCellContent(null);
+            finalPos.setCellContent(movingChar);
+            initialPos = finalPos;
+            isMoving = false;
+        }
     }
-}
-/*
-class Shrek extends Character {
 
 }
-*/
