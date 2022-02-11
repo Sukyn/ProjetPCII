@@ -21,7 +21,7 @@ class Grid {
     public Cell selectedCell;
     /** Constructeur */
     public Grid(int height, int width){
-        /* on initialise les variables height et width */
+        /* initialisation of  variables height et width */
         this.height = height;
         this.width = width;
         /* Creation of a list for the cells*/
@@ -71,23 +71,40 @@ class Grid {
         return cells.get(height/2).get(width/2);
     }
 
+    /** Method setSelectedCell
+     * set the selected cell in the grid
+     * @param c, a cell
+     */
     public void setSelectedCell(Cell c){
         selectedCell = c;
         System.out.println(c.getCellContent());
     }
 
+    /** Method getClosestCell
+     * return the closest cell from a position in the window, generally used with coordinates from a click
+     * @param x, int
+     * @param y, int
+     * @return Cell
+     */
     public Cell getClosestCell(int x, int y){
+        /* defines the minimal distance from a cell depending on a circle that is the size of a Cell and the shift plus a little margin */
         double dist = Model.cellSize/2. + View.shift + 10;
+        /* initialize closestCell for execution sake */
         Cell closestCell = selectedCell;
+        /* we go through all cells to find the closest one, can be upgraded to go through only the one close to the coordinates */
         for (ArrayList<Cell> cellList : cells) {
             for (Cell cell : cellList) {
+                /* calculates the distance between the coordinates and the current cell */
                 double comp = Math.sqrt(Math.pow(x-cell.posCenterX, 2) + Math.pow(y-cell.posCenterY, 2));
+                /* if it is inferior to the current minima */
                 if ( comp < dist){
+                    /* we replace the minima with a new one and the closest cell with the current cell */
                     dist = comp;
                     closestCell = cell;
                 }
             }
         }
+        /* return the closest cell found*/
         return closestCell;
     }
 }
@@ -98,6 +115,7 @@ class Cell {
     public int posCenterX;    public int posCenterY;
     public CellContent content;
     public boolean isSelected = false;
+    /** constructor */
     public Cell(int x, int y) {
         this.posX = x;
         this.posY = y;
@@ -111,14 +129,26 @@ class Cell {
 
     }
 
+    /** Method setCellContent
+     * set the cell content of this object with the passed parameter
+     * @param newContent, the CellContent to set
+     */
     public void setCellContent(CellContent newContent){
         content = newContent;
     }
 
+    /** Method getCellContent
+     * returns the current cell content of this object
+     * @return CellContent
+     */
     public  CellContent getCellContent(){
         return  content;
     }
 
+    /** Method getCellCharacterContent
+     * returns the content of the cell as a character if it is one, else, return null
+     * @return Character
+     */
     public  Character getCellCharacterContent(){
         if (content.getClass() == Character.class)
             return (Character) content;
@@ -131,21 +161,34 @@ class CellContent {
     public Cell contentCellPosition;
     public int contentPosX, contentPosY;
     public Image sprite;
+    /** construtor */
     public CellContent(Cell c, Image s){
-        contentCellPosition = c;
-        contentPosX = c.posCenterX - Model.cellSize/2;
-        contentPosY = c.posCenterY - Model.cellSize/2;
-        sprite = s;
+        this.contentCellPosition = c;
+        this.contentPosX = c.posCenterX - Model.cellSize/2;
+        this.contentPosY = c.posCenterY - Model.cellSize/2;
+        this.sprite = s;
     }
 
+    /** Method setContentCellPosition
+     * set the position of this object in the cell in parameters
+     * @param c, Cell
+     */
     public void setContentCellPosition(Cell c){
         contentCellPosition = c;
     }
 
+    /** Method getContentCellPosition
+     * return the cell containing this object
+     * @return Cell
+     */
     public Cell getContentCellPosition(){
         return contentCellPosition;
     }
 
+    /** Method getSprite
+     * return the image corresponding to this particular image
+     * @return Image
+     */
     public Image getSprite(){
         return sprite;
     }
@@ -167,7 +210,7 @@ class Character extends CellContent{
     public void moveCharModel(Cell c) {
         //new Move (this, super.getContentCellPosition(), c).start();
         super.getContentCellPosition().setCellContent(null);
-        // mettre en commentaire les deux prochaines lignes si on remet le thread
+        // mettre en commentaire les prochaines lignes si on remet le thread
         super.setContentCellPosition(c);
         super.contentPosX = c.posCenterX - Model.cellSize/2;
         super.contentPosY = c.posCenterY - Model.cellSize/2;
