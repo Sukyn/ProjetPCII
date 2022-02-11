@@ -27,18 +27,24 @@ public class Controller implements MouseListener {
         if (e.getButton() == BUTTON1) {
             model.grid.setSelectedCell(model.grid.getClosestCell(e.getX(), e.getY()));
         /* on a right click and if there is a character in the selected cell, move the character to the closest cell form right click */
-        } else if (e.getButton() == BUTTON3 && model.grid.selectedCell.getCellContent() != null && model.grid.selectedCell.getCellContent().getClass() == Character.class){
+        } else if (e.getButton() == BUTTON3 && model.grid.selectedCell.getCellContent() != null &&
+                (model.grid.selectedCell.getCellContent().getClass() == Character.class
+                        || model.grid.selectedCell.getCellContent().getClass() == Fiona.class)) {
             if (model.grid.getClosestCell(e.getX(), e.getY()).getCellContent() == null && !model.grid.selectedCell.getCellContent().move.isMoving && !model.grid.getClosestCell(e.getX(), e.getY()).isTargeted) {
                 model.grid.selectedCell.getCellContent().move.setDestination(model.grid.getClosestCell(e.getX(), e.getY()));
                 Character chara = (Character) model.grid.selectedCell.getCellContent();
-                if (cpt%3 == 0) {
-                    chara.boostSpeed(15);
-                } else {
-                    chara.resetSpeed();
+                if (model.grid.selectedCell.getCellContent().getClass() == Fiona.class) {
+                    Fiona fiona = (Fiona)chara;
+                    if (cpt % 3 == 0) {
+                        fiona.boostSpeed(15);
+                    } else {
+                        fiona.resetSpeed();
+                    }
+                    cpt++;
                 }
-                cpt++;
             }
         }
+
     }
 
     /**

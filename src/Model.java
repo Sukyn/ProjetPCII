@@ -13,12 +13,11 @@ public class Model {
     public Model(int height, int width) {
         this.grid = new Grid(height, width);
 
-        //c.setCellContent();
         Cell c = grid.cells.get(height/2).get(width/2);
         c.isSelected = true;
         grid.selectedCell = c;
         addChar("Assets/Shrek.png", height/2, width/2, 6, 50, 20);
-        addChar("Assets/Fiona.png", height/2, width/2+1, 10, 10, 15);
+        addSpecialChar("Fiona");
         addItem("Assets/Buche.png",height/2, width/2-1);
         addItem("Assets/Buche.png",height/2+2, width/2+1);
         addItem("Assets/Buche.png",height/2-2, width/2+1);
@@ -27,7 +26,21 @@ public class Model {
         addItem("Assets/Tree.png",height/2-2, width/2+3);
         addItem("Assets/Rock.png",height/2+4, width/2+1);
     }
+    private void addSpecialChar(String specialChar) {
+        if (specialChar == "Fiona") {
+            Image image = null;
+            Cell cell = grid.cells.get(grid.height/2).get(grid.width/2+1);
+            try {
+                image = ImageIO.read(new File("Assets/Fiona.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Fiona chara = new Fiona(cell, image, 10, 10, 15);
+            cell.setCellContent(chara);
+            chars.add(chara);
+        }
 
+    }
     private void addChar(String file, int posX, int posY, int speed, int strength, int health) {
         Image image = null;
         Cell cell = grid.cells.get(posX).get(posY);
@@ -40,7 +53,6 @@ public class Model {
         cell.setCellContent(chara);
         chars.add(chara);
     }
-
     private void addItem(String file, int posX, int posY) {
         Image image = null;
         Cell cell = grid.cells.get(posX).get(posY);
@@ -242,8 +254,9 @@ class Character extends CellContent{
     int health;
     int strength;
     double basicSpeed;
-    int basicHealth;
+    int maxHealth;
     int basicStrength;
+    boolean isDead = false;
     /** constructor */
     public Character(Cell c, Image s, double moveSpeed, int health, int strength) {
         super(c, s);
@@ -251,7 +264,7 @@ class Character extends CellContent{
         this.health = health;
         this.strength = strength;
         this.basicSpeed = moveSpeed;
-        this.basicHealth = health;
+        this.maxHealth = health;
         this.basicStrength = strength;
         this.move = moveCharModel();
     }
@@ -263,6 +276,17 @@ class Character extends CellContent{
     public Move moveCharModel() {
         return new Move (this, super.getContentCellPosition());
     }
+    public void loseHP(int hit) { health -= hit; if (health <= 0) isDead = true; }
+    public void healHP(int recover) { if (health+recover <= maxHealth) health+= recover; else health=maxHealth;}
+}
+
+class Fiona extends Character {
+    public Fiona(Cell c, Image s, double moveSpeed, int health, int strength) {
+        super(c, s, moveSpeed, health, strength);
+    }
+    /** Passif de Fiona :
+     * Elle peut améliorer sa speed
+    * */
     public void boostSpeed(double boost) { speed += boost; }
     public void resetSpeed() { speed = basicSpeed; }
 }
