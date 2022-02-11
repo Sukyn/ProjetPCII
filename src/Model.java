@@ -17,8 +17,8 @@ public class Model {
         Cell c = grid.cells.get(height/2).get(width/2);
         c.isSelected = true;
         grid.selectedCell = c;
-        addChar("Assets/Shrek.png", height/2, width/2, 1);
-        addChar("Assets/Fiona.png", height/2, width/2+1, 5);
+        addChar("Assets/Shrek.png", height/2, width/2, 6);
+        addChar("Assets/Fiona.png", height/2, width/2+1, 10);
         addItem("Assets/Buche.png",height/2, width/2-1);
         addItem("Assets/Buche.png",height/2+2, width/2+1);
         addItem("Assets/Buche.png",height/2-2, width/2+1);
@@ -270,6 +270,9 @@ class Move extends TimerTask {
         this.finalPos = end;
         this.coefDirX = (finalPos.posCenterX - initialPos.posCenterX)/100.;
         this.coefDirY = (finalPos.posCenterY - initialPos.posCenterY)/100.;
+        double norme = Math.sqrt(coefDirX*coefDirX + coefDirY*coefDirY);
+        this.coefDirX = coefDirX/norme;
+        this.coefDirY = coefDirY/norme;
         end.setTargeted(movingChar);
         isMoving = true;
     }
