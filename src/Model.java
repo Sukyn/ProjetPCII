@@ -19,7 +19,7 @@ public class Model {
         c.isSelected = true;
         grid.selectedCell = c;
         addChar("Assets/Shrek.png", height/2, width/2, 1);
-        addChar("Assets/Fiona.png", height/2, width/2+1, 1);
+        addChar("Assets/Fiona.png", height/2, width/2+1, 5);
     }
 
     private void addChar(String file, int posX, int posY, int moveSpeed) {
@@ -131,6 +131,7 @@ class Cell {
     public int posY;
     public int posCenterX;    public int posCenterY;
     public CellContent content;
+    public boolean isTargeted = false;
     public boolean isSelected = false;
     /** constructor */
     public Cell(int x, int y) {
@@ -144,6 +145,10 @@ class Cell {
         this.posCenterY = (3 * Model.cellSize / 4) * (this.posY - 1) + this.posY * View.shift + Model.cellSize/2;
 
 
+    }
+
+    public void setTargeted(Character chara) {
+        isTargeted = true;
     }
 
     /** Method setCellContent
@@ -250,6 +255,7 @@ class Move extends TimerTask {
         this.finalPos = end;
         this.coefDirX = (finalPos.posCenterX - initialPos.posCenterX)/100.;
         this.coefDirY = (finalPos.posCenterY - initialPos.posCenterY)/100.;
+        end.setTargeted(movingChar);
         isMoving = true;
     }
     @Override
@@ -304,6 +310,7 @@ class Move extends TimerTask {
             finalPos.setCellContent(movingChar);
             initialPos = finalPos;
             isMoving = false;
+            finalPos.isTargeted = false;
         }
     }
 
