@@ -65,8 +65,11 @@ public class View extends JPanel {
                 drawHexagon(g, hexagon, hexagonImage);
             }
         }
-        for(Character chara : model.chars) {
-            drawChar(g, chara);
+        for(CellContent chara : model.chars) {
+            drawContent(g, chara);
+        }
+        for(CellContent item : model.items) {
+            drawContent(g, item);
         }
         /* if there is a selected cell we draw the adequate sprite */
         try {
@@ -80,14 +83,11 @@ public class View extends JPanel {
      * draws a cell content depending on it's sprite
      * @param g : Graphics
      */
-    /*
+
     private void drawContent(Graphics g, CellContent content){
-        g.drawImage(content.getSprite(), content.contentPosX, content.contentPosY, Model.cellSize, Model.cellSize, this);
+        g.drawImage(content.getSprite(), (int)content.contentPosX, (int)content.contentPosY, Model.cellSize, Model.cellSize, this);
     }
-    */
-    private void drawChar(Graphics g, Character chara){
-        g.drawImage(chara.getSprite(), (int)chara.contentPosX, (int)chara.contentPosY, Model.cellSize, Model.cellSize, this);
-    }
+
 }
 
 

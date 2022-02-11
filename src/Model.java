@@ -7,10 +7,9 @@ import java.util.TimerTask;
 
 public class Model {
     public static int cellSize = 100;
-
     public Grid grid;
-
     public ArrayList<Character> chars = new ArrayList<>();
+    public ArrayList<CellContent> items = new ArrayList<>();
     public Model(int height, int width) {
         this.grid = new Grid(height, width);
 
@@ -20,6 +19,9 @@ public class Model {
         grid.selectedCell = c;
         addChar("Assets/Shrek.png", height/2, width/2, 1);
         addChar("Assets/Fiona.png", height/2, width/2+1, 5);
+        addItem("Assets/Buche.png",height/2, width/2-1);
+        addItem("Assets/Buche.png",height/2+2, width/2+1);
+        addItem("Assets/Buche.png",height/2-2, width/2+1);
     }
 
     private void addChar(String file, int posX, int posY, int moveSpeed) {
@@ -33,6 +35,19 @@ public class Model {
         Character chara = new Character(cell, image, moveSpeed);
         cell.setCellContent(chara);
         chars.add(chara);
+    }
+
+    private void addItem(String file, int posX, int posY) {
+        Image image = null;
+        Cell cell = grid.cells.get(posX).get(posY);
+        try {
+            image = ImageIO.read(new File(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CellContent item = new CellContent(cell, image);
+        cell.setCellContent(item);
+        items.add(item);
     }
 }
 
