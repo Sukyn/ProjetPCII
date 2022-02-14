@@ -65,9 +65,8 @@ public class View extends JPanel {
                 drawHexagon(g, hexagon, hexagonImage);
             }
         }
-        for(CellContent chara : model.chars) {
-            drawContent(g, chara);
-        }
+        drawContent(g, model.shrek);
+        drawContent(g, model.fiona);
         for(CellContent item : model.items) {
             drawContent(g, item);
         }

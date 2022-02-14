@@ -15,12 +15,6 @@ public class Main {
 
         /* Adding view to the JFrame */
         shrex.add(view);
-
-        Timer timer = new Timer();
-        for (Character chara : model.chars) {
-            timer.schedule(chara.move, 0, 100);
-        }
-
         /* Displaying view */
         shrex.pack();
         shrex.setVisible(true);

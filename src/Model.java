@@ -3,12 +3,15 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class Model {
     public static int cellSize = 100;
     public Grid grid;
-    public ArrayList<Character> chars = new ArrayList<>();
+    // public ArrayList<Character> chars = new ArrayList<>();
+    public Fiona fiona;
+    public Shrek shrek;
     public ArrayList<CellContent> items = new ArrayList<>();
     public Model(int height, int width) {
         this.grid = new Grid(height, width);
@@ -16,7 +19,7 @@ public class Model {
         Cell c = grid.cells.get(height/2).get(width/2);
         c.isSelected = true;
         grid.selectedCell = c;
-        addChar("Assets/Shrek.png", height/2, width/2, 6, 50, 20);
+        addSpecialChar("Shrek");
         addSpecialChar("Fiona");
         addItem("Assets/Buche.png",height/2, width/2-1);
         addItem("Assets/Buche.png",height/2+2, width/2+1);
@@ -25,6 +28,8 @@ public class Model {
         addItem("Assets/Rock.png",height/2, width/2+3);
         addItem("Assets/Tree.png",height/2-2, width/2+3);
         addItem("Assets/Rock.png",height/2+4, width/2+1);
+
+
     }
     private void addSpecialChar(String specialChar) {
         if (specialChar == "Fiona") {
@@ -37,22 +42,22 @@ public class Model {
             }
             Fiona chara = new Fiona(cell, image, 10, 10, 15);
             cell.setCellContent(chara);
-            chars.add(chara);
+            this.fiona = chara;
+        } else if (specialChar == "Shrek") {
+            Image image = null;
+            Cell cell = grid.cells.get(grid.height/2).get(grid.width/2);
+            try {
+                image = ImageIO.read(new File("Assets/Shrek.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Shrek chara = new Shrek(cell, image, 6, 50, 20);
+            cell.setCellContent(chara);
+            this.shrek = chara;
         }
 
     }
-    private void addChar(String file, int posX, int posY, int speed, int strength, int health) {
-        Image image = null;
-        Cell cell = grid.cells.get(posX).get(posY);
-        try {
-            image = ImageIO.read(new File(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Character chara = new Character(cell, image, speed, strength, health);
-        cell.setCellContent(chara);
-        chars.add(chara);
-    }
+
     private void addItem(String file, int posX, int posY) {
         Image image = null;
         Cell cell = grid.cells.get(posX).get(posY);
@@ -174,8 +179,6 @@ class Cell {
             this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * View.shift + Model.cellSize/2 - (6-View.shift/2) + Model.cellSize/2;
         }
         this.posCenterY = (3 * Model.cellSize / 4) * (this.posY - 1) + this.posY * View.shift + Model.cellSize/2;
-
-
     }
 
     public void setTargeted(Character chara) {
@@ -256,6 +259,7 @@ class Character extends CellContent{
     double basicSpeed;
     int maxHealth;
     int basicStrength;
+    Timer timer;
     boolean isDead = false;
     /** constructor */
     public Character(Cell c, Image s, double moveSpeed, int health, int strength) {
@@ -267,6 +271,11 @@ class Character extends CellContent{
         this.maxHealth = health;
         this.basicStrength = strength;
         this.move = moveCharModel();
+    }
+
+    public void addTimer() {
+        this.timer = new Timer();
+        timer.schedule(this.move, 0, 100);
     }
 
     /** Method to move the character
@@ -289,6 +298,12 @@ class Fiona extends Character {
     * */
     public void boostSpeed(double boost) { speed += boost; }
     public void resetSpeed() { speed = basicSpeed; }
+}
+
+class Shrek extends Character {
+    public Shrek(Cell c, Image s, double moveSpeed, int health, int strength) {
+        super(c, s, moveSpeed, health, strength);
+    }
 }
 
 class Move extends TimerTask {
@@ -332,6 +347,7 @@ class Move extends TimerTask {
             initialPos = finalPos;
             isMoving = false;
             finalPos.isTargeted = false;
+            movingChar.timer.cancel();
         }
     }
 }
