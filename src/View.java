@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class View extends JPanel {
     public static final int HEIGHT = 700;
@@ -28,6 +29,18 @@ public class View extends JPanel {
         this.hexagonImage = image.getScaledInstance(Model.cellSize, Model.cellSize, Image.SCALE_SMOOTH);
         image = ImageIO.read(new File("Assets/hexaSelected.png"));
         this.selectedHexagonImage = image.getScaledInstance(Model.cellSize, Model.cellSize, Image.SCALE_SMOOTH);
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                revalidate();
+                repaint();
+            }
+        }).start();
     }
 
     /** Method paint
@@ -35,7 +48,6 @@ public class View extends JPanel {
      * @param g, Graphics
      */
     public void paintComponent(Graphics g) {
-        super.repaint();
         g.drawImage(wallpaper, 0, 0, WIDTH, HEIGHT, this);
         drawGrid(g);
     }
@@ -67,6 +79,8 @@ public class View extends JPanel {
         }
         drawContent(g, model.shrek);
         drawContent(g, model.fiona);
+        drawContent(g, model.dragon);
+        drawContent(g, model.donkey);
         for(CellContent item : model.items) {
             drawContent(g, item);
         }

@@ -1,6 +1,5 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Timer;
 
 import static java.awt.event.MouseEvent.*;
 
