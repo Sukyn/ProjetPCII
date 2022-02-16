@@ -1,3 +1,5 @@
+package MVC;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -28,8 +30,8 @@ public class Controller implements MouseListener {
             model.grid.setSelectedCell(model.grid.getClosestCell(e.getX(), e.getY()));
         /* on a right click and if there is a character in the selected cell, move the character to the closest cell form right click */
         } else if (e.getButton() == BUTTON3 && model.grid.selectedCell.getCellContent() != null &&
-                model.grid.selectedCell.getCellContent().getClass().getSuperclass() == Character.class) {
-            Character chara = (Character) model.grid.selectedCell.getCellContent();
+                model.grid.selectedCell.getCellContent().getClass().getSuperclass() == CharacterClasses.Character.class) {
+            CharacterClasses.Character chara = (CharacterClasses.Character) model.grid.selectedCell.getCellContent();
             if (model.grid.getClosestCell(e.getX(), e.getY()).getCellContent() == null && !chara.move.isMoving && !model.grid.getClosestCell(e.getX(), e.getY()).isTargeted) {
                 chara.move.setDestination(model.grid.getClosestCell(e.getX(), e.getY()));
                 chara.addTimer();

@@ -1,3 +1,5 @@
+package MVC;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -6,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
+import CellClasses.*;
+import CharacterClasses.*;
 
 public class View extends JPanel {
     public static final int HEIGHT = 700;
@@ -125,63 +129,63 @@ public class View extends JPanel {
  *
  *         /* Creating of a new JFrame, with default close operation set *
  *shrex=new JFrame("SHREX");
-         *shrex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         *
-         *
-         *model=m;
-         *setPreferredSize(new Dimension(LENGHT,HEIGHT));
-         *         // width of the image
-         *int width=400;
-         *
-         *         // height of the image
-         *int height=400;
-         *
-         *         // For storing image in RAM
-         *BufferedImage image=null;
-         *
-         *         // READ IMAGE
-         *try{
-         *File input_file=new File(
-         *"C:/Users/Mayeul/Pictures/Inspiration_Quotes/Party_Shit.PNG");
-         *
-         *             // image file path create an object of
-         *             // BufferedImage type and pass as parameter the
-         *             // width,  height and image int
-         *             // type. TYPE_INT_ARGB means that we are
-         *             // representing the Alpha , Red, Green and Blue
-         *             // component of the image pixel using 8 bit
-         *             // integer value.
-         *
-         *image=ImageIO.read(input_file);
-         *
-         *             // Reading input file
-         *             //image = ImageIO.read(input_file);
-         *
-         *System.out.println("Reading complete.");
-         *}
-         *catch(IOException e){
-         *System.out.println("Error: "+e);
-         *}
-         *
-         *
-         *File input_file_2=new File("C:\\Users\\Mayeul\\Pictures\\Saved Pictures\\01-15-57-R-13795190-1561298060-2756.jpeg.jpg");
-         *
-         *
-         *Image dimg=image.getScaledInstance(100,100,Image.SCALE_SMOOTH);
-         *
-         *ImageIcon imageIcon=new ImageIcon(dimg);
-         *         //JFrame jFrame = new JFrame();
-         *
-         *shrex.setLayout(new FlowLayout());
-         *
-         *         //shrex.setSize(100, 100);
-         *JLabel jLabel=new JLabel();
-         *
-         *jLabel.setIcon(imageIcon);
-         *shrex.add(jLabel);
-         *shrex.setVisible(true);
-         *
-         *shrex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         *}
-         *}
+ *shrex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ *
+ *
+ *model=m;
+ *setPreferredSize(new Dimension(LENGHT,HEIGHT));
+ *         // width of the image
+ *int width=400;
+ *
+ *         // height of the image
+ *int height=400;
+ *
+ *         // For storing image in RAM
+ *BufferedImage image=null;
+ *
+ *         // READ IMAGE
+ *try{
+ *File input_file=new File(
+ *"C:/Users/Mayeul/Pictures/Inspiration_Quotes/Party_Shit.PNG");
+ *
+ *             // image file path create an object of
+ *             // BufferedImage type and pass as parameter the
+ *             // width,  height and image int
+ *             // type. TYPE_INT_ARGB means that we are
+ *             // representing the Alpha , Red, Green and Blue
+ *             // component of the image pixel using 8 bit
+ *             // integer value.
+ *
+ *image=ImageIO.read(input_file);
+ *
+ *             // Reading input file
+ *             //image = ImageIO.read(input_file);
+ *
+ *System.out.println("Reading complete.");
+ *}
+ *catch(IOException e){
+ *System.out.println("Error: "+e);
+ *}
+ *
+ *
+ *File input_file_2=new File("C:\\Users\\Mayeul\\Pictures\\Saved Pictures\\01-15-57-R-13795190-1561298060-2756.jpeg.jpg");
+ *
+ *
+ *Image dimg=image.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+ *
+ *ImageIcon imageIcon=new ImageIcon(dimg);
+ *         //JFrame jFrame = new JFrame();
+ *
+ *shrex.setLayout(new FlowLayout());
+ *
+ *         //shrex.setSize(100, 100);
+ *JLabel jLabel=new JLabel();
+ *
+ *jLabel.setIcon(imageIcon);
+ *shrex.add(jLabel);
+ *shrex.setVisible(true);
+ *
+ *shrex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ *}
+ *}
  */

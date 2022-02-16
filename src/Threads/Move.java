@@ -1,12 +1,17 @@
-import java.util.TimerTask;
+package Threads;
 
-class Move extends TimerTask {
-    Character movingChar;
+import java.util.TimerTask;
+import CellClasses.*;
+import CharacterClasses.*;
+import MVC.*;
+
+public class Move extends TimerTask {
+    CharacterClasses.Character movingChar;
     Cell initialPos, finalPos;
     double coefDirX;
     double coefDirY;
-    boolean isMoving = false;
-    public Move(Character c, Cell start){
+    public boolean isMoving = false;
+    public Move(CharacterClasses.Character c, Cell start){
         super();
         this.initialPos = start;
         this.finalPos = start;
@@ -25,13 +30,13 @@ class Move extends TimerTask {
     }
     @Override
     public void run()  {
-        if (isMoving && (coefDirX > 0 && finalPos.posCenterX > movingChar.contentPosX + Model.cellSize/2)
-                || (coefDirX < 0 && finalPos.posCenterX < movingChar.contentPosX + Model.cellSize/2)
-                || (coefDirY > 0 && finalPos.posCenterY > movingChar.contentPosY + Model.cellSize/2)
-                || (coefDirY < 0 && finalPos.posCenterY < movingChar.contentPosY + Model.cellSize/2)){
-            if ((coefDirX > 0 && finalPos.posCenterX > movingChar.contentPosX + Model.cellSize/2) || (coefDirX < 0 && finalPos.posCenterX < movingChar.contentPosX + Model.cellSize/2))
+        if (isMoving && (coefDirX > 0 && finalPos.posCenterX > movingChar.contentPosX + Model.cellSize/2.)
+                || (coefDirX < 0 && finalPos.posCenterX < movingChar.contentPosX + Model.cellSize/2.)
+                || (coefDirY > 0 && finalPos.posCenterY > movingChar.contentPosY + Model.cellSize/2.)
+                || (coefDirY < 0 && finalPos.posCenterY < movingChar.contentPosY + Model.cellSize/2.)){
+            if ((coefDirX > 0 && finalPos.posCenterX > movingChar.contentPosX + Model.cellSize/2.) || (coefDirX < 0 && finalPos.posCenterX < movingChar.contentPosX + Model.cellSize/2.))
                 movingChar.contentPosX += movingChar.speed * coefDirX;
-            if ((coefDirY > 0 && finalPos.posCenterY > movingChar.contentPosY + Model.cellSize/2) || (coefDirY < 0 && finalPos.posCenterY < movingChar.contentPosY + Model.cellSize/2))
+            if ((coefDirY > 0 && finalPos.posCenterY > movingChar.contentPosY + Model.cellSize/2.) || (coefDirY < 0 && finalPos.posCenterY < movingChar.contentPosY + Model.cellSize/2.))
                 movingChar.contentPosY += movingChar.speed * coefDirY;
         }
         else if (isMoving) {
