@@ -1,8 +1,9 @@
 package CellClasses;
 
 import MVC.*;
-import CharacterClasses.*;
 import CharacterClasses.Character;
+import MVC.Views.GameView;
+import MVC.Views.View;
 
 public class Cell {
     public int posX;
@@ -16,11 +17,11 @@ public class Cell {
         this.posX = x;
         this.posY = y;
         if (posY%2 == 0){
-            this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * View.shift + Model.cellSize/2;
+            this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * GameView.shift + Model.cellSize/2;
         } else {
-            this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * View.shift + Model.cellSize/2 - (6- View.shift/2) + Model.cellSize/2;
+            this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * GameView.shift + Model.cellSize/2 - (6- GameView.shift/2) + Model.cellSize/2;
         }
-        this.posCenterY = (3 * Model.cellSize / 4) * (this.posY - 1) + this.posY * View.shift + Model.cellSize/2;
+        this.posCenterY = (3 * Model.cellSize / 4) * (this.posY - 1) + this.posY * GameView.shift + Model.cellSize/2;
     }
 
     public void setTargeted(Character chara) {

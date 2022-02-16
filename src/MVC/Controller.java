@@ -1,5 +1,7 @@
 package MVC;
 
+import MVC.Views.View;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -14,7 +16,7 @@ public class Controller implements MouseListener {
         cpt = 0;
         view = v;
         model = m;
-        view.addMouseListener(this);
+        view.frame.addMouseListener(this);
     }
 
     /**

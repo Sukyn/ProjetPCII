@@ -1,4 +1,4 @@
-package MVC;
+package MVC.Views;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Timer;
 import CellClasses.*;
 import CharacterClasses.*;
+import MVC.Model;
+import com.sun.tools.javac.Main;
 
-public class View extends JPanel {
+public class GameView extends JPanel {
     public static final int HEIGHT = 700;
     public static final int WIDTH = 1000;
     public static final int shift = 10;
@@ -21,12 +23,10 @@ public class View extends JPanel {
     Model model;
 
     /** constructor */
-    public View(Model m) throws IOException {
-        /* assigns model value from parameter */
+    public GameView(Model m) throws IOException {
         this.model = m;
-        /* set window default size*/
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         /* opens the different images we will use */
         this.wallpaper = ImageIO.read(new File("Assets/Swomp2.jpg"));
         BufferedImage image = ImageIO.read(new File("Assets/hexa.png"));

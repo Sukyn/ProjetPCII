@@ -1,6 +1,7 @@
 package CellClasses;
 
 import MVC.*;
+import MVC.Views.GameView;
 
 import java.util.ArrayList;
 
@@ -79,7 +80,7 @@ public class Grid {
      */
     public Cell getClosestCell(int x, int y) {
         /* defines the minimal distance from a cell depending on a circle that is the size of a Cell and the shift plus a little margin */
-        double dist = Model.cellSize / 2. + View.shift + 10;
+        double dist = Model.cellSize / 2. + GameView.shift + 10;
         /* initialize closestCell for execution sake */
         Cell closestCell = selectedCell;
         /* we go through all cells to find the closest one, can be upgraded to go through only the one close to the coordinates */
