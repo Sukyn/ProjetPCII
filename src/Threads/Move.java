@@ -24,7 +24,7 @@ public class Move extends TimerTask {
 
     public void setDestination(Cell end) {
         this.finalPos = end;
-        end.setTargeted(movingChar);
+
         isMoving = true;
         currentTarget = initialPos;
         double max = Double.MAX_VALUE;
@@ -35,6 +35,7 @@ public class Move extends TimerTask {
                 currentTarget = ngh;
             }
         }
+        currentTarget.setTargeted(movingChar);
         this.coefDirX = (currentTarget.posCenterX - initialPos.posCenterX)/100.;
         this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY)/100.;
     }
@@ -60,11 +61,14 @@ public class Move extends TimerTask {
             double max = Double.MAX_VALUE;
             for (Cell ngh : model.grid.getNeighbors(initialPos)) {
                 double comp = Math.sqrt(Math.pow(finalPos.posCenterX - ngh.posCenterX, 2) + Math.pow(finalPos.posCenterY - ngh.posCenterY, 2));
-                if (comp < max && (ngh.getCellContent() == null || (movingChar.isFlying && ngh.getCellContent().getClass().getSuperclass() != CharacterClasses.Character.class))) {
-                    max = comp;
-                    currentTarget = ngh;
+                if (!ngh.isTargeted) {
+                    if (comp < max && (ngh.getCellContent() == null || (movingChar.isFlying && ngh.getCellContent().getClass().getSuperclass() != CharacterClasses.Character.class))) {
+                        max = comp;
+                        currentTarget = ngh;
+                    }
                 }
             }
+            currentTarget.setTargeted(movingChar);
             if (initialPos == finalPos) {
                 isMoving = false;
                 movingChar.timer.cancel();
