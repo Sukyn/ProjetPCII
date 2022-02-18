@@ -7,18 +7,26 @@ import java.awt.*;
 import java.util.Timer;
 
 public class Character extends CellContent {
-    boolean isFlying;
+    public boolean isFlying;
     public double speed;
     int health;
     int strength;
     double basicSpeed;
     int maxHealth;
     int basicStrength;
+
+    public int maxFlowerInv;
+    public int maxIronInv;
+    public int maxPowderInv;
+    public int flowerInv;
+    public int ironInv;
+    public int powderInv;
+
     public Timer timer;
     public Move move;
     boolean isDead = false;
     /** constructor */
-    public Character(Cell c, Image s, double moveSpeed, int health, int strength, boolean flying) {
+    public Character(Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, int maxF, int maxI, int maxP) {
         super(c, s);
         this.speed = moveSpeed;
         this.health = health;
@@ -28,6 +36,12 @@ public class Character extends CellContent {
         this.basicStrength = strength;
         this.isFlying = flying;
         this.move = moveCharModel();
+        this.maxFlowerInv = maxF;
+        this.maxIronInv = maxI;
+        this.maxPowderInv = maxP;
+        this.flowerInv = 0;
+        this.ironInv = 0;
+        this.powderInv = 0;
     }
 
     public void addTimer() {

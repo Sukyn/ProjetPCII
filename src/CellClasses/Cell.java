@@ -3,7 +3,6 @@ package CellClasses;
 import MVC.*;
 import CharacterClasses.Character;
 import MVC.Views.GameView;
-import MVC.Views.View;
 
 public class Cell {
     public int posX;

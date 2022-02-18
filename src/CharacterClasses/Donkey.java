@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Donkey extends Character {
     public Donkey(Cell c, Image s, double moveSpeed, int health, int strength) {
-        super(c, s, moveSpeed, health, strength, false);
+        super(c, s, moveSpeed, health, strength, false, 100, 10, 10);
     }
 
     public void takePowder() {

@@ -1,17 +1,10 @@
 package MVC.Views;
 
-import javax.imageio.ImageIO;
+import MVC.Model;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Timer;
-import CellClasses.*;
-import CharacterClasses.*;
-import MVC.Model;
-import com.sun.tools.javac.Main;
 
 public class View {
     public JFrame frame;

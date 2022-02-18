@@ -4,7 +4,6 @@ import MVC.Model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class CharacterInfoView extends JPanel {
 
