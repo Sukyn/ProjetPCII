@@ -37,6 +37,7 @@ public class Model {
 
 
     }
+
     private void addSpecialChar(String specialChar) {
         switch (specialChar) {
             case "CharacterClasses.Fiona" -> {
@@ -47,7 +48,7 @@ public class Model {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Fiona chara = new Fiona(cell, image, 10, 10, 15);
+                Fiona chara = new Fiona(this, cell, image, 10, 10, 15);
                 cell.setCellContent(chara);
                 this.fiona = chara;
             }
@@ -59,7 +60,7 @@ public class Model {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Shrek chara = new Shrek(cell, image, 6, 50, 20);
+                Shrek chara = new Shrek(this, cell, image, 6, 50, 20);
                 cell.setCellContent(chara);
                 this.shrek = chara;
             }
@@ -71,7 +72,7 @@ public class Model {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Donkey chara = new Donkey(cell, image, 6, 50, 20);
+                Donkey chara = new Donkey(this, cell, image, 6, 50, 20);
                 cell.setCellContent(chara);
                 this.donkey = chara;
             }
@@ -83,7 +84,7 @@ public class Model {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Dragon chara = new Dragon(cell, image, 6, 50, 20);
+                Dragon chara = new Dragon(this, cell, image, 6, 50, 20);
                 cell.setCellContent(chara);
                 this.dragon = chara;
             }

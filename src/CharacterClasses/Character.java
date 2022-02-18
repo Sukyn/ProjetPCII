@@ -1,6 +1,7 @@
 package CharacterClasses;
 
 import CellClasses.*;
+import MVC.Model;
 import Threads.Move;
 
 import java.awt.*;
@@ -21,12 +22,12 @@ public class Character extends CellContent {
     public int flowerInv;
     public int ironInv;
     public int powderInv;
-
+    public Model model;
     public Timer timer;
     public Move move;
     boolean isDead = false;
     /** constructor */
-    public Character(Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, int maxF, int maxI, int maxP) {
+    public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, int maxF, int maxI, int maxP) {
         super(c, s);
         this.speed = moveSpeed;
         this.health = health;
@@ -42,7 +43,10 @@ public class Character extends CellContent {
         this.flowerInv = 0;
         this.ironInv = 0;
         this.powderInv = 0;
+        this.model = model;
     }
+
+
 
     public void addTimer() {
         this.timer = new Timer();

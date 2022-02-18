@@ -5,8 +5,8 @@ import CellClasses.Cell;
 import java.awt.*;
 
 public class Fiona extends Character {
-    public Fiona(Cell c, Image s, double moveSpeed, int health, int strength) {
-        super(c, s, moveSpeed, health, strength, false, 10, 10, 100);
+    public Fiona(MVC.Model m, Cell c, Image s, double moveSpeed, int health, int strength) {
+        super(m, c, s, moveSpeed, health, strength, false, 10, 10, 100);
     }
 
     /**
