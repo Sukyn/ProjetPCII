@@ -32,25 +32,43 @@ public class Grid {
 
     /* Method to get neighbors of the Cell
       TODO */
-    /*
-    private ArrayList<Cell> getNeighbors(Cell target) {
+
+    public ArrayList<Cell> getNeighbors(Cell target) {
         ArrayList<Cell> neighbors = new ArrayList<>();
-        neighbors.add(cells.get(target.posX).get(target.posY + 1));
-        neighbors.add(cells.get(target.posX).get(target.posY - 1));
-        if (target.posX %2 == 0) {
-            neighbors.add(cells.get(target.posX +1).get(target.posY + 1));
-            neighbors.add(cells.get(target.posX +1).get(target.posY));
-            neighbors.add(cells.get(target.posX -1).get(target.posY + 1));
-            neighbors.add(cells.get(target.posX -1).get(target.posY));
+        if (target.posX > 0) {
+            neighbors.add(cells.get(target.posX - 1).get(target.posY));
+        }
+        if (target.posX < width) {
+            neighbors.add(cells.get(target.posX + 1).get(target.posY));
+        }
+
+        if (target.posY %2 == 1) {
+            if (target.posY < height) {
+                if (target.posX < width) {
+                    neighbors.add(cells.get(target.posX + 1).get(target.posY + 1));
+                }
+                neighbors.add(cells.get(target.posX).get(target.posY + 1));
+            }
+            if (target.posY > 0) {
+                if (target.posX < width && target.posX > 0) {
+                    neighbors.add(cells.get(target.posX + 1).get(target.posY - 1));
+                }
+                if (target.posX > 0) {
+                    neighbors.add(cells.get(target.posX).get(target.posY - 1));
+                }
+            }
         } else {
-            neighbors.add(cells.get(target.posX +1).get(target.posY - 1));
-            neighbors.add(cells.get(target.posX +1).get(target.posY));
-            neighbors.add(cells.get(target.posX -1).get(target.posY - 1));
-            neighbors.add(cells.get(target.posX -1).get(target.posY));
+            if (target.posY < height) {
+                neighbors.add(cells.get(target.posX - 1).get(target.posY + 1));
+                neighbors.add(cells.get(target.posX).get(target.posY + 1));
+            }
+            if (target.posY > 0) {
+                neighbors.add(cells.get(target.posX -1).get(target.posY - 1));
+                neighbors.add(cells.get(target.posX).get(target.posY - 1));
+            }
         }
         return neighbors;
     }
-    */
 
     /*
     public Cell getCenter() {

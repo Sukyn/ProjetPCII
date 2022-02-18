@@ -41,6 +41,7 @@ public class Controller implements MouseListener {
                         && chara.isFlying)
                         && !chara.move.isMoving && !model.grid.getClosestCell(e.getX(), e.getY()).isTargeted) {
                     chara.move = chara.moveCharModel();
+
                     chara.move.setDestination(model.grid.getClosestCell(e.getX(), e.getY()));
                     chara.addTimer();
                 }

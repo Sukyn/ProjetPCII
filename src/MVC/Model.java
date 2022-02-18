@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Model {
     public static int cellSize = 100;
-    public Grid grid;
+    public static Grid grid;
     public Fiona fiona;
     public Shrek shrek;
     public Donkey donkey;
