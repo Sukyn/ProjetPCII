@@ -1,5 +1,7 @@
 package MVC.Views;
 
+import CellClasses.*;
+import CharacterClasses.Character;
 import MVC.Model;
 import MVC.View;
 
@@ -36,7 +38,28 @@ public class CellInfoView extends JPanel {
      * @param g, Graphics
      */
     public void paintComponent(Graphics g) {
+        Cell c = Model.grid.getSelectedCell();
+        CellContent content = c.getCellContent();
+        Character character = c.getCellCharacterContent();
+        boolean isObstacle = false;
+        int ressourceQuantity = 0;
+        RessourceType ressourceType = null;
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WIDTH, HEIGHT);
+        if (content == null || content.getClass() == CellRessource.class)
+            isObstacle = false;
+            if (content != null){
+                ressourceQuantity = ((CellRessource)content).getCurrentAmount();
+                ressourceType =  ((CellRessource)content).getRessourceType();
+            }
+        else
+            isObstacle = true;
+
+        g.drawString("Obstacle :", 5, 5);
+        if (isObstacle)
+            g.drawString("Yes", 20, 5);
+        else
+            g.drawString("No", 20, 5);
+
     }
 }

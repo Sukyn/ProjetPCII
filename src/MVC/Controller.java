@@ -35,7 +35,7 @@ public class Controller implements MouseListener, KeyListener {
             Model.grid.setSelectedCell(Model.grid.getClosestCell(e.getX(), e.getY()));
         /* on a right click and if there is a character in the selected cell, move the character to the closest cell form right click */
         } else {
-            Character character = Model.grid.selectedCell.getCellCharacterContent();
+            Character character = Model.grid.getSelectedCell().getCellCharacterContent();
             if (e.getButton() == BUTTON3 && character != null) {
                 if ((Model.grid.getClosestCell(e.getX(), e.getY()).getCellContent() == null
                         || ((Model.grid.getClosestCell(e.getX(), e.getY())).getCellContent().getClass() != Character.class)

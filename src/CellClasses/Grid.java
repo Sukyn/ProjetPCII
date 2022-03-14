@@ -92,6 +92,14 @@ public class Grid {
         System.out.println(c.getCellCharacterContent());
     }
 
+    /** Method getSelectedCell
+     * return the currently selected cell
+     * @return selectedCell;
+     */
+    public Cell getSelectedCell() {
+        return selectedCell;
+    }
+
     /**
      * Method getClosestCell
      * return the closest cell from a position in the window,

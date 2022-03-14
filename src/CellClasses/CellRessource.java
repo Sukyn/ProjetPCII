@@ -4,8 +4,6 @@ import CharacterClasses.Character;
 
 import java.awt.*;
 
-enum RessourceType {flower, iron, powder, gold}
-
 public class CellRessource extends CellContent {
     RessourceType ressourceType;
     final int maxAmount;
@@ -21,6 +19,18 @@ public class CellRessource extends CellContent {
         this.depleted = false;
 
     }
+
+    /** Method getCurrentAmount
+     * returns the current amount of the ressource
+     * @return currentAmount;
+     */
+    public int getCurrentAmount(){ return currentAmount; }
+
+    /** Method getRessourceType
+     * returns the ressource type
+     * @return ressourceType;
+     */
+    public RessourceType getRessourceType(){ return ressourceType; }
 
     /** Method collect
      * the character passed in parameter collects this ressource

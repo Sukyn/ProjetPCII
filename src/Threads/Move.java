@@ -28,7 +28,7 @@ public class Move extends TimerTask {
         isMoving = true;
         currentTarget = initialPos;
         double max = Double.MAX_VALUE;
-        for (Cell ngh : model.grid.getNeighbors(initialPos)) {
+        for (Cell ngh : Model.grid.getNeighbors(initialPos)) {
             double comp = Math.sqrt(Math.pow(end.posCenterX - ngh.posCenterX, 2) + Math.pow(end.posCenterY - ngh.posCenterY, 2));
             if (comp < max
                     && (ngh.getCellContent() == null || ngh.getCellContent().getClass() != CellObstacle.class || movingChar.isFlying)
@@ -61,7 +61,7 @@ public class Move extends TimerTask {
             Cell previous = initialPos;
             initialPos = currentTarget;
             double max = Double.MAX_VALUE;
-            for (Cell ngh : model.grid.getNeighbors(initialPos)) {
+            for (Cell ngh : Model.grid.getNeighbors(initialPos)) {
                 if (ngh != previous) {
                     double comp = Math.sqrt(Math.pow(finalPos.posCenterX - ngh.posCenterX, 2) + Math.pow(finalPos.posCenterY - ngh.posCenterY, 2));
                     if (!ngh.isTargeted) {
