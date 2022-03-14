@@ -1,5 +1,6 @@
 package MVC;
 
+import CellClasses.Cell;
 import CharacterClasses.Character;
 
 import java.awt.event.KeyEvent;
@@ -32,7 +33,21 @@ public class Controller implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) {
         /* on a left click, sets the selected cell to the closest cell from left click */
         if (e.getButton() == BUTTON1) {
-            Model.grid.setSelectedCell(Model.grid.getClosestCell(e.getX(), e.getY()));
+            Cell selectedSell = Model.grid.getClosestCell(e.getX(), e.getY()-31);
+            if (!selectedSell.isSelected) {
+                Model.grid.selectedCell.isSelected = false;
+                Model.grid.setSelectedCell(selectedSell);
+                selectedSell.isSelected = true;
+                System.out.print(" Position de la case sélectionnée : ");
+                System.out.print(selectedSell.posCenterX);
+                System.out.print(" , ");
+                System.out.println(selectedSell.posCenterY);
+
+            }
+            System.out.print(" Position de la souris :  ");
+            System.out.print(e.getX());
+            System.out.print(" & ");
+            System.out.println(e.getY());
         /* on a right click and if there is a character in the selected cell, move the character to the closest cell form right click */
         } else {
             Character character = Model.grid.getSelectedCell().getCellCharacterContent();

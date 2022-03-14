@@ -27,7 +27,9 @@ public class Cell {
         } else {
             this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * GameView.shift + Model.cellSize/2 - (6- GameView.shift/2) + Model.cellSize/2;
         }
-        this.posCenterY = (3 * Model.cellSize / 4) * (this.posY - 1) + this.posY * GameView.shift + Model.cellSize/2;
+        this.posCenterY = (this.posY - 1) * Model.cellSize-this.posY *30 + this.posY * GameView.shift + Model.cellSize*3/4;
+
+
     }
 
     /** Method setTargeted
