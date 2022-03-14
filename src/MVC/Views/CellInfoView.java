@@ -44,22 +44,23 @@ public class CellInfoView extends JPanel {
         boolean isObstacle = false;
         int ressourceQuantity = 0;
         RessourceType ressourceType = null;
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        if (content == null || content.getClass() == CellRessource.class)
+        g.setColor(Color.BLACK);
+        if (content == null || content.getClass() == CellRessource.class) {
             isObstacle = false;
-            if (content != null){
-                ressourceQuantity = ((CellRessource)content).getCurrentAmount();
-                ressourceType =  ((CellRessource)content).getRessourceType();
+            if (content != null && content.getClass() == CellRessource.class) {
+                ressourceQuantity = ((CellRessource) content).getCurrentAmount();
+                ressourceType = ((CellRessource) content).getRessourceType();
             }
-        else
+        } else
             isObstacle = true;
 
-        g.drawString("Obstacle :", 5, 5);
+        g.drawString("Obstacle :", 5, 15);
         if (isObstacle)
-            g.drawString("Yes", 20, 5);
+            g.drawString("Yes", 70, 15);
         else
-            g.drawString("No", 20, 5);
+            g.drawString("No", 70, 15);
 
     }
 }
