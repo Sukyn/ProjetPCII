@@ -9,6 +9,7 @@ import java.util.Timer;
 
 public class Character extends CellContent {
     /* declaration of variables : */
+    public String name;
     /* related to movement */
     public boolean isFlying;
     public double speed;
@@ -35,10 +36,11 @@ public class Character extends CellContent {
     public Move move;
     boolean isDead = false;
     /** constructor */
-    public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, int maxF, int maxI, int maxP) {
+    public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP) {
         /* call to CellContent constructor */
         super(c, s);
         /* initialisation of variables : */
+        this.name = name;
         /* base value that will change and evolve in game */
         this.speed = moveSpeed;
         this.health = health;

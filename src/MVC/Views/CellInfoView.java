@@ -43,7 +43,8 @@ public class CellInfoView extends JPanel {
         Character character = c.getCellCharacterContent();
         boolean isObstacle = false;
         int ressourceQuantity = 0;
-        RessourceType ressourceType = null;
+        String ressourceType = "none";
+        String charaName = "none";
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         g.setColor(Color.BLACK);
@@ -51,16 +52,26 @@ public class CellInfoView extends JPanel {
             isObstacle = false;
             if (content != null && content.getClass() == CellRessource.class) {
                 ressourceQuantity = ((CellRessource) content).getCurrentAmount();
-                ressourceType = ((CellRessource) content).getRessourceType();
+                ressourceType = ((CellRessource) content).getRessourceType().name();
             }
-        } else
+        } else {
             isObstacle = true;
+        }
+        if (character != null){
+            charaName = character.name;
+        }
+        int x = 5; int y = 15; int yOffset = 20;
 
-        g.drawString("Obstacle :", 5, 15);
         if (isObstacle)
-            g.drawString("Yes", 70, 15);
+            g.drawString("Obstacle:Yes", x, y);
         else
-            g.drawString("No", 70, 15);
+            g.drawString("Obstacle:No", x, y);
+        y += yOffset;
+        g.drawString("Ressource type:"+ressourceType, x, y);
+        y += yOffset;
+        g.drawString("Quantity:"+ressourceQuantity, x, y);
+        y += yOffset;
+        g.drawString("Character:"+charaName, x, y);
 
     }
 }
