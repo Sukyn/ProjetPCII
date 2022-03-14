@@ -1,8 +1,9 @@
 package MVC;
 
-import MVC.*;
-import MVC.Views.*;
-import Threads.*;
+import MVC.Views.CellInfoView;
+import MVC.Views.CharacterInfoView;
+import MVC.Views.GameView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class View {
         c.gridwidth = 2;
         /* Adding characterInfoView to the JFrame */
         Object main;
-        characterInfoView = new CharacterInfoView(m, aaaaa.controller);
+        characterInfoView = new CharacterInfoView(m, MainGame.controller);
         frame.add(characterInfoView, c);
 
         /* Displaying view */

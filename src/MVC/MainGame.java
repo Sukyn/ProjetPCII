@@ -1,11 +1,9 @@
-package Threads;
-
-import MVC.*;
+package MVC;
 
 import java.io.IOException;
 
 
-public class aaaaa {
+public class MainGame {
     static Model model;
     static View view;
     public static Controller controller;

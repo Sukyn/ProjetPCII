@@ -99,7 +99,6 @@ public class GameView extends JPanel {
      * draws a cell content depending on it's sprite
      * @param g : Graphics
      */
-
     private void drawContent(Graphics g, CellContent content){
         g.drawImage(content.getSprite(), (int)content.contentPosX, (int)content.contentPosY, Model.cellSize, Model.cellSize, this);
     }
