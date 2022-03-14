@@ -3,15 +3,12 @@ package MVC;
 import CellClasses.Cell;
 import CharacterClasses.Character;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 import static java.awt.event.MouseEvent.BUTTON1;
 import static java.awt.event.MouseEvent.BUTTON3;
 
-public class Controller implements MouseListener, KeyListener {
+public class Controller implements MouseListener, KeyListener, ActionListener {
     View view;
     Model model;
     int cpt;
@@ -139,5 +136,20 @@ public class Controller implements MouseListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println(e);
+        if (e.getActionCommand().equals("Récolte")){
+            Character c = Model.grid.getSelectedCell().getCellCharacterContent();
+            if (c != null)
+                c.collect();
+        }
     }
 }

@@ -31,7 +31,7 @@ public class Model {
         addObstacle("Assets/Buche.png",height/2+2, width/2+1);
         addObstacle("Assets/Buche.png",height/2-2, width/2+1);
         addObstacle("Assets/Tree.png",height/2-3, width/2+1);
-        addObstacle("Dessins/Boulder1.png",height/2, width/2+3);
+        addRessource("Dessins/Boulder1.png",height/2, width/2+3, RessourceType.iron, 10);
         addObstacle("Assets/Tree.png",height/2-2, width/2+3);
         addObstacle("Assets/Rock.png",height/2+4, width/2+1);
 
@@ -101,6 +101,19 @@ public class Model {
             e.printStackTrace();
         }
         CellContent item = new CellObstacle(cell, image);
+        cell.setCellContent(item);
+        items.add(item);
+    }
+
+    private void addRessource(String file, int posX, int posY, RessourceType r, int max) {
+        Image image = null;
+        Cell cell = grid.cells.get(posX).get(posY);
+        try {
+            image = ImageIO.read(new File(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CellContent item = new CellRessource(r, cell, image, max);
         cell.setCellContent(item);
         items.add(item);
     }

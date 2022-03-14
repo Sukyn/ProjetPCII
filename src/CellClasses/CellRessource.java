@@ -1,7 +1,5 @@
 package CellClasses;
 
-import CharacterClasses.Character;
-
 import java.awt.*;
 
 public class CellRessource extends CellContent {
@@ -26,49 +24,15 @@ public class CellRessource extends CellContent {
      */
     public int getCurrentAmount(){ return currentAmount; }
 
+    /** Method takeRessource
+     *
+     */
+    public void takeRessource(int value){ currentAmount -= value; }
     /** Method getRessourceType
      * returns the ressource type
      * @return ressourceType;
      */
     public RessourceType getRessourceType(){ return ressourceType; }
 
-    /** Method collect
-     * the character passed in parameter collects this ressource
-     * @param character, the character collecting
-     */
-    public void collect(Character character){
-        /* if the character is on the correct cell */
-        if (character.contentCellPosition == contentCellPosition) {
-            /* it increases it's number of ressource depending of the type and while staying under the max*/
-            switch (this.ressourceType) {
-                /* case flower */
-                case flower -> {
-                    if (character.flowerInv < character.maxIronInv) {
-                        /* decrease amount for this ressources and increases in character inventory */
-                        currentAmount--;
-                        character.flowerInv++;
-                    }
-                }
-                /* case iron */
-                case iron -> {
-                    if (character.ironInv < character.maxIronInv) {
-                        /* decrease amount for this ressources and increases in character inventory */
-                        currentAmount--;
-                        character.ironInv++;
-                    }
-                }
-                /* case powder */
-                case powder -> {
-                    if (character.powderInv < character.maxPowderInv) {
-                        /* decrease amount for this ressources and increases in character inventory */
-                        currentAmount--;
-                        character.powderInv++;
-                    }
-                }
-                /* case gold */
-                case gold -> {
-                }
-            }
-        }
-    }
+
 }

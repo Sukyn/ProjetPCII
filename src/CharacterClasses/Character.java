@@ -7,6 +7,7 @@ import Threads.*;
 import java.awt.*;
 import java.util.Timer;
 
+
 public class Character extends CellContent {
     /* declaration of variables : */
     public String name;
@@ -109,6 +110,47 @@ public class Character extends CellContent {
      */
     public void resetStrength() {
         speed = basicStrength;
+    }
+
+    /** Method collect
+     * the character passed in parameter collects this ressource
+     */
+    public void collect(){
+        CellContent c = this.contentCellPosition.getCellContent();
+        /* if the character is on the correct cell */
+        if (c != null && c.getClass() == CellRessource.class) {
+            CellRessource r = (CellRessource)c;
+            /* it increases it's number of ressource depending of the type and while staying under the max*/
+            switch (r.getRessourceType()) {
+                /* case flower */
+                case flower -> {
+                    if (flowerInv < maxIronInv) {
+                        /* decrease amount for this ressources and increases in character inventory */
+                        r.takeRessource(1);
+                        flowerInv++;
+                    }
+                }
+                /* case iron */
+                case iron -> {
+                    if (ironInv < maxIronInv) {
+                        /* decrease amount for this ressources and increases in character inventory */
+                        r.takeRessource(1);
+                        ironInv++;
+                    }
+                }
+                /* case powder */
+                case powder -> {
+                    if (powderInv < maxPowderInv) {
+                        /* decrease amount for this ressources and increases in character inventory */
+                        r.takeRessource(1);
+                        powderInv++;
+                    }
+                }
+                /* case gold */
+                case gold -> {
+                }
+            }
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 package MVC.Views;
 
 import MVC.Controller;
+import MVC.MainGame;
 import MVC.Model;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class CharacterInfoView extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         bouttonRecolte = new JButton("Récolte");
         add(bouttonRecolte);
-        //bouttonRecolte.addActionListener(c);
+        bouttonRecolte.addActionListener(MainGame.controller);
 
         new Thread(() -> {
             while (true) {
