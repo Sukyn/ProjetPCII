@@ -12,8 +12,10 @@ public class Cell {
     public int posCenterX;    public int posCenterY;
     /* for content and selection */
     public CellContent content;
+    public Character characterContent;
     public boolean isTargeted = false;
     public boolean isSelected = false;
+
     /** constructor */
     public Cell(int x, int y) {
         /* initialises position variables*/
@@ -32,34 +34,29 @@ public class Cell {
      * defines this cell as the destination of the character passed in parameter
      * @param chara, Character
      */
-    public void setTargeted(Character chara) {
-        isTargeted = true;
-    }
+    public void setTargeted(Character chara) { isTargeted = true; }
 
     /** Method setCellContent
      * set the cell content of this object with the passed parameter
      * @param newContent, the CellContent to set
      */
-    public void setCellContent(CellContent newContent){
-        content = newContent;
-    }
+    public void setCellContent(CellContent newContent){ content = newContent; }
 
     /** Method getCellContent
      * returns the current cell content of this object
      * @return CellContent
      */
-    public  CellContent getCellContent(){
-        return  content;
-    }
+    public  CellContent getCellContent(){ return  content; }
+
+    /** Method setCellCharacterContent
+     * set the cell character content of this object with the passed parameter
+     * @param newCharacter, the Character to set
+     */
+    public void setCellCharacterContent(Character newCharacter){ characterContent = newCharacter; }
 
     /** Method getCellCharacterContent
      * returns the content of the cell as a character if it is one, else, return null
      * @return Character
      */
-    public Character getCellCharacterContent(){
-        if (content.getClass() == Character.class)
-            return (Character) content;
-        else
-            return null;
-    }
+    public Character getCellCharacterContent(){ return characterContent; }
 }

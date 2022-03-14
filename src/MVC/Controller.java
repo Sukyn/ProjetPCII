@@ -1,13 +1,14 @@
 package MVC;
 
-import CellClasses.CellContent;
+import CharacterClasses.Character;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static java.awt.event.MouseEvent.*;
+import static java.awt.event.MouseEvent.BUTTON1;
+import static java.awt.event.MouseEvent.BUTTON3;
 
 public class Controller implements MouseListener, KeyListener {
     View view;
@@ -34,17 +35,16 @@ public class Controller implements MouseListener, KeyListener {
             Model.grid.setSelectedCell(Model.grid.getClosestCell(e.getX(), e.getY()));
         /* on a right click and if there is a character in the selected cell, move the character to the closest cell form right click */
         } else {
-            CellContent content = Model.grid.selectedCell.getCellContent();
-            if (e.getButton() == BUTTON3 && content != null && content.getClass().getSuperclass() == CharacterClasses.Character.class) {
-                CharacterClasses.Character chara = (CharacterClasses.Character) content;
+            Character character = Model.grid.selectedCell.getCellCharacterContent();
+            if (e.getButton() == BUTTON3 && character != null) {
                 if ((Model.grid.getClosestCell(e.getX(), e.getY()).getCellContent() == null
-                        || ((Model.grid.getClosestCell(e.getX(), e.getY())).getCellContent().getClass() != CharacterClasses.Character.class)
-                        && chara.isFlying)
-                        && !chara.move.isMoving && !Model.grid.getClosestCell(e.getX(), e.getY()).isTargeted) {
-                    chara.move = chara.moveCharModel();
+                        || ((Model.grid.getClosestCell(e.getX(), e.getY())).getCellContent().getClass() != Character.class)
+                        && character.isFlying)
+                        && !character.move.isMoving && !Model.grid.getClosestCell(e.getX(), e.getY()).isTargeted) {
+                    character.move = character.moveCharModel();
 
-                    chara.move.setDestination(Model.grid.getClosestCell(e.getX(), e.getY()));
-                    chara.addTimer();
+                    character.move.setDestination(Model.grid.getClosestCell(e.getX(), e.getY()));
+                    character.addTimer();
                 }
             }
         }

@@ -89,6 +89,7 @@ public class Grid {
     public void setSelectedCell(Cell c) {
         selectedCell = c;
         System.out.println(c.getCellContent());
+        System.out.println(c.getCellCharacterContent());
     }
 
     /**

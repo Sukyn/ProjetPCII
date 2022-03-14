@@ -1,10 +1,10 @@
 package Threads;
 
-import java.util.ArrayList;
+import CellClasses.Cell;
+import CellClasses.CellObstacle;
+import MVC.Model;
+
 import java.util.TimerTask;
-import CellClasses.*;
-import CharacterClasses.*;
-import MVC.*;
 
 public class Move extends TimerTask {
     CharacterClasses.Character movingChar;
@@ -30,7 +30,9 @@ public class Move extends TimerTask {
         double max = Double.MAX_VALUE;
         for (Cell ngh : model.grid.getNeighbors(initialPos)) {
             double comp = Math.sqrt(Math.pow(end.posCenterX - ngh.posCenterX, 2) + Math.pow(end.posCenterY - ngh.posCenterY, 2));
-            if (comp < max && (ngh.getCellContent() == null || (movingChar.isFlying && ngh.getCellContent().getClass() != CharacterClasses.Character.class))) {
+            if (comp < max
+                    && (ngh.getCellContent() == null || ngh.getCellContent().getClass() != CellObstacle.class || movingChar.isFlying)
+                    && ngh.getCellCharacterContent() == null) {
                 max = comp;
                 currentTarget = ngh;
             }
@@ -53,8 +55,8 @@ public class Move extends TimerTask {
         else if (isMoving) {
 
             movingChar.setContentCellPosition(currentTarget);
-            initialPos.setCellContent(null);
-            currentTarget.setCellContent(movingChar);
+            initialPos.setCellCharacterContent(null);
+            currentTarget.setCellCharacterContent(movingChar);
             currentTarget.isTargeted = false;
             Cell previous = initialPos;
             initialPos = currentTarget;
@@ -63,8 +65,9 @@ public class Move extends TimerTask {
                 if (ngh != previous) {
                     double comp = Math.sqrt(Math.pow(finalPos.posCenterX - ngh.posCenterX, 2) + Math.pow(finalPos.posCenterY - ngh.posCenterY, 2));
                     if (!ngh.isTargeted) {
-                        if (comp < max && (ngh.getCellContent() == null || (movingChar.isFlying && ngh.getCellContent().getClass().getSuperclass() != CharacterClasses.Character.class))) {
-                            max = comp;
+                        if (comp < max
+                                && (ngh.getCellContent() == null || ngh.getCellContent().getClass() != CellObstacle.class || movingChar.isFlying)
+                                && ngh.getCellCharacterContent() == null) {                            max = comp;
                             currentTarget = ngh;
                         }
                     }

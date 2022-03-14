@@ -27,13 +27,13 @@ public class Model {
         addSpecialChar("CharacterClasses.Fiona");
         addSpecialChar("CharacterClasses.Donkey");
         addSpecialChar("CharacterClasses.Dragon");
-        addItem("Dessins/Stem1.png",height/2, width/2-1);
-        addItem("Assets/Buche.png",height/2+2, width/2+1);
-        addItem("Assets/Buche.png",height/2-2, width/2+1);
-        addItem("Assets/Tree.png",height/2-3, width/2+1);
-        addItem("Dessins/Boulder1.png",height/2, width/2+3);
-        addItem("Assets/Tree.png",height/2-2, width/2+3);
-        addItem("Assets/Rock.png",height/2+4, width/2+1);
+        addObstacle("Dessins/Stem1.png",height/2, width/2-1);
+        addObstacle("Assets/Buche.png",height/2+2, width/2+1);
+        addObstacle("Assets/Buche.png",height/2-2, width/2+1);
+        addObstacle("Assets/Tree.png",height/2-3, width/2+1);
+        addObstacle("Dessins/Boulder1.png",height/2, width/2+3);
+        addObstacle("Assets/Tree.png",height/2-2, width/2+3);
+        addObstacle("Assets/Rock.png",height/2+4, width/2+1);
 
 
     }
@@ -49,7 +49,7 @@ public class Model {
                     e.printStackTrace();
                 }
                 Fiona chara = new Fiona(this, cell, image, 10, 10, 15);
-                cell.setCellContent(chara);
+                cell.setCellCharacterContent(chara);
                 this.fiona = chara;
             }
             case "CharacterClasses.Shrek" -> {
@@ -61,7 +61,7 @@ public class Model {
                     e.printStackTrace();
                 }
                 Shrek chara = new Shrek(this, cell, image, 6, 50, 20);
-                cell.setCellContent(chara);
+                cell.setCellCharacterContent(chara);
                 this.shrek = chara;
             }
             case "CharacterClasses.Donkey" -> {
@@ -73,7 +73,7 @@ public class Model {
                     e.printStackTrace();
                 }
                 Donkey chara = new Donkey(this, cell, image, 6, 50, 20);
-                cell.setCellContent(chara);
+                cell.setCellCharacterContent(chara);
                 this.donkey = chara;
             }
             case "CharacterClasses.Dragon" -> {
@@ -85,14 +85,14 @@ public class Model {
                     e.printStackTrace();
                 }
                 Dragon chara = new Dragon(this, cell, image, 6, 50, 20);
-                cell.setCellContent(chara);
+                cell.setCellCharacterContent(chara);
                 this.dragon = chara;
             }
         }
 
     }
 
-    private void addItem(String file, int posX, int posY) {
+    private void addObstacle(String file, int posX, int posY) {
         Image image = null;
         Cell cell = grid.cells.get(posX).get(posY);
         try {
@@ -100,7 +100,7 @@ public class Model {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        CellContent item = new CellContent(cell, image);
+        CellContent item = new CellObstacle(cell, image);
         cell.setCellContent(item);
         items.add(item);
     }
