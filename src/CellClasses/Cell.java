@@ -16,8 +16,10 @@ public class Cell {
     public boolean isSelected = false;
     /** constructor */
     public Cell(int x, int y) {
+        /* initialises position variables*/
         this.posX = x;
         this.posY = y;
+        /* initialises position for the center of the cell in the window depending on its line */
         if (posY%2 == 0){
             this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * GameView.shift + Model.cellSize/2;
         } else {
@@ -26,6 +28,10 @@ public class Cell {
         this.posCenterY = (3 * Model.cellSize / 4) * (this.posY - 1) + this.posY * GameView.shift + Model.cellSize/2;
     }
 
+    /** Method setTargeted
+     * defines this cell as the destination of the character passed in parameter
+     * @param chara, Character
+     */
     public void setTargeted(Character chara) {
         isTargeted = true;
     }

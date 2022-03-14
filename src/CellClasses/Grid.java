@@ -6,6 +6,7 @@ import MVC.Views.*;
 import java.util.ArrayList;
 
 public class Grid {
+    /* declaration of variables for size and content */
     public final int height;
     public final int width;
     public ArrayList<ArrayList<Cell>> cells;
@@ -29,12 +30,14 @@ public class Grid {
         }
     }
 
-
-    /* Method to get neighbors of the Cell
-      TODO */
-
+    /** Method getNeighbors
+     * return the neighbors in the grid of a cell passed in parameter
+     * @param target, Cell
+     * @return neighbors, a list a neighbors of target cell
+     */
     public ArrayList<Cell> getNeighbors(Cell target) {
         ArrayList<Cell> neighbors = new ArrayList<>();
+        /* if the cell is not close to an edge in posX, we had the above and or bellow cell */
         if (target.posX > 0) {
             neighbors.add(cells.get(target.posX - 1).get(target.posY));
         }
@@ -42,20 +45,20 @@ public class Grid {
             neighbors.add(cells.get(target.posX + 1).get(target.posY));
         }
 
+        /* depending on the line, we had different cells to the list */
         if (target.posY %2 == 1) {
+            /* if the cell is not close to an edge in posY, we had the left and or right cell */
             if (target.posY < height) {
                 if (target.posX < width) {
                     neighbors.add(cells.get(target.posX + 1).get(target.posY + 1));
                 }
                 neighbors.add(cells.get(target.posX).get(target.posY + 1));
             }
-            if (target.posY > 0) {
-                if (target.posX < width && target.posX > 0) {
-                    neighbors.add(cells.get(target.posX + 1).get(target.posY - 1));
-                }
-                if (target.posX > 0) {
-                    neighbors.add(cells.get(target.posX).get(target.posY - 1));
-                }
+            if (target.posX < width && target.posX > 0) {
+                neighbors.add(cells.get(target.posX + 1).get(target.posY - 1));
+            }
+            if (target.posX > 0) {
+                neighbors.add(cells.get(target.posX).get(target.posY - 1));
             }
         } else {
             if (target.posY < height) {
@@ -90,8 +93,8 @@ public class Grid {
 
     /**
      * Method getClosestCell
-     * return the closest cell from a position in the window, generally used with coordinates from a click
-     *
+     * return the closest cell from a position in the window,
+     * generally used with coordinates from a click
      * @param x, int
      * @param y, int
      * @return Cell

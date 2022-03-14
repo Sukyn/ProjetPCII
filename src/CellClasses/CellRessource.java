@@ -31,24 +31,31 @@ public class CellRessource extends CellContent {
         if (character.contentCellPosition == contentCellPosition) {
             /* it increases it's number of ressource depending of the type and while staying under the max*/
             switch (this.ressourceType) {
+                /* case flower */
                 case flower -> {
                     if (character.flowerInv < character.maxIronInv) {
+                        /* decrease amount for this ressources and increases in character inventory */
                         currentAmount--;
                         character.flowerInv++;
                     }
                 }
+                /* case iron */
                 case iron -> {
                     if (character.ironInv < character.maxIronInv) {
+                        /* decrease amount for this ressources and increases in character inventory */
                         currentAmount--;
                         character.ironInv++;
                     }
                 }
+                /* case powder */
                 case powder -> {
                     if (character.powderInv < character.maxPowderInv) {
+                        /* decrease amount for this ressources and increases in character inventory */
                         currentAmount--;
                         character.powderInv++;
                     }
                 }
+                /* case gold */
                 case gold -> {
                 }
             }
