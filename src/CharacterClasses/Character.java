@@ -94,5 +94,19 @@ public class Character extends CellContent {
      * @param recover, int
      */
     public void healHP(int recover) { if (health+recover <= maxHealth) health+= recover; else health=maxHealth;}
+
+    /** Method resetSpeed
+     * reset the speed of this character to its initial value
+     */
+    public void resetSpeed() {
+        speed = basicSpeed;
+    }
+
+    /** Method resetStrength
+     * reset the strength of this character to its initial value
+     */
+    public void resetStrength() {
+        speed = basicStrength;
+    }
 }
 
