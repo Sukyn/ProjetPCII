@@ -2,7 +2,7 @@ package MVC.Views;
 
 import CellClasses.Cell;
 import CellClasses.CellContent;
-import MVC.Model;
+import MVC.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -75,7 +75,7 @@ public class GameView extends JPanel {
      */
     private void drawGrid(Graphics g){
         /*we go through the grid and call drawHexagon to draw the different cells*/
-        for (ArrayList<Cell> hexagonList : model.grid.cells) {
+        for (ArrayList<Cell> hexagonList : Model.grid.cells) {
             for (Cell hexagon : hexagonList) {
                 drawHexagon(g, hexagon, hexagonImage);
             }
@@ -89,7 +89,7 @@ public class GameView extends JPanel {
         }
         /* if there is a selected cell we draw the adequate sprite */
         try {
-            drawHexagon(g, model.grid.selectedCell, selectedHexagonImage);
+            drawHexagon(g, Model.grid.selectedCell, selectedHexagonImage);
         } catch (NullPointerException e){
             e.printStackTrace();
         }

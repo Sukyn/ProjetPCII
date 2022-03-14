@@ -2,12 +2,15 @@ package CellClasses;
 
 import MVC.*;
 import CharacterClasses.Character;
-import MVC.Views.GameView;
+import MVC.Views.*;
 
 public class Cell {
+    /* declaration of variables : */
+    /* for position */
     public int posX;
     public int posY;
     public int posCenterX;    public int posCenterY;
+    /* for content and selection */
     public CellContent content;
     public boolean isTargeted = false;
     public boolean isSelected = false;

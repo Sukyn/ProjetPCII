@@ -1,5 +1,6 @@
 package MVC.Views;
 
+import MVC.Controller;
 import MVC.Model;
 
 import javax.swing.*;
@@ -10,13 +11,17 @@ public class CharacterInfoView extends JPanel {
     public static final int HEIGHT = GameView.HEIGHT/7;
     public static final int WIDTH = GameView.WIDTH + CellInfoView.WIDTH;
     Model model;
+    JButton bouttonRecolte;
 
     /** constructor */
-    public CharacterInfoView(Model m) {
+    public CharacterInfoView(Model m, Controller c) {
         /* assigns model value from parameter */
         this.model = m;
         /* set window default size*/
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        bouttonRecolte = new JButton("Récolte");
+        add(bouttonRecolte);
+        //bouttonRecolte.addActionListener(c);
 
         new Thread(() -> {
             while (true) {

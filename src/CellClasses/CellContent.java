@@ -1,6 +1,7 @@
 package CellClasses;
 
 import MVC.*;
+import CellClasses.*;
 
 import java.awt.*;
 
@@ -8,7 +9,7 @@ public class CellContent {
     public Cell contentCellPosition;
     public double contentPosX, contentPosY;
     public Image sprite;
-    /** construtor */
+    /** constructor */
     public CellContent(Cell c, Image s){
         this.contentCellPosition = c;
         this.contentPosX = c.posCenterX - Model.cellSize/2.;

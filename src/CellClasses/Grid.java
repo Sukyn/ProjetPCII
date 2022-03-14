@@ -1,7 +1,7 @@
 package CellClasses;
 
 import MVC.*;
-import MVC.Views.GameView;
+import MVC.Views.*;
 
 import java.util.ArrayList;
 

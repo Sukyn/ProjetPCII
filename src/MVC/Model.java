@@ -18,7 +18,7 @@ public class Model {
     public Dragon dragon;
     public ArrayList<CellContent> items = new ArrayList<>();
     public Model(int height, int width) {
-        this.grid = new Grid(height, width);
+        grid = new Grid(height, width);
 
         Cell c = grid.cells.get(height/2).get(width/2);
         c.isSelected = true;
@@ -27,11 +27,11 @@ public class Model {
         addSpecialChar("CharacterClasses.Fiona");
         addSpecialChar("CharacterClasses.Donkey");
         addSpecialChar("CharacterClasses.Dragon");
-        addItem("Assets/Buche.png",height/2, width/2-1);
+        addItem("Dessins/Stem1.png",height/2, width/2-1);
         addItem("Assets/Buche.png",height/2+2, width/2+1);
         addItem("Assets/Buche.png",height/2-2, width/2+1);
         addItem("Assets/Tree.png",height/2-3, width/2+1);
-        addItem("Assets/Rock.png",height/2, width/2+3);
+        addItem("Dessins/Boulder1.png",height/2, width/2+3);
         addItem("Assets/Tree.png",height/2-2, width/2+3);
         addItem("Assets/Rock.png",height/2+4, width/2+1);
 

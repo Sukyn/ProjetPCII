@@ -1,7 +1,8 @@
-package MVC.Views;
+package MVC;
 
-import MVC.Model;
-
+import MVC.*;
+import MVC.Views.*;
+import Threads.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -48,7 +49,8 @@ public class View {
         /* the component will span across 2 columns */
         c.gridwidth = 2;
         /* Adding characterInfoView to the JFrame */
-        characterInfoView = new CharacterInfoView(m);
+        Object main;
+        characterInfoView = new CharacterInfoView(m, aaaaa.controller);
         frame.add(characterInfoView, c);
 
         /* Displaying view */
