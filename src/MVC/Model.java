@@ -41,6 +41,9 @@ public class Model {
     public void addChar(Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP) {
         CharacterClasses.Character chara = new CharacterClasses.Character(this, c, s, moveSpeed, health, strength, flying, name, maxF, maxI, maxP, "enemy");
         c.setCellCharacterContent(chara);
+        chara.move = chara.moveCharModel();
+        chara.move.setDestination(grid.cells.get(grid.height / 2).get(grid.width / 2));
+        chara.addTimer();
     }
     private void addSpecialChar(String specialChar) {
         switch (specialChar) {

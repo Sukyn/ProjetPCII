@@ -48,25 +48,29 @@ public class Grid {
         /* depending on the line, we had different cells to the list */
         if (target.posY %2 == 1) {
             /* if the cell is not close to an edge in posY, we had the left and or right cell */
-            if (target.posY < height) {
-                if (target.posX < width) {
+            if (target.posY < height-2) {
+                if (target.posX < width-2) {
                     neighbors.add(cells.get(target.posX + 1).get(target.posY + 1));
                 }
                 neighbors.add(cells.get(target.posX).get(target.posY + 1));
             }
-            if (target.posX < width && target.posX > 0) {
+            if (target.posX < width-1 && target.posX > 0) {
                 neighbors.add(cells.get(target.posX + 1).get(target.posY - 1));
             }
             if (target.posX > 0) {
                 neighbors.add(cells.get(target.posX).get(target.posY - 1));
             }
         } else {
-            if (target.posY < height) {
-                neighbors.add(cells.get(target.posX - 1).get(target.posY + 1));
+            if (target.posY < height-1) {
+                if (target.posX > 0) {
+                    neighbors.add(cells.get(target.posX - 1).get(target.posY + 1));
+                }
                 neighbors.add(cells.get(target.posX).get(target.posY + 1));
             }
             if (target.posY > 0) {
-                neighbors.add(cells.get(target.posX -1).get(target.posY - 1));
+                if (target.posX > 0) {
+                    neighbors.add(cells.get(target.posX - 1).get(target.posY - 1));
+                }
                 neighbors.add(cells.get(target.posX).get(target.posY - 1));
             }
         }

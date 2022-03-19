@@ -32,7 +32,7 @@ public class SpawnEnemy extends TimerTask {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            int moveSpeed = 0;
+            int moveSpeed = 1;
             int health = 10;
             int strength = 10;
             boolean flying = false;
@@ -41,6 +41,7 @@ public class SpawnEnemy extends TimerTask {
             int maxI = 0;
             int maxP = 0;
             model.addChar(cell, image, moveSpeed, health, strength, flying, name, maxF, maxI, maxP);
+
         }
     }
 }
