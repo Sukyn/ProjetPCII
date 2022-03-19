@@ -28,11 +28,6 @@ public class Cell {
         } else {
             this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * GameView.shift + Model.cellSize/2 - (6- GameView.shift/2) + Model.cellSize/2;
         }
-        // 100
-        // (y-1) *100 - y*30 + y*s + 75
-        // y*100 - 100 - 30y + y*s + 75
-        // 70y - 25 + y*s
-        // (70+s)*y - 25
         this.posCenterY = (Model.cellSize*3/4 - 5 + GameView.shift)*this.posY - (Model.cellSize/4);
 
 
@@ -42,7 +37,9 @@ public class Cell {
      * defines this cell as the destination of the character passed in parameter
      * @param chara, Character
      */
-    public void setTargeted(Character chara) { isTargeted = true; }
+    public void setTargeted(Character chara) { isTargeted = true;
+        characterContent = chara;
+    }
 
     /** Method setCellContent
      * set the cell content of this object with the passed parameter
@@ -54,7 +51,7 @@ public class Cell {
      * returns the current cell content of this object
      * @return CellContent
      */
-    public  CellContent getCellContent(){ return  content; }
+    public CellContent getCellContent(){ return  content; }
 
     /** Method setCellCharacterContent
      * set the cell character content of this object with the passed parameter

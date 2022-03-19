@@ -1,6 +1,9 @@
 package MVC;
 
+import Threads.SpawnEnemy;
+
 import java.io.IOException;
+import java.util.Timer;
 
 
 public class MainGame {
@@ -14,6 +17,10 @@ public class MainGame {
         model = new Model(height,width);
         view = new View(model);
         controller = new Controller(view, model);
+
+        Timer timer = new Timer();
+        SpawnEnemy spawn = new SpawnEnemy(model);
+        timer.schedule(spawn, 100, 2500);
     }
 }
 

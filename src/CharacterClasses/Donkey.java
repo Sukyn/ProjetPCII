@@ -8,7 +8,7 @@ public class Donkey extends Character {
     /** constructor */
     public Donkey(MVC.Model m, Cell c, Image s, double moveSpeed, int health, int strength) {
         /* call to the constructor of Character */
-        super(m, c, s, moveSpeed, health, strength, false, "Donkey",100, 10, 10);
+        super(m, c, s, moveSpeed, health, strength, false, "Donkey",100, 10, 10, "ally");
     }
 
     /** Method takePowder

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Model {
     public static int cellSize = 100;
-    public static Grid grid;
+    public Grid grid;
     public Fiona fiona;
     public Shrek shrek;
     public Donkey donkey;
@@ -38,6 +38,10 @@ public class Model {
 
     }
 
+    public void addChar(Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP) {
+        CharacterClasses.Character chara = new CharacterClasses.Character(this, c, s, moveSpeed, health, strength, flying, name, maxF, maxI, maxP, "enemy");
+        c.setCellCharacterContent(chara);
+    }
     private void addSpecialChar(String specialChar) {
         switch (specialChar) {
             case "CharacterClasses.Fiona" -> {

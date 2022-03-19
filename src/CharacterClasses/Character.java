@@ -21,6 +21,7 @@ public class Character extends CellContent {
     /* related to strength */
     int strength;
     int basicStrength;
+    public String type;
 
     /* maximum inventory for ressources */
     public int maxFlowerInv;
@@ -37,7 +38,7 @@ public class Character extends CellContent {
     public Move move;
     boolean isDead = false;
     /** constructor */
-    public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP) {
+    public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP, String type) {
         /* call to CellContent constructor */
         super(c, s);
         /* initialisation of variables : */
@@ -65,6 +66,7 @@ public class Character extends CellContent {
 
         /* model */
         this.model = model;
+        this.type = type;
     }
 
 

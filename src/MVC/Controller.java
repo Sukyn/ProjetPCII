@@ -19,7 +19,7 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
     }
 
     private void move(Cell cell, Cell endCell) {
-        Character character = Model.grid.getSelectedCell().getCellCharacterContent();
+        Character character = model.grid.getSelectedCell().getCellCharacterContent();
         if (character != null) {
             if ((cell.getCellContent() == null
                     || (cell.getCellContent().getClass() != Character.class)
@@ -41,15 +41,15 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         /* on a left click, sets the selected cell to the closest cell from left click */
-        Cell cell = Model.grid.getClosestCell(e.getX(), e.getY()-31);
+        Cell cell = model.grid.getClosestCell(e.getX(), e.getY()-31);
         if (e.getButton() == BUTTON1) {
             if (!cell.isSelected) {
-                Model.grid.selectedCell.isSelected = false;
-                Model.grid.setSelectedCell(cell);
+                model.grid.selectedCell.isSelected = false;
+                model.grid.setSelectedCell(cell);
                 cell.isSelected = true;
             }
         } else if (e.getButton() == BUTTON3) {
-            move(Model.grid.getSelectedCell(), cell);
+            move(model.grid.getSelectedCell(), cell);
         }
     }
 
@@ -60,10 +60,10 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        Cell cell = Model.grid.getClosestCell(e.getX(), e.getY()-31);
-        if (!cell.isSelected) {
-            Model.grid.selectedCell.isSelected = false;
-            Model.grid.setSelectedCell(cell);
+        Cell cell = model.grid.getClosestCell(e.getX(), e.getY()-31);
+        if (!cell.isSelected && e.getButton() == BUTTON1) {
+            model.grid.selectedCell.isSelected = false;
+            model.grid.setSelectedCell(cell);
             cell.isSelected = true;
         }
     }
@@ -75,8 +75,10 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        Cell cell = Model.grid.getClosestCell(e.getX(), e.getY()-31);
-        move(Model.grid.getSelectedCell(), cell);
+        Cell cell = model.grid.getClosestCell(e.getX(), e.getY()-31);
+        if (!cell.isSelected) {
+            move(model.grid.getSelectedCell(), cell);
+        }
     }
 
     /**
@@ -144,7 +146,7 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println(e);
         if (e.getActionCommand().equals("Récolte")){
-            Character c = Model.grid.getSelectedCell().getCellCharacterContent();
+            Character c = model.grid.getSelectedCell().getCellCharacterContent();
             if (c != null)
                 c.collect();
         }

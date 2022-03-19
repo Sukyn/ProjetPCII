@@ -38,7 +38,7 @@ public class CellInfoView extends JPanel {
      * @param g, Graphics
      */
     public void paintComponent(Graphics g) {
-        Cell c = Model.grid.getSelectedCell();
+        Cell c = model.grid.getSelectedCell();
         CellContent content = c.getCellContent();
         Character character = c.getCellCharacterContent();
         boolean isObstacle = false;
