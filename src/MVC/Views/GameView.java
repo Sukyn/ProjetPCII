@@ -67,8 +67,6 @@ public class GameView extends JPanel {
         } else {
             g.drawImage(image, (hexagon.posX - 1) * Model.cellSize-hexagon.posX *12+hexagon.posX *shift + Model.cellSize / 2-(6-shift/2), (3 * Model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift/2, this);
         }
-        g.fillRect(hexagon.posCenterX, hexagon.posCenterY, 2, 2);
-        g.drawString(hexagon.posX + "," + hexagon.posY, hexagon.posCenterX-2, hexagon.posCenterY-2);
     }
 
     /** Method drawGrid

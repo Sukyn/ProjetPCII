@@ -29,33 +29,24 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         /* on a left click, sets the selected cell to the closest cell from left click */
+        Cell cell = Model.grid.getClosestCell(e.getX(), e.getY()-31);
         if (e.getButton() == BUTTON1) {
-            Cell selectedSell = Model.grid.getClosestCell(e.getX(), e.getY()-31);
-            if (!selectedSell.isSelected) {
+            if (!cell.isSelected) {
                 Model.grid.selectedCell.isSelected = false;
-                Model.grid.setSelectedCell(selectedSell);
-                selectedSell.isSelected = true;
-                System.out.print(" Position de la case sélectionnée : ");
-                System.out.print(selectedSell.posCenterX);
-                System.out.print(" , ");
-                System.out.println(selectedSell.posCenterY);
-
+                Model.grid.setSelectedCell(cell);
+                cell.isSelected = true;
             }
-            System.out.print(" Position de la souris :  ");
-            System.out.print(e.getX());
-            System.out.print(" & ");
-            System.out.println(e.getY());
         /* on a right click and if there is a character in the selected cell, move the character to the closest cell form right click */
         } else {
             Character character = Model.grid.getSelectedCell().getCellCharacterContent();
             if (e.getButton() == BUTTON3 && character != null) {
-                if ((Model.grid.getClosestCell(e.getX(), e.getY()).getCellContent() == null
-                        || ((Model.grid.getClosestCell(e.getX(), e.getY())).getCellContent().getClass() != Character.class)
+                if ((cell.getCellContent() == null
+                        || (cell.getCellContent().getClass() != Character.class)
                         && character.isFlying)
-                        && !character.move.isMoving && !Model.grid.getClosestCell(e.getX(), e.getY()).isTargeted) {
+                        && !character.move.isMoving && !cell.isTargeted) {
                     character.move = character.moveCharModel();
 
-                    character.move.setDestination(Model.grid.getClosestCell(e.getX(), e.getY()));
+                    character.move.setDestination(cell);
                     character.addTimer();
                 }
             }

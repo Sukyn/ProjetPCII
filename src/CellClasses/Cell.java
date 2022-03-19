@@ -24,10 +24,16 @@ public class Cell {
         /* initialises position for the center of the cell in the window depending on its line */
         if (posY%2 == 0){
             this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * GameView.shift + Model.cellSize/2;
+
         } else {
             this.posCenterX = (this.posX - 1) * Model.cellSize-this.posX *12 + this.posX * GameView.shift + Model.cellSize/2 - (6- GameView.shift/2) + Model.cellSize/2;
         }
-        this.posCenterY = (this.posY - 1) * Model.cellSize-this.posY *30 + this.posY * GameView.shift + Model.cellSize*3/4;
+        // 100
+        // (y-1) *100 - y*30 + y*s + 75
+        // y*100 - 100 - 30y + y*s + 75
+        // 70y - 25 + y*s
+        // (70+s)*y - 25
+        this.posCenterY = (Model.cellSize*3/4 - 5 + GameView.shift)*this.posY - (Model.cellSize/4);
 
 
     }
