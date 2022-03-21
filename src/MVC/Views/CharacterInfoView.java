@@ -58,6 +58,11 @@ public class CharacterInfoView extends JPanel {
             int yOffset = 20;
             g.drawString("Character:" + charaName, x, y);
             y += yOffset;
+            g.setColor(Color.RED);
+            g.fillRect(x-1, y-1-11, 102, 14);
+            g.setColor(Color.GREEN);
+            g.fillRect(x, y-11, Math.max(1,100*character.getHealth()/character.getMaxHealth()), 12);
+            g.setColor(Color.BLACK);
             g.drawString("Health:" + character.getHealth() + "/" + character.getMaxHealth(), x, y);
             y += yOffset;
             g.drawString("Strength:" + character.getStrength() + "  Speed:" + character.getSpeed(), x, y);

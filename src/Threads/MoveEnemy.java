@@ -28,12 +28,12 @@ public class MoveEnemy extends TimerTask {
     @Override
     public void run()  {
         if (initialPos == finalPos) {
-            model.loseGlobalHP(movingChar.strength);
+            model.loseGlobalHP(movingChar.getStrength());
             finalPos.setCellCharacterContent(null);
         } else {
             if (currentTarget.getCellCharacterContent() != null) {
                 if (currentTarget.getCellCharacterContent().type != "enemy") {
-                    currentTarget.getCellCharacterContent().loseHP(movingChar.strength);
+                    currentTarget.getCellCharacterContent().loseHP(movingChar.getStrength());
                 }
             } else {
                 movingChar.setContentCellPosition(currentTarget);

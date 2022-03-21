@@ -73,5 +73,14 @@ public class CellInfoView extends JPanel {
         y += yOffset;
         g.drawString("Character:"+charaName, x, y);
 
+        y += yOffset;
+        g.setColor(Color.RED);
+        g.fillRect(x-1, y-1-11, View.WIDTH/7 - 8, 14);
+        g.setColor(Color.GREEN);
+        g.fillRect(x, y-11, (int) Math.max(1, (View.WIDTH/7 - 10) * model.globalHP/100.), 12);
+        g.setColor(Color.BLACK);
+        g.drawString("Swamp Health:" + model.globalHP, x, y);
+
+
     }
 }
