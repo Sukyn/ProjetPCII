@@ -16,6 +16,7 @@ public class Model {
     public Shrek shrek;
     public Donkey donkey;
     public Dragon dragon;
+    public int globalHP = 100;
     public ArrayList<CellContent> items = new ArrayList<>();
     public Model(int height, int width) {
         grid = new Grid(height, width);
@@ -38,9 +39,15 @@ public class Model {
 
     }
 
+    public void loseGlobalHP(int i) {
+        this.globalHP -= i;
+    }
     public void addChar(Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP) {
         CharacterClasses.Character chara = new CharacterClasses.Character(this, c, s, moveSpeed, health, strength, flying, name, maxF, maxI, maxP, "enemy");
         c.setCellCharacterContent(chara);
+        chara.moveEnemy = chara.moveEnemyModel();
+        chara.moveEnemy.setDestination(grid.cells.get(grid.height / 2).get(grid.width / 2));
+        chara.addTimerEnemy(0, 1000);
     }
     private void addSpecialChar(String specialChar) {
         switch (specialChar) {
