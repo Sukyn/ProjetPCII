@@ -1,5 +1,7 @@
 package MVC.Views;
 
+import CellClasses.Cell;
+import CharacterClasses.Character;
 import MVC.Controller;
 import MVC.MainGame;
 import MVC.Model;
@@ -42,7 +44,26 @@ public class CharacterInfoView extends JPanel {
      * @param g, Graphics
      */
     public void paintComponent(Graphics g) {
+        Cell c = model.grid.getSelectedCell();
+        Character character = c.getCellCharacterContent();
+        String charaName = "none";
+
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, WIDTH, HEIGHT);
+        if (character != null) {
+            charaName = character.name;
+            g.setColor(Color.BLACK);
+            int x = 5;
+            int y = 15;
+            int yOffset = 20;
+            g.drawString("Character:" + charaName, x, y);
+            y += yOffset;
+            g.drawString("Health:" + character.getHealth() + "/" + character.getMaxHealth(), x, y);
+            y += yOffset;
+            g.drawString("Strength:" + character.getStrength() + "  Speed:" + character.getSpeed(), x, y);
+            y += yOffset;
+            g.drawString("Flower:" + character.getF() + "/" + character.getMaxF() + "   Iron:" + character.getI() + "/" + character.getMaxI() + "   Powder:" + character.getP() + "/" + character.getMaxP(), x, y);
+        }
+
     }
 }

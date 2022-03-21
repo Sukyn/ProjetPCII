@@ -5,6 +5,7 @@ import MVC.*;
 import Threads.*;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.Timer;
 
 
@@ -19,7 +20,7 @@ public class Character extends CellContent {
     int health;
     int maxHealth;
     /* related to strength */
-    public int strength;
+    int strength;
     int basicStrength;
     public String type;
 
@@ -54,7 +55,7 @@ public class Character extends CellContent {
         this.basicStrength = strength;
         /* if the character is flying or not and it's thread for movement */
         this.isFlying = flying;
-        if (type == "enemy") {
+        if (Objects.equals(type, "enemy")) {
             this.moveEnemy = moveEnemyModel();
         } else {
             this.move = moveCharModel();
@@ -167,6 +168,16 @@ public class Character extends CellContent {
             }
         }
     }
+    public int getHealth(){ return health;}
+    public int getMaxHealth(){ return maxHealth;}
+    public int getStrength(){ return strength;}
+    public double getSpeed(){ return speed;}
+    public int getF(){ return flowerInv;}
+    public int getMaxF(){ return maxFlowerInv;}
+    public int getI(){ return ironInv;}
+    public int getMaxI(){ return maxIronInv;}
+    public int getP(){ return powderInv;}
+    public int getMaxP(){ return maxPowderInv;}
 
 
 }
