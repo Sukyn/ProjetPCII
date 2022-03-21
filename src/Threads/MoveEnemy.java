@@ -30,10 +30,11 @@ public class MoveEnemy extends TimerTask {
         if (initialPos == finalPos) {
             model.loseGlobalHP(movingChar.getStrength());
             finalPos.setCellCharacterContent(null);
+            movingChar.timer.cancel();
         } else {
             if (currentTarget.getCellCharacterContent() != null) {
                 if (currentTarget.getCellCharacterContent().type != "enemy") {
-                    currentTarget.getCellCharacterContent().loseHP(movingChar.getStrength());
+                    currentTarget.getCellCharacterContent().loseHP(movingChar.strength);
                 }
             } else {
                 movingChar.setContentCellPosition(currentTarget);

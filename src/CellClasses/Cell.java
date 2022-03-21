@@ -38,7 +38,6 @@ public class Cell {
      * @param chara, Character
      */
     public void setTargeted(Character chara) { isTargeted = true;
-        characterContent = chara;
     }
 
     /** Method setCellContent

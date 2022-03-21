@@ -20,7 +20,7 @@ public class Character extends CellContent {
     int health;
     int maxHealth;
     /* related to strength */
-    int strength;
+    public int strength;
     int basicStrength;
     public String type;
 
@@ -107,7 +107,15 @@ public class Character extends CellContent {
      * decrements health variable depending on the hit passed in parameter
      * @param hit, int
      */
-    public void loseHP(int hit) { health -= hit; if (health <= 0) isDead = true; }
+    public void loseHP(int hit) {
+        health -= hit;
+        if (health <= 0)  {
+            isDead = true;
+            if (type == "enemy") {
+                this.getContentCellPosition().setCellCharacterContent(null);
+            }
+        }
+    }
     /** Method healHP
      * increments health variable depending on the hit passed in parameter while staying under the maxHealth variable
      * @param recover, int

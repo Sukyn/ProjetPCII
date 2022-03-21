@@ -33,7 +33,7 @@ public class SpawnEnemy extends TimerTask {
                 e.printStackTrace();
             }
             int moveSpeed = 1;
-            int health = 10;
+            int health = 1000;
             int strength = 10;
             boolean flying = false;
             String name = "Blob";
