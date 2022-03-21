@@ -111,7 +111,7 @@ public class Character extends CellContent {
         health -= hit;
         if (health <= 0)  {
             isDead = true;
-            if (type == "enemy") {
+            if (type.equals("enemy")) {
                 this.getContentCellPosition().setCellCharacterContent(null);
             }
         }

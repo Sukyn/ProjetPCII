@@ -35,9 +35,8 @@ public class Cell {
 
     /** Method setTargeted
      * defines this cell as the destination of the character passed in parameter
-     * @param chara, Character
      */
-    public void setTargeted(Character chara) { isTargeted = true;
+    public void setTargeted() { isTargeted = true;
     }
 
     /** Method setCellContent

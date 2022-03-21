@@ -35,7 +35,7 @@ public class Move extends TimerTask {
                     || (ngh.getCellContent().getClass() == CellObstacle.class
                          && movingChar.isFlying))
                     && (ngh.getCellCharacterContent() == null
-                    || ngh.getCellCharacterContent().type == "enemy")) {
+                    || ngh.getCellCharacterContent().type.equals("enemy"))) {
                 max = comp;
                 currentTarget = ngh;
 
@@ -46,7 +46,7 @@ public class Move extends TimerTask {
         if (currentTarget.getCellCharacterContent() != null) {
             isAttacking = true;
         } else {
-            currentTarget.setTargeted(movingChar);
+            currentTarget.setTargeted();
             currentTarget.setCellContent(movingChar);
             this.coefDirX = (currentTarget.posCenterX - initialPos.posCenterX)/100.;
             this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY)/100.;
@@ -54,10 +54,10 @@ public class Move extends TimerTask {
     }
     @Override
     public void run()  {
-        if (!isAttacking && isMoving && (coefDirX > 0 && currentTarget.posCenterX > movingChar.contentPosX + Model.cellSize/2.)
+        if (!isAttacking && isMoving && ((coefDirX > 0 && currentTarget.posCenterX > movingChar.contentPosX + Model.cellSize/2.)
                 || (coefDirX < 0 && currentTarget.posCenterX < movingChar.contentPosX + Model.cellSize/2.)
                 || (coefDirY > 0 && currentTarget.posCenterY > movingChar.contentPosY + Model.cellSize/2.)
-                || (coefDirY < 0 && currentTarget.posCenterY < movingChar.contentPosY + Model.cellSize/2.)){
+                || (coefDirY < 0 && currentTarget.posCenterY < movingChar.contentPosY + Model.cellSize/2.))){
             if ((coefDirX > 0 && currentTarget.posCenterX > movingChar.contentPosX + Model.cellSize/2.) || (coefDirX < 0 && currentTarget.posCenterX < movingChar.contentPosX + Model.cellSize/2.))
                 movingChar.contentPosX += movingChar.speed * coefDirX;
             if ((coefDirY > 0 && currentTarget.posCenterY > movingChar.contentPosY + Model.cellSize/2.) || (coefDirY < 0 && currentTarget.posCenterY < movingChar.contentPosY + Model.cellSize/2.))
@@ -81,7 +81,7 @@ public class Move extends TimerTask {
                                 || (ngh.getCellContent().getClass() == CellObstacle.class
                                 && movingChar.isFlying))
                                 && (ngh.getCellCharacterContent() == null
-                                || ngh.getCellCharacterContent().type == "enemy")) {
+                                || ngh.getCellCharacterContent().type.equals("enemy"))) {
                             max = comp;
                             currentTarget = ngh;
                         }
@@ -91,7 +91,7 @@ public class Move extends TimerTask {
             }
             if (currentTarget.getCellCharacterContent() == null) {
                 isAttacking = false;
-                currentTarget.setTargeted(movingChar);
+                currentTarget.setTargeted();
                 if (initialPos == finalPos) {
                     isMoving = false;
                     movingChar.timer.cancel();
@@ -100,7 +100,7 @@ public class Move extends TimerTask {
                     this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY) / 100.;
                 }
             } else {
-                if (currentTarget.getCellCharacterContent().type == "enemy") {
+                if (currentTarget.getCellCharacterContent().type.equals("enemy")) {
                     currentTarget.getCellCharacterContent().loseHP(movingChar.strength);
                     isAttacking = true;
                 }

@@ -41,7 +41,7 @@ public class CellInfoView extends JPanel {
         Cell c = model.grid.getSelectedCell();
         CellContent content = c.getCellContent();
         Character character = c.getCellCharacterContent();
-        boolean isObstacle = false;
+        boolean isObstacle;
         int ressourceQuantity = 0;
         String ressourceType = "none";
         String charaName = "none";
@@ -50,7 +50,7 @@ public class CellInfoView extends JPanel {
         g.setColor(Color.BLACK);
         if (content == null || content.getClass() == CellRessource.class) {
             isObstacle = false;
-            if (content != null && content.getClass() == CellRessource.class) {
+            if (content != null) {
                 ressourceQuantity = ((CellRessource) content).getCurrentAmount();
                 ressourceType = ((CellRessource) content).getRessourceType().name();
             }
@@ -77,7 +77,7 @@ public class CellInfoView extends JPanel {
         g.setColor(Color.RED);
         g.fillRect(x-1, y-1-11, View.WIDTH/7 - 8, 14);
         g.setColor(Color.GREEN);
-        g.fillRect(x, y-11, (int) Math.max(1, (View.WIDTH/7 - 10) * model.globalHP/100.), 12);
+        g.fillRect(x, y-11, (int) Math.max(1, (View.WIDTH/7. - 10) * model.globalHP/100.), 12);
         g.setColor(Color.BLACK);
         g.drawString("Swamp Health:" + model.globalHP, x, y);
 

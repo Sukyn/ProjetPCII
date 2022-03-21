@@ -33,13 +33,13 @@ public class MoveEnemy extends TimerTask {
             movingChar.timer.cancel();
         } else {
             if (currentTarget.getCellCharacterContent() != null) {
-                if (currentTarget.getCellCharacterContent().type != "enemy") {
+                if (!currentTarget.getCellCharacterContent().type.equals("enemy")) {
                     currentTarget.getCellCharacterContent().loseHP(movingChar.strength);
                 }
             } else {
                 movingChar.setContentCellPosition(currentTarget);
-                movingChar.contentPosX = currentTarget.posCenterX - model.cellSize/2 ;
-                movingChar.contentPosY = currentTarget.posCenterY - model.cellSize/2;
+                movingChar.contentPosX = currentTarget.posCenterX - Model.cellSize/2. ;
+                movingChar.contentPosY = currentTarget.posCenterY - Model.cellSize/2. ;
                 initialPos.setCellCharacterContent(null);
                 currentTarget.setCellCharacterContent(movingChar);
                 initialPos = currentTarget;

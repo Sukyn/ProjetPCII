@@ -50,8 +50,7 @@ public class View {
         /* the component will span across 2 columns */
         c.gridwidth = 2;
         /* Adding characterInfoView to the JFrame */
-        Object main;
-        characterInfoView = new CharacterInfoView(m, MainGame.controller);
+        characterInfoView = new CharacterInfoView(m);
         frame.add(characterInfoView, c);
 
         /* Displaying view */
@@ -76,14 +75,6 @@ public class View {
                 frame.repaint();
             }
         }).start();
-    }
-
-    /** Method paint
-     * draw all the content in the window
-     * @param g, Graphics
-     */
-    public void paintComponent(Graphics g) {
-
     }
 }
 

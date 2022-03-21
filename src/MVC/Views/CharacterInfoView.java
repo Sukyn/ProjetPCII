@@ -2,7 +2,6 @@ package MVC.Views;
 
 import CellClasses.Cell;
 import CharacterClasses.Character;
-import MVC.Controller;
 import MVC.MainGame;
 import MVC.Model;
 
@@ -17,7 +16,7 @@ public class CharacterInfoView extends JPanel {
     JButton bouttonRecolte;
 
     /** constructor */
-    public CharacterInfoView(Model m, Controller c) {
+    public CharacterInfoView(Model m) {
         /* assigns model value from parameter */
         this.model = m;
         /* set window default size*/
@@ -46,7 +45,7 @@ public class CharacterInfoView extends JPanel {
     public void paintComponent(Graphics g) {
         Cell c = model.grid.getSelectedCell();
         Character character = c.getCellCharacterContent();
-        String charaName = "none";
+        String charaName;
 
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, WIDTH, HEIGHT);

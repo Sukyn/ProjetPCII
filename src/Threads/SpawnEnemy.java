@@ -1,8 +1,6 @@
 package Threads;
 
 import CellClasses.Cell;
-import CellClasses.CellObstacle;
-import MVC.Model;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

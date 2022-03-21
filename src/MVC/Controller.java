@@ -20,7 +20,7 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
 
     private void move(Cell cell, Cell endCell) {
         Character character = model.grid.getSelectedCell().getCellCharacterContent();
-        if (character != null && character.type != "enemy") {
+        if (character != null || character.type.equals("enemy")) {
             if ((cell.getCellContent() == null
                     || (cell.getCellContent().getClass() != Character.class)
                     && character.isFlying)
