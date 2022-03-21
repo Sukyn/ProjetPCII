@@ -19,7 +19,7 @@ public class Character extends CellContent {
     int health;
     int maxHealth;
     /* related to strength */
-    int strength;
+    public int strength;
     int basicStrength;
     public String type;
 
@@ -36,6 +36,7 @@ public class Character extends CellContent {
     /* Threads related variables */
     public Timer timer;
     public Move move;
+    public MoveEnemy moveEnemy;
     boolean isDead = false;
     /** constructor */
     public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP, String type) {
@@ -53,8 +54,11 @@ public class Character extends CellContent {
         this.basicStrength = strength;
         /* if the character is flying or not and it's thread for movement */
         this.isFlying = flying;
-        this.move = moveCharModel();
-
+        if (type == "enemy") {
+            this.moveEnemy = moveEnemyModel();
+        } else {
+            this.move = moveCharModel();
+        }
         /* max inventory for ressources */
         this.maxFlowerInv = maxF;
         this.maxIronInv = maxI;
@@ -73,11 +77,18 @@ public class Character extends CellContent {
     /** Method addTimer
      * Creates a timer for this character
      */
-    public void addTimer() {
+    public void addTimer(int period) {
         /* creation and initialisation of the timer */
         this.timer = new Timer();
         /* schedule for the timer */
-        timer.schedule(this.move, 0, 100);
+        timer.schedule(this.move, 0, period);
+    }
+
+    public void addTimerEnemy(int delay, int period) {
+        /* creation and initialisation of the timer */
+        this.timer = new Timer();
+        /* schedule for the timer */
+        timer.schedule(this.moveEnemy, delay, period);
     }
 
 
@@ -88,7 +99,9 @@ public class Character extends CellContent {
     public Move moveCharModel() {
         return new Move(this, super.getContentCellPosition());
     }
-
+    public MoveEnemy moveEnemyModel() {
+        return new MoveEnemy(this, super.getContentCellPosition());
+    }
     /** Method loseHP
      * decrements health variable depending on the hit passed in parameter
      * @param hit, int
@@ -154,5 +167,7 @@ public class Character extends CellContent {
             }
         }
     }
+
+
 }
 

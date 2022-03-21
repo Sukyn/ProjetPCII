@@ -28,7 +28,7 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
                 character.move = character.moveCharModel();
 
                 character.move.setDestination(endCell);
-                character.addTimer();
+                character.addTimer(100);
             }
         }
     }

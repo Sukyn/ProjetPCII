@@ -20,7 +20,7 @@ public class MainGame {
 
         Timer timer = new Timer();
         SpawnEnemy spawn = new SpawnEnemy(model);
-        timer.schedule(spawn, 100, 2500);
+        timer.schedule(spawn, 0, 5000);
     }
 }
 
