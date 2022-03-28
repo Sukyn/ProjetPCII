@@ -1,6 +1,7 @@
 package MVC.Views;
 
 import CellClasses.Cell;
+import CellClasses.CellRessource;
 import CharacterClasses.Character;
 import MVC.Controller;
 import MVC.Model;
@@ -56,8 +57,8 @@ public class CharacterInfoView extends JPanel {
         g.fillRect(0, 0, WIDTH, HEIGHT);
         if (character != null) {
             if (Objects.equals(character.type, "ally")){
-                this.buttonDrop.setEnabled(true);
-                this.buttonRecolte.setEnabled(true);
+                this.buttonDrop.setEnabled(c.posX >= model.grid.width / 2 - 1 && c.posX <= model.grid.width / 2 + 1 && c.posY >= model.grid.height / 2 - 1 && c.posY <= model.grid.height / 2 + 1);
+                this.buttonRecolte.setEnabled(c.getCellContent() != null && c.getCellContent().getClass() == CellRessource.class);
                 this.buttonIncreaseHp.setEnabled(model.getGlobalPowder() > 0);
                 this.buttonIncreaseStrength.setEnabled(model.getGlobalIron() > 0);
                 this.buttonHeal.setEnabled(model.getGlobalFlower() > 0);

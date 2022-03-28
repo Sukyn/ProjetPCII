@@ -1,10 +1,9 @@
 package MVC;
 
-import CharacterClasses.*;
 import CellClasses.*;
+import CharacterClasses.*;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +33,6 @@ public class Model {
         addSpecialChar("CharacterClasses.Fiona");
         addSpecialChar("CharacterClasses.Donkey");
         addSpecialChar("CharacterClasses.Dragon");
-        addSpecialChar("CharacterClasses.House");
         addObstacle("Dessins/Stem1.png",height/2, width/2-1);
         addObstacle("Assets/Buche.png",height/2+2, width/2+1);
         addObstacle("Assets/Buche.png",height/2-2, width/2+1);

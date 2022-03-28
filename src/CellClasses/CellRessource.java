@@ -1,13 +1,17 @@
 package CellClasses;
 
-import java.awt.*;
+import Threads.IncreaseRessource;
+
 import java.awt.image.BufferedImage;
+import java.util.Timer;
 
 public class CellRessource extends CellContent {
     RessourceType ressourceType;
     final int maxAmount;
     int currentAmount;
     boolean depleted;
+    Timer timer;
+    IncreaseRessource increaseRessource;
 
     /** constructor */
     public CellRessource (RessourceType r, Cell c, BufferedImage i, int max)  {
@@ -16,7 +20,9 @@ public class CellRessource extends CellContent {
         this.maxAmount = max;
         this.currentAmount = max;
         this.depleted = false;
-
+        this.timer = new Timer();
+        increaseRessource = new IncreaseRessource(this);
+        timer.schedule(this.increaseRessource, 0, 5000);
     }
 
     /** Method getCurrentAmount
@@ -29,6 +35,12 @@ public class CellRessource extends CellContent {
      *
      */
     public void takeRessource(int value){ currentAmount -= value; }
+
+    /** Method takeRessource
+     *
+     */
+    public void addRessource(int value){ currentAmount += value; }
+
     /** Method getRessourceType
      * returns the ressource type
      * @return ressourceType;
