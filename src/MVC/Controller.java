@@ -18,13 +18,13 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
         view.frame.addMouseListener(this);
     }
 
-    private void move(Cell cell, Cell endCell) {
+    private void move(Cell endCell) {
         Character character = model.grid.getSelectedCell().getCellCharacterContent();
-        if (character != null || character.type.equals("enemy")) {
-            if ((cell.getCellContent() == null
-                    || (cell.getCellContent().getClass() != Character.class)
-                    && character.isFlying)
-                    && !character.move.isMoving && !cell.isTargeted) {
+        if (character != null && !character.type.equals("enemy")) {
+            if ((endCell.getCellContent() == null
+                    || ((endCell.getCellContent().getClass() != Character.class)
+                    && character.isFlying))
+                    && !character.move.isMoving && !endCell.isTargeted) {
                 character.move = character.moveCharModel();
 
                 character.move.setDestination(endCell);
@@ -49,7 +49,7 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
                 cell.isSelected = true;
             }
         } else if (e.getButton() == BUTTON3) {
-            move(model.grid.getSelectedCell(), cell);
+            move(cell);
         }
     }
 
@@ -77,7 +77,7 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
     public void mouseReleased(MouseEvent e) {
         Cell cell = model.grid.getClosestCell(e.getX(), e.getY()-31);
         if (!cell.isSelected) {
-            move(model.grid.getSelectedCell(), cell);
+            move(cell);
         }
     }
 

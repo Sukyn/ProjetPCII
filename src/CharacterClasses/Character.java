@@ -38,7 +38,7 @@ public class Character extends CellContent {
     public Timer timer;
     public Move move;
     public MoveEnemy moveEnemy;
-    boolean isDead = false;
+    public boolean isDead = false;
     /** constructor */
     public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP, String type) {
         /* call to CellContent constructor */
@@ -113,8 +113,18 @@ public class Character extends CellContent {
             isDead = true;
             if (type.equals("enemy")) {
                 this.getContentCellPosition().setCellCharacterContent(null);
+                this.moveEnemy = null;
+                this.timer.cancel();
+            } else {
+                this.getContentCellPosition().setCellCharacterContent(null);
+                regen(this);
             }
         }
+    }
+
+    public void regen(Character character) {
+        Timer timer = new Timer();
+        timer.schedule(new Regen(this), 0, 1000);
     }
     /** Method healHP
      * increments health variable depending on the hit passed in parameter while staying under the maxHealth variable

@@ -85,12 +85,13 @@ public class GameView extends JPanel {
                 if (c.getCellContent() != null) {
                     drawContent(g, c.getCellContent());
                 }
-                else if (c.getCellCharacterContent() != null) {
-                    drawContent(g, c.getCellCharacterContent());
-                    if (c.getCellCharacterContent().type.equals("enemy")) {
-
-                        g.drawLine(c.getCellCharacterContent().moveEnemy.arrowPos1X, c.getCellCharacterContent().moveEnemy.arrowPos1Y,
-                                   c.getCellCharacterContent().moveEnemy.arrowPos2X, c.getCellCharacterContent().moveEnemy.arrowPos2Y);
+                CharacterClasses.Character cellContent = c.getCellCharacterContent();
+                if (cellContent != null) {
+                    drawContent(g, cellContent);
+                    if (cellContent.type.equals("enemy")) {
+                        Threads.MoveEnemy enemy = cellContent.moveEnemy;
+                        g.drawLine(enemy.arrowPos1X, enemy.arrowPos1Y,
+                                enemy.arrowPos2X, enemy.arrowPos2Y);
                     }
                 }
             }

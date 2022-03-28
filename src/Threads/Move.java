@@ -13,7 +13,6 @@ public class Move extends TimerTask {
     double coefDirY;
     Cell currentTarget;
     public boolean isMoving = false;
-    boolean isAttacking = false;
     Model model;
     public Move(CharacterClasses.Character c, Cell start){
         super();
@@ -43,18 +42,16 @@ public class Move extends TimerTask {
 
         }
 
-        if (currentTarget.getCellCharacterContent() != null) {
-            isAttacking = true;
-        } else {
+        if (currentTarget.getCellCharacterContent() == null) {
             currentTarget.setTargeted();
-            currentTarget.setCellContent(movingChar);
-            this.coefDirX = (currentTarget.posCenterX - initialPos.posCenterX)/100.;
-            this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY)/100.;
         }
+        this.coefDirX = (currentTarget.posCenterX - initialPos.posCenterX)/100.;
+        this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY)/100.;
+
     }
     @Override
     public void run()  {
-        if (!isAttacking && isMoving && ((coefDirX > 0 && currentTarget.posCenterX > movingChar.contentPosX + Model.cellSize/2.)
+        if (currentTarget.getCellCharacterContent() == null && isMoving && ((coefDirX > 0 && currentTarget.posCenterX > movingChar.contentPosX + Model.cellSize/2.)
                 || (coefDirX < 0 && currentTarget.posCenterX < movingChar.contentPosX + Model.cellSize/2.)
                 || (coefDirY > 0 && currentTarget.posCenterY > movingChar.contentPosY + Model.cellSize/2.)
                 || (coefDirY < 0 && currentTarget.posCenterY < movingChar.contentPosY + Model.cellSize/2.))){
@@ -64,7 +61,12 @@ public class Move extends TimerTask {
                 movingChar.contentPosY += movingChar.speed * coefDirY;
         }
         else if (isMoving) {
-            if (!isAttacking) {
+            CharacterClasses.Character character = currentTarget.getCellCharacterContent();
+            if (character != null) {
+                if (character.type.equals("enemy")) {
+                    character.loseHP(movingChar.strength);
+                }
+            } else {
                 movingChar.setContentCellPosition(currentTarget);
                 initialPos.setCellCharacterContent(null);
                 currentTarget.setCellCharacterContent(movingChar);
@@ -89,21 +91,14 @@ public class Move extends TimerTask {
                     }
                 }
             }
-            if (currentTarget.getCellCharacterContent() == null) {
-                isAttacking = false;
-                currentTarget.setTargeted();
-                if (initialPos == finalPos) {
-                    isMoving = false;
-                    movingChar.timer.cancel();
-                } else {
-                    this.coefDirX = (currentTarget.posCenterX - initialPos.posCenterX) / 100.;
-                    this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY) / 100.;
-                }
+
+            if (initialPos == finalPos) {
+                isMoving = false;
+                movingChar.timer.cancel();
             } else {
-                if (currentTarget.getCellCharacterContent().type.equals("enemy")) {
-                    currentTarget.getCellCharacterContent().loseHP(movingChar.strength);
-                    isAttacking = true;
-                }
+                this.coefDirX = (currentTarget.posCenterX - initialPos.posCenterX) / 100.;
+                this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY) / 100.;
+                currentTarget.isTargeted = true;
             }
         }
     }
