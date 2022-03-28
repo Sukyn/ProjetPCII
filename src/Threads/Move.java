@@ -2,6 +2,7 @@ package Threads;
 
 import CellClasses.Cell;
 import CellClasses.CellObstacle;
+import CellClasses.CellRessource;
 import MVC.Model;
 
 import java.util.TimerTask;
@@ -32,7 +33,8 @@ public class Move extends TimerTask {
             if ( comp < max && !ngh.isTargeted
                     && (ngh.getCellContent() == null
                     || (ngh.getCellContent().getClass() == CellObstacle.class
-                         && movingChar.isFlying))
+                         && movingChar.isFlying) || (ngh.getCellContent().getClass() == CellRessource.class
+                    && movingChar.isFlying))
                     && (ngh.getCellCharacterContent() == null
                     || ngh.getCellCharacterContent().type.equals("enemy"))) {
                 max = comp;
