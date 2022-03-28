@@ -1,9 +1,12 @@
 package MVC;
 
 import CellClasses.Cell;
+import CellClasses.CellObstacle;
+import CellClasses.CellRessource;
 import CharacterClasses.Character;
 
 import java.awt.event.*;
+import java.util.Objects;
 
 import static java.awt.event.MouseEvent.BUTTON1;
 import static java.awt.event.MouseEvent.BUTTON3;
@@ -16,14 +19,18 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
         view = v;
         model = m;
         view.frame.addMouseListener(this);
+        view.characterInfoView.setController(this);
     }
 
     private void move(Cell endCell) {
         Character character = model.grid.getSelectedCell().getCellCharacterContent();
         if (character != null && !character.type.equals("enemy")) {
             if ((endCell.getCellContent() == null
-                    || ((endCell.getCellContent().getClass() != Character.class)
+                    || (endCell.getCellContent().getClass() == CellRessource.class)
+                    || ((endCell.getCellContent().getClass() == CellObstacle.class)
                     && character.isFlying))
+                    && (endCell.getCellCharacterContent() == null
+                    || Objects.equals(endCell.getCellCharacterContent().type, "enemy"))
                     && !character.move.isMoving && !endCell.isTargeted) {
                 character.move = character.moveCharModel();
 
@@ -144,11 +151,25 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e);
-        if (e.getActionCommand().equals("Récolte")){
-            Character c = model.grid.getSelectedCell().getCellCharacterContent();
-            if (c != null)
-                c.collect();
+        System.out.println("salut");
+        Character c = model.grid.getSelectedCell().getCellCharacterContent();
+        if (c != null) {
+            switch (e.getActionCommand()) {
+                case "Récolte" -> c.collect();
+                case "Drop" -> c.dropRessources();
+                case "Améliorer la force" -> {
+                    c.addStrength(5);
+                    model.setGlobalIron(model.getGlobalIron() - 1);
+                }
+                case "Améliorer les points de vie" -> {
+                    c.addMaxHp(5);
+                    model.setGlobalPowder(model.getGlobalPowder() - 1);
+                }
+                case "Heal" -> {
+                    c.healHP(10);
+                    model.setGlobalFlower(model.getGlobalFlower() - 1);
+                }
+            }
         }
     }
 }

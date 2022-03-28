@@ -115,6 +115,7 @@ public class Character extends CellContent {
                 this.getContentCellPosition().setCellCharacterContent(null);
                 this.moveEnemy = null;
                 this.timer.cancel();
+                model.addGlobalGold(1);
             } else {
                 this.getContentCellPosition().setCellCharacterContent(null);
                 regen(this);
@@ -152,7 +153,7 @@ public class Character extends CellContent {
     public void collect(){
         CellContent c = this.contentCellPosition.getCellContent();
         /* if the character is on the correct cell */
-        if (c != null && c.getClass() == CellRessource.class) {
+        if (c != null && c.getClass() == CellRessource.class && ((CellRessource) c).getCurrentAmount() != 0) {
             CellRessource r = (CellRessource)c;
             /* it increases it's number of ressource depending of the type and while staying under the max*/
             switch (r.getRessourceType()) {
@@ -186,6 +187,23 @@ public class Character extends CellContent {
             }
         }
     }
+
+    public void dropRessources(){
+        model.setGlobalIron(model.getGlobalIron()+this.getI());
+        this.ironInv = 0;
+        model.setGlobalPowder(model.getGlobalPowder()+this.getP());
+        this.powderInv = 0;
+        model.setGlobalFlower(model.getGlobalFlower()+this.getF());
+        this.flowerInv = 0;
+    }
+
+    public void addStrength(int x){
+        this.strength += x;
+    }
+    public void addMaxHp(int x){
+        this.maxHealth += x;
+    }
+
     public int getHealth(){ return health;}
     public int getMaxHealth(){ return maxHealth;}
     public int getStrength(){ return strength;}

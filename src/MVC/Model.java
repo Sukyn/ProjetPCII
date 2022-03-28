@@ -17,6 +17,10 @@ public class Model {
     public Donkey donkey;
     public Dragon dragon;
     public int globalHP = 100;
+    public int globalFlower;
+    public int globalIron;
+    public int globalPowder;
+    public int globalGold;
     public ArrayList<CellContent> items = new ArrayList<>();
     public Model(int height, int width) {
         grid = new Grid(height, width);
@@ -128,6 +132,16 @@ public class Model {
         cell.setCellContent(item);
         items.add(item);
     }
+
+    public int getGlobalFlower(){ return this.globalFlower; }
+    public int getGlobalIron(){ return this.globalIron; }
+    public int getGlobalPowder(){ return this.globalPowder; }
+    public void setGlobalFlower(int x){ this.globalFlower = x; }
+    public void setGlobalIron(int x){ this.globalIron = x; }
+    public void setGlobalPowder(int x){ this.globalPowder = x; }
+
+    public int getGlobalGold(){ return this.globalGold; }
+    public void addGlobalGold(int x){ this.globalGold += x; }
 }
 
 

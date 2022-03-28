@@ -2,18 +2,19 @@ package MVC.Views;
 
 import CellClasses.Cell;
 import CharacterClasses.Character;
-import MVC.MainGame;
+import MVC.Controller;
 import MVC.Model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class CharacterInfoView extends JPanel {
 
     public static final int HEIGHT = GameView.HEIGHT/7;
     public static final int WIDTH = GameView.WIDTH + CellInfoView.WIDTH;
     Model model;
-    JButton bouttonRecolte;
+    JButton buttonRecolte, buttonDrop, buttonIncreaseStrength, buttonIncreaseHp, buttonHeal;
 
     /** constructor */
     public CharacterInfoView(Model m) {
@@ -21,21 +22,25 @@ public class CharacterInfoView extends JPanel {
         this.model = m;
         /* set window default size*/
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        bouttonRecolte = new JButton("Récolte");
-        add(bouttonRecolte);
-        bouttonRecolte.addActionListener(MainGame.controller);
+        buttonRecolte = new JButton("Récolte");
+        add(buttonRecolte);
+        buttonDrop = new JButton("Drop");
+        add(buttonDrop);
+        buttonHeal = new JButton("Heal");
+        add(buttonHeal);
+        buttonIncreaseStrength = new JButton("Améliorer la force");
+        add(buttonIncreaseStrength);
+        buttonIncreaseHp = new JButton("Améliorer les points de vie");
+        add(buttonIncreaseHp);
+        System.out.println(buttonRecolte.getActionCommand());
+    }
 
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                revalidate();
-                repaint();
-            }
-        }).start();
+    public void setController(Controller c){
+        buttonRecolte.addActionListener(c);
+        buttonDrop.addActionListener(c);
+        buttonIncreaseHp.addActionListener(c);
+        buttonIncreaseStrength.addActionListener(c);
+        buttonHeal.addActionListener(c);
     }
 
     /** Method paint
@@ -50,6 +55,19 @@ public class CharacterInfoView extends JPanel {
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         if (character != null) {
+            if (Objects.equals(character.type, "ally")){
+                this.buttonDrop.setEnabled(true);
+                this.buttonRecolte.setEnabled(true);
+                this.buttonIncreaseHp.setEnabled(model.getGlobalPowder() > 0);
+                this.buttonIncreaseStrength.setEnabled(model.getGlobalIron() > 0);
+                this.buttonHeal.setEnabled(model.getGlobalFlower() > 0);
+            } else {
+                this.buttonDrop.setEnabled(false);
+                this.buttonRecolte.setEnabled(false);
+                this.buttonIncreaseHp.setEnabled(false);
+                this.buttonIncreaseStrength.setEnabled(false);
+                this.buttonHeal.setEnabled(false);
+            }
             charaName = character.name;
             g.setColor(Color.BLACK);
             int x = 5;
@@ -67,6 +85,12 @@ public class CharacterInfoView extends JPanel {
             g.drawString("Strength:" + character.getStrength() + "  Speed:" + character.getSpeed(), x, y);
             y += yOffset;
             g.drawString("Flower:" + character.getF() + "/" + character.getMaxF() + "   Iron:" + character.getI() + "/" + character.getMaxI() + "   Powder:" + character.getP() + "/" + character.getMaxP(), x, y);
+        } else {
+            this.buttonDrop.setEnabled(false);
+            this.buttonRecolte.setEnabled(false);
+            this.buttonIncreaseHp.setEnabled(false);
+            this.buttonIncreaseStrength.setEnabled(false);
+            this.buttonHeal.setEnabled(false);
         }
 
     }

@@ -53,6 +53,11 @@ public class GameView extends JPanel {
     public void paintComponent(Graphics g) {
         g.drawImage(wallpaper, 0, 0, WIDTH, HEIGHT, this);
         drawGrid(g);
+        g.setColor(Color.white);
+        g.fillRect(0,0,200,14);
+        g.setColor(Color.BLACK);
+        g.drawString("Flower:" + model.getGlobalFlower() + "   Iron:" + model.getGlobalIron() + "   Powder:" + model.getGlobalPowder() + "    Gold:"+model.getGlobalGold() , 2, 12);
+
     }
 
     /** Method drawHexagon

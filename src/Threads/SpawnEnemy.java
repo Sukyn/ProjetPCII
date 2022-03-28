@@ -19,7 +19,6 @@ public class SpawnEnemy extends TimerTask {
 
     @Override
     public void run()  {
-
         int posX = (int)(Math.random() * (grid.width-1));
         int posY = (int)(Math.random() * (grid.height-1));
         Cell cell = grid.cells.get(posX).get(posY);
@@ -39,7 +38,7 @@ public class SpawnEnemy extends TimerTask {
             int maxI = 0;
             int maxP = 0;
             model.addChar(cell, image, moveSpeed, health, strength, flying, name, maxF, maxI, maxP);
-
+            cpt++;
         }
     }
 }

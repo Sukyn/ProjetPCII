@@ -32,9 +32,9 @@ public class Move extends TimerTask {
             double comp = Math.sqrt(Math.pow(end.posCenterX - ngh.posCenterX, 2) + Math.pow(end.posCenterY - ngh.posCenterY, 2));
             if ( comp < max && !ngh.isTargeted
                     && (ngh.getCellContent() == null
+                    || (ngh.getCellContent().getClass() == CellRessource.class)
                     || (ngh.getCellContent().getClass() == CellObstacle.class
-                         && movingChar.isFlying) || (ngh.getCellContent().getClass() == CellRessource.class
-                    && movingChar.isFlying))
+                         && movingChar.isFlying))
                     && (ngh.getCellCharacterContent() == null
                     || ngh.getCellCharacterContent().type.equals("enemy"))) {
                 max = comp;
@@ -78,12 +78,14 @@ public class Move extends TimerTask {
                 double max = Double.MAX_VALUE;
                 for (Cell ngh : model.grid.getNeighbors(initialPos)) {
                     if (ngh != previous) {
+                        System.out.println(ngh.getCellContent());
                         double comp = Math.sqrt(Math.pow(finalPos.posCenterX - ngh.posCenterX, 2) + Math.pow(finalPos.posCenterY - ngh.posCenterY, 2));
-
                         if (comp < max && !ngh.isTargeted
                                 && (ngh.getCellContent() == null
+                                || (ngh.getCellContent().getClass() == CellClasses.CellRessource.class)
                                 || (ngh.getCellContent().getClass() == CellObstacle.class
                                 && movingChar.isFlying))
+
                                 && (ngh.getCellCharacterContent() == null
                                 || ngh.getCellCharacterContent().type.equals("enemy"))) {
                             max = comp;

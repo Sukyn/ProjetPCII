@@ -27,43 +27,51 @@ public class MoveEnemy extends TimerTask {
 
     @Override
     public void run()  {
-        if (initialPos == finalPos) {
-            model.loseGlobalHP(movingChar.getStrength());
-            finalPos.setCellCharacterContent(null);
-            movingChar.timer.cancel();
-        } else {
-            if (currentTarget.getCellCharacterContent() != null) {
-                if (!currentTarget.getCellCharacterContent().type.equals("enemy")) {
-                    currentTarget.getCellCharacterContent().loseHP(movingChar.strength);
-                }
+        if (cpt == 10) {
+            if (initialPos == finalPos) {
+                model.loseGlobalHP(movingChar.getStrength());
+                finalPos.setCellCharacterContent(null);
+                movingChar.timer.cancel();
             } else {
-                movingChar.setContentCellPosition(currentTarget);
-                movingChar.contentPosX = currentTarget.posCenterX - Model.cellSize/2. ;
-                movingChar.contentPosY = currentTarget.posCenterY - Model.cellSize/2. ;
-                initialPos.setCellCharacterContent(null);
-                currentTarget.setCellCharacterContent(movingChar);
-                initialPos = currentTarget;
-            }
-        }
-
-        Cell previous = initialPos;
-        double max = Double.MAX_VALUE;
-        for (Cell ngh : model.grid.getNeighbors(initialPos)) {
-            if (ngh != previous) {
-                double comp = Math.sqrt(Math.pow(finalPos.posCenterX - ngh.posCenterX, 2) + Math.pow(finalPos.posCenterY - ngh.posCenterY, 2));
-
-                if ( comp < max && (ngh.getCellContent() == null
-                        || ngh.getCellContent().getClass() != CellObstacle.class
-                        || movingChar.isFlying)) {
-                    max = comp;
-                    currentTarget = ngh;
+                if (currentTarget.getCellCharacterContent() != null) {
+                    if (!currentTarget.getCellCharacterContent().type.equals("enemy")) {
+                        movingChar.loseHP(currentTarget.getCellCharacterContent().getStrength());
+                        currentTarget.getCellCharacterContent().loseHP(movingChar.strength);
+                    }
+                } else {
+                    movingChar.setContentCellPosition(currentTarget);
+                    movingChar.contentPosX = currentTarget.posCenterX - Model.cellSize / 2.;
+                    movingChar.contentPosY = currentTarget.posCenterY - Model.cellSize / 2.;
+                    initialPos.setCellCharacterContent(null);
+                    currentTarget.setCellCharacterContent(movingChar);
+                    initialPos = currentTarget;
                 }
             }
+
+            Cell previous = initialPos;
+            double max = Double.MAX_VALUE;
+            for (Cell ngh : model.grid.getNeighbors(initialPos)) {
+                if (ngh != previous) {
+                    double comp = Math.sqrt(Math.pow(finalPos.posCenterX - ngh.posCenterX, 2) + Math.pow(finalPos.posCenterY - ngh.posCenterY, 2));
+
+                    if (comp < max && (ngh.getCellContent() == null
+                            || ngh.getCellContent().getClass() != CellObstacle.class
+                            || movingChar.isFlying)) {
+                        max = comp;
+                        currentTarget = ngh;
+                    }
+                }
+            }
+            arrowPos1X = initialPos.posCenterX;
+            arrowPos1Y = initialPos.posCenterY;
+            arrowPos2X = initialPos.posCenterX;
+            arrowPos2Y = initialPos.posCenterY;
+            cpt = 0;
+        } else {
+            arrowPos2X += (currentTarget.posCenterX - initialPos.posCenterX) / 10;
+            arrowPos2Y += (currentTarget.posCenterY - initialPos.posCenterY) / 10;
+            cpt++;
         }
-        arrowPos1X = initialPos.posCenterX;
-        arrowPos1Y = initialPos.posCenterY;
-        arrowPos2Y = currentTarget.posCenterY;
-        arrowPos2X = currentTarget.posCenterX;
     }
 }
 
