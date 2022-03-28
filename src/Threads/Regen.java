@@ -34,6 +34,7 @@ public class Regen extends TimerTask {
                     cell.setCellCharacterContent(character);
                     character.isDead = false;
                     character.healHP(max);
+                    character.move.isMoving = false;
                     super.cancel();
                     break;
                 }

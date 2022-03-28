@@ -66,7 +66,7 @@ public class Move extends TimerTask {
                 if (character.type.equals("enemy")) {
                     character.loseHP(movingChar.strength);
                 }
-            } else {
+            } else if (!movingChar.isDead){
                 movingChar.setContentCellPosition(currentTarget);
                 initialPos.setCellCharacterContent(null);
                 currentTarget.setCellCharacterContent(movingChar);
