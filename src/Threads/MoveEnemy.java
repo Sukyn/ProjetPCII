@@ -11,6 +11,7 @@ public class MoveEnemy extends TimerTask {
     CharacterClasses.Character movingChar;
     Cell initialPos, finalPos, currentTarget;
     Model model;
+    int cpt = 0;
     public int arrowPos1X, arrowPos1Y, arrowPos2X, arrowPos2Y;
     public MoveEnemy(CharacterClasses.Character c, Cell start){
         super();

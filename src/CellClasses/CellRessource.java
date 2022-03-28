@@ -1,6 +1,7 @@
 package CellClasses;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CellRessource extends CellContent {
     RessourceType ressourceType;
@@ -9,7 +10,7 @@ public class CellRessource extends CellContent {
     boolean depleted;
 
     /** constructor */
-    public CellRessource (RessourceType r, Cell c, Image i, int max)  {
+    public CellRessource (RessourceType r, Cell c, BufferedImage i, int max)  {
         super(c,i);
         this.ressourceType = r;
         this.maxAmount = max;

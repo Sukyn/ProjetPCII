@@ -3,14 +3,15 @@ package CellClasses;
 import MVC.Model;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CellContent {
     /* declaration of variables for position in the grid and on the screen */
     public Cell contentCellPosition;
     public double contentPosX, contentPosY;
-    public Image sprite;
+    public BufferedImage sprite;
     /** constructor */
-    public CellContent(Cell c, Image s){
+    public CellContent(Cell c, BufferedImage s){
         /* initialisation of positions */
         this.contentCellPosition = c;
         this.contentPosX = c.posCenterX - Model.cellSize/2.;

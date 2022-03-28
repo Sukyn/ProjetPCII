@@ -4,6 +4,7 @@ import CellClasses.Cell;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.TimerTask;
@@ -11,6 +12,7 @@ import java.util.TimerTask;
 public class SpawnEnemy extends TimerTask {
     CellClasses.Grid grid;
     MVC.Model model;
+    int cpt = 0;
     public SpawnEnemy(MVC.Model model){
         super();
         this.model = model;
@@ -23,15 +25,15 @@ public class SpawnEnemy extends TimerTask {
         int posY = (int)(Math.random() * (grid.height-1));
         Cell cell = grid.cells.get(posX).get(posY);
         if (cell.getCellContent() == null && cell.getCellCharacterContent() == null && !cell.isTargeted) {
-            Image image = null;
+            BufferedImage image = null;
             try {
                 image = ImageIO.read(new File("Assets/Slime.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            int moveSpeed = 1;
-            int health = 1000;
-            int strength = 10;
+            int moveSpeed = 1+(cpt/100);
+            int health = 10+cpt;
+            int strength = 10+(cpt/10);
             boolean flying = false;
             String name = "Blob";
             int maxF = 0;

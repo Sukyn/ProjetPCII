@@ -5,6 +5,7 @@ import CellClasses.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Model {
     public Shrek shrek;
     public Donkey donkey;
     public Dragon dragon;
+    public House house;
     public int globalHP = 100;
     public int globalFlower;
     public int globalIron;
@@ -32,6 +34,7 @@ public class Model {
         addSpecialChar("CharacterClasses.Fiona");
         addSpecialChar("CharacterClasses.Donkey");
         addSpecialChar("CharacterClasses.Dragon");
+        addSpecialChar("CharacterClasses.House");
         addObstacle("Dessins/Stem1.png",height/2, width/2-1);
         addObstacle("Assets/Buche.png",height/2+2, width/2+1);
         addObstacle("Assets/Buche.png",height/2-2, width/2+1);
@@ -46,17 +49,17 @@ public class Model {
     public void loseGlobalHP(int i) {
         this.globalHP -= i;
     }
-    public void addChar(Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP) {
+    public void addChar(Cell c, BufferedImage s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP) {
         CharacterClasses.Character chara = new CharacterClasses.Character(this, c, s, moveSpeed, health, strength, flying, name, maxF, maxI, maxP, "enemy");
         c.setCellCharacterContent(chara);
         chara.moveEnemy = chara.moveEnemyModel();
         chara.moveEnemy.setDestination(grid.cells.get(grid.height / 2).get(grid.width / 2));
-        chara.addTimerEnemy(0, 1000);
+        chara.addTimerEnemy(0, 200);
     }
     private void addSpecialChar(String specialChar) {
+        BufferedImage image = null;
         switch (specialChar) {
             case "CharacterClasses.Fiona" -> {
-                Image image = null;
                 Cell cell = grid.cells.get(grid.height / 2).get(grid.width / 2 + 1);
                 try {
                     image = ImageIO.read(new File("Assets/Fiona.png"));
@@ -67,9 +70,19 @@ public class Model {
                 cell.setCellCharacterContent(chara);
                 this.fiona = chara;
             }
-            case "CharacterClasses.Shrek" -> {
-                Image image = null;
+            case "CharacterClasses.House" -> {
                 Cell cell = grid.cells.get(grid.height / 2).get(grid.width / 2);
+                try {
+                    image = ImageIO.read(new File("Assets/House.png"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                House chara = new House(this, cell, image, 0, 1000, 1);
+                cell.setCellCharacterContent(chara);
+                this.house = chara;
+            }
+            case "CharacterClasses.Shrek" -> {
+                Cell cell = grid.cells.get(grid.height / 2 -1).get(grid.width / 2);
                 try {
                     image = ImageIO.read(new File("Assets/Shrek.png"));
                 } catch (IOException e) {
@@ -80,7 +93,6 @@ public class Model {
                 this.shrek = chara;
             }
             case "CharacterClasses.Donkey" -> {
-                Image image = null;
                 Cell cell = grid.cells.get(grid.height / 2 + 1).get(grid.width / 2 + 1);
                 try {
                     image = ImageIO.read(new File("Assets/Donkey.png"));
@@ -92,7 +104,6 @@ public class Model {
                 this.donkey = chara;
             }
             case "CharacterClasses.Dragon" -> {
-                Image image = null;
                 Cell cell = grid.cells.get(grid.height / 2 + 2).get(grid.width / 2 + 2);
                 try {
                     image = ImageIO.read(new File("Assets/Dragon.png"));
@@ -108,7 +119,7 @@ public class Model {
     }
 
     private void addObstacle(String file, int posX, int posY) {
-        Image image = null;
+        BufferedImage image = null;
         Cell cell = grid.cells.get(posX).get(posY);
         try {
             image = ImageIO.read(new File(file));
@@ -121,7 +132,7 @@ public class Model {
     }
 
     private void addRessource(String file, int posX, int posY, RessourceType r, int max) {
-        Image image = null;
+        BufferedImage image = null;
         Cell cell = grid.cells.get(posX).get(posY);
         try {
             image = ImageIO.read(new File(file));

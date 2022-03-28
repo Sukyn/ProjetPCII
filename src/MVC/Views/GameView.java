@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class GameView extends JPanel {
         this.hexagonImage = image.getScaledInstance(Model.cellSize, Model.cellSize, Image.SCALE_SMOOTH);
         image = ImageIO.read(new File("Assets/hexaSelected.png"));
         this.selectedHexagonImage = image.getScaledInstance(Model.cellSize, Model.cellSize, Image.SCALE_SMOOTH);
+        /* On utilise pour cela un objet de type RescaleOp, qui possède une méthode de filtrage */
 
         new Thread(() -> {
             while (true) {

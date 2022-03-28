@@ -5,6 +5,8 @@ import MVC.*;
 import Threads.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.util.Objects;
 import java.util.Timer;
 
@@ -40,7 +42,7 @@ public class Character extends CellContent {
     public MoveEnemy moveEnemy;
     public boolean isDead = false;
     /** constructor */
-    public Character(Model model, Cell c, Image s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP, String type) {
+    public Character(Model model, Cell c, BufferedImage s, double moveSpeed, int health, int strength, boolean flying, String name, int maxF, int maxI, int maxP, String type) {
         /* call to CellContent constructor */
         super(c, s);
         /* initialisation of variables : */
