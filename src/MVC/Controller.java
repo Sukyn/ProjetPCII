@@ -35,7 +35,7 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
                 character.move = character.moveCharModel();
 
                 character.move.setDestination(endCell);
-                character.addTimer(100);
+                character.addTimerMove(100);
             }
         }
     }
@@ -155,7 +155,10 @@ public class Controller implements MouseListener, KeyListener, ActionListener {
         Character c = model.grid.getSelectedCell().getCellCharacterContent();
         if (c != null) {
             switch (e.getActionCommand()) {
-                case "Récolte" -> c.collect();
+                case "Récolte" -> {
+                    c.gatherRessource = c.createGatherThread();
+                    c.addTimerGather();
+                }
                 case "Drop" -> c.dropRessources();
                 case "Améliorer la force" -> {
                     c.addStrength(5);

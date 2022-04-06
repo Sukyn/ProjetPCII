@@ -13,7 +13,7 @@ public class IncreaseRessource extends TimerTask {
         this.ressource = r;
     }
     /**
-     * The action to be performed by this timer task.
+     * The action to be performed by this timerMove task.
      */
     @Override
     public void run() {

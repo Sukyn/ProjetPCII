@@ -4,9 +4,7 @@ import CellClasses.*;
 import MVC.*;
 import Threads.*;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RescaleOp;
 import java.util.Objects;
 import java.util.Timer;
 
@@ -37,7 +35,9 @@ public class Character extends CellContent {
     /* model for the character */
     public Model model;
     /* Threads related variables */
-    public Timer timer;
+    public Timer timerGather;
+    public GatherRessource gatherRessource;
+    public Timer timerMove;
     public Move move;
     public MoveEnemy moveEnemy;
     public boolean isDead = false;
@@ -62,6 +62,7 @@ public class Character extends CellContent {
         } else {
             this.move = moveCharModel();
         }
+        this.gatherRessource = createGatherThread();
         /* max inventory for ressources */
         this.maxFlowerInv = maxF;
         this.maxIronInv = maxI;
@@ -76,24 +77,40 @@ public class Character extends CellContent {
         this.type = type;
     }
 
-
-    /** Method addTimer
-     * Creates a timer for this character
+    /** Method addTimerMove
+     * Creates a timerMove for the move thread of this character
      */
-    public void addTimer(int period) {
-        /* creation and initialisation of the timer */
-        this.timer = new Timer();
-        /* schedule for the timer */
-        timer.schedule(this.move, 0, period);
+    public void addTimerGather() {
+        /* creation and initialisation of the timerMove */
+        this.timerGather = new Timer();
+        /* schedule for the timerMove */
+        timerGather.schedule(this.gatherRessource, 0, 1000);
+    }
+
+    /** Method addTimerMove
+     * Creates a timerMove for the move thread of this character
+     */
+    public void addTimerMove(int period) {
+        /* creation and initialisation of the timerMove */
+        this.timerMove = new Timer();
+        /* schedule for the timerMove */
+        timerMove.schedule(this.move, 0, period);
     }
 
     public void addTimerEnemy(int delay, int period) {
-        /* creation and initialisation of the timer */
-        this.timer = new Timer();
-        /* schedule for the timer */
-        timer.schedule(this.moveEnemy, delay, period);
+        /* creation and initialisation of the timerMove */
+        this.timerMove = new Timer();
+        /* schedule for the timerMove */
+        timerMove.schedule(this.moveEnemy, delay, period);
     }
 
+    /** Method createGatherRessource
+     * Method to create a gatherRessource instruction for this character
+     * @return GatherRessource, a new gatherRessource thread for this character
+     */
+    public GatherRessource createGatherThread() {
+        return new GatherRessource(this);
+    }
 
     /** Method moveCharModel
      * Method to create a new move instruction for this character depending on the selected cell
@@ -116,7 +133,7 @@ public class Character extends CellContent {
             if (type.equals("enemy")) {
                 this.getContentCellPosition().setCellCharacterContent(null);
                 this.moveEnemy = null;
-                this.timer.cancel();
+                this.timerMove.cancel();
                 model.addGlobalGold(1);
             } else {
                 this.getContentCellPosition().setCellCharacterContent(null);

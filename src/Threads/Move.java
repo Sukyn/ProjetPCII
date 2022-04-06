@@ -98,7 +98,7 @@ public class Move extends TimerTask {
 
             if (initialPos == finalPos) {
                 isMoving = false;
-                movingChar.timer.cancel();
+                movingChar.timerMove.cancel();
             } else {
                 this.coefDirX = (currentTarget.posCenterX - initialPos.posCenterX) / 100.;
                 this.coefDirY = (currentTarget.posCenterY - initialPos.posCenterY) / 100.;
