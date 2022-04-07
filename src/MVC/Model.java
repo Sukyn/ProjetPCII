@@ -4,12 +4,18 @@ import CellClasses.*;
 import CharacterClasses.*;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Model {
+    ArrayList<Point> gridCoords;
+    static ArrayList<Point> ressourcesCoords;
+    ArrayList<Point> obstacleCoords;
+
     public static int cellSize = 100;
     public Grid grid;
     public Fiona fiona;
@@ -25,7 +31,39 @@ public class Model {
     public ArrayList<CellContent> items = new ArrayList<>();
     public Model(int height, int width) {
         grid = new Grid(height, width);
+        ressourcesCoords = new ArrayList<>();
+        for (int i = 1; i < width; i++){
+            switch (i){
+                case 1, 8 -> {
+                    for (int j = 3; j < 8; j++){
+                        ressourcesCoords.add(new Point(j,i));
+                    }
+                }
+                case 2-> {
+                    for (int j = 3; j < 9; j++){
+                        ressourcesCoords.add(new Point(j,i));
+                    }
+                }
+                case 3, 7 -> {
+                    for (int j = 2; j < 9; j++){
+                        ressourcesCoords.add(new Point(j,i));
+                    }
+                }
+                case 4, 6-> {
+                    for (int j = 2; j < 10; j++){
+                        if (j != 5 && j != 6)
+                            ressourcesCoords.add(new Point(j,i));
+                    }
+                }
+                case 5 -> {
+                    for (int j = 1; j < 10; j++){
+                        if (j != 4 && j != 5 && j != 6)
+                            ressourcesCoords.add(new Point(j,i));
+                    }
+                }
+            }
 
+        }
         Cell c = grid.cells.get(height/2).get(width/2);
         c.isSelected = true;
         grid.selectedCell = c;
@@ -33,13 +71,26 @@ public class Model {
         addSpecialChar("CharacterClasses.Fiona");
         addSpecialChar("CharacterClasses.Donkey");
         addSpecialChar("CharacterClasses.Dragon");
-        addObstacle("Dessins/Stem1.png",height/2, width/2-1);
-        addObstacle("Assets/Buche.png",height/2+2, width/2+1);
-        addObstacle("Assets/Buche.png",height/2-2, width/2+1);
-        addObstacle("Assets/Tree.png",height/2-3, width/2+1);
-        addRessource("Dessins/Boulder1.png",height/2, width/2+3, RessourceType.iron, 10);
-        addObstacle("Assets/Tree.png",height/2-2, width/2+3);
-        addObstacle("Assets/Rock.png",height/2+4, width/2+1);
+
+        Point p = createRessourceCoord();
+        addRessource("Dessins/Boulder1.png",p.x, p.y, RessourceType.iron, 10);
+        p = createRessourceCoord();
+        addRessource("Assets/flowers.png",p.x, p.y, RessourceType.flower, 10);
+        p = createRessourceCoord();
+        addRessource("Assets/poudre.png",p.x, p.y, RessourceType.powder, 10);
+
+        p = createRessourceCoord();
+        addObstacle("Dessins/Stem1.png",p.x, p.y);
+        p = createRessourceCoord();
+        addObstacle("Dessins/Stem1.png",p.x, p.y);
+        p = createRessourceCoord();
+        addObstacle("Dessins/Stem1.png",p.x, p.y);
+        p = createRessourceCoord();
+        addObstacle("Dessins/Stem1.png",p.x, p.y);
+        p = createRessourceCoord();
+        addObstacle("Dessins/Stem1.png",p.x, p.y);
+        p = createRessourceCoord();
+        addObstacle("Dessins/Stem1.png",p.x, p.y);
 
 
     }
@@ -114,6 +165,13 @@ public class Model {
             }
         }
 
+    }
+
+    private Point createRessourceCoord(){
+        int selected = (int)(Math.random() * ressourcesCoords.toArray().length);
+        Point p = ressourcesCoords.get(selected);
+        ressourcesCoords.remove(selected);
+        return p;
     }
 
     private void addObstacle(String file, int posX, int posY) {
