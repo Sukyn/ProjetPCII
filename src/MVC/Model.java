@@ -69,6 +69,7 @@ public class Model {
         grid.selectedCell = c;
         addSpecialChar("CharacterClasses.Shrek");
         addSpecialChar("CharacterClasses.Fiona");
+        addSpecialChar("CharacterClasses.House");
         addSpecialChar("CharacterClasses.Donkey");
         addSpecialChar("CharacterClasses.Dragon");
 
@@ -122,7 +123,7 @@ public class Model {
             case "CharacterClasses.House" -> {
                 Cell cell = grid.cells.get(grid.height / 2).get(grid.width / 2);
                 try {
-                    image = ImageIO.read(new File("Assets/House.png"));
+                    image = ImageIO.read(new File("Assets/house.png"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
