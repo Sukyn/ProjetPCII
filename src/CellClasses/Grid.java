@@ -1,43 +1,54 @@
 package CellClasses;
 
+
 import MVC.*;
 import MVC.Views.*;
-
 import java.util.ArrayList;
 
+
+/**
+ * Class Grid
+ * Represents the grid on which the game is played
+ * Contains Cells
+ */
 public class Grid {
-    /* declaration of variables for size and content */
+    /* Declaration of variables for size and content */
     public final int height;
     public final int width;
     public ArrayList<ArrayList<Cell>> cells;
     public Cell selectedCell;
 
+
     /**
-     * Constructeur
+     * Class constructor of the class Grid
+     * @param height : the desired height of the grid
+     * @param width : the desired width of the grid
      */
     public Grid(int height, int width) {
-        /* initialisation of  variables height et width */
+        /* Initialization of  variables height et width */
         this.height = height;
         this.width = width;
+
         /* Creation of a list for the cells*/
-        this.cells = new ArrayList<>(height);
+        this.cells = new ArrayList<>(height);		// creation of the "external" list (the list of lists)
         for (int i = 0; i < height; i++) {
-            cells.add(new ArrayList<>());
+            cells.add(new ArrayList<>());			// creation of the "internal" lists (nested inside the external one)
             for (int j = 0; j < width; j++) {
-                Cell c = new Cell(i, j);
-                cells.get(i).add(c);
+                Cell c = new Cell(i, j);			// initialization of the cells
+                cells.get(i).add(c);				// the cells are then added to the list
             }
         }
     }
 
-    /** Method getNeighbors
-     * return the neighbors in the grid of a cell passed in parameter
-     * @param target, Cell
-     * @return neighbors, a list a neighbors of target cell
+    /**
+     * Method getNeighbors
+     * Returns the neighbors in the grid of a cell passed in parameter
+     * @param target : the cell of which the neighbors are wanted
+     * @return neighbors : a list a neighbors of the target cell
      */
     public ArrayList<Cell> getNeighbors(Cell target) {
         ArrayList<Cell> neighbors = new ArrayList<>();
-        /* if the cell is not close to an edge in posX, we had the above and or bellow cell */
+        /* If the cell is not close to an edge in posX, we had the above and or bellow cell */
         if (target.posX > 0) {
             neighbors.add(cells.get(target.posX - 1).get(target.posY));
         }
@@ -45,9 +56,9 @@ public class Grid {
             neighbors.add(cells.get(target.posX + 1).get(target.posY));
         }
 
-        /* depending on the line, we had different cells to the list */
+        /* Depending on the line, we had different cells to the list */
         if (target.posY %2 == 1) {
-            /* if the cell is not close to an edge in posY, we had the left and or right cell */
+            /* If the cell is not close to an edge in posY, we had the left and or right cell */
             if (target.posY < height-2) {
                 if (target.posX < width-2) {
                     neighbors.add(cells.get(target.posX + 1).get(target.posY + 1));
@@ -86,9 +97,8 @@ public class Grid {
 
     /**
      * Method setSelectedCell
-     * set the selected cell in the grid
-     *
-     * @param c, a cell
+     * Sets the selected cell in the grid
+     *     * @param c : a cell
      */
     public void setSelectedCell(Cell c) {
         selectedCell = c;
@@ -98,9 +108,10 @@ public class Grid {
         */
     }
 
-    /** Method getSelectedCell
-     * return the currently selected cell
-     * @return selectedCell;
+    /**
+     * Method getSelectedCell
+     * Returns the currently selected cell
+     * @return selectedCell
      */
     public Cell getSelectedCell() {
         return selectedCell;
@@ -108,31 +119,31 @@ public class Grid {
 
     /**
      * Method getClosestCell
-     * return the closest cell from a position in the window,
+     * Returns the closest cell from a position in the window,
      * generally used with coordinates from a click
-     * @param x, int
-     * @param y, int
+     * @param x : int
+     * @param y : int
      * @return Cell
      */
     public Cell getClosestCell(int x, int y) {
-        /* defines the minimal distance from a cell depending on a circle that is the size of a Cell and the shift plus a little margin */
+        /* Defines the minimal distance from a cell depending on a circle that is the size of a Cell and the shift plus a little margin */
         double dist = Model.cellSize / 2. + GameView.shift + 10;
-        /* initialize closestCell for execution sake */
+        /* Initializes closestCell for execution sake */
         Cell closestCell = selectedCell;
-        /* we go through all cells to find the closest one, can be upgraded to go through only the one close to the coordinates */
+        /* We go through all cells to find the closest one, can be upgraded to go through only the one close to the coordinates */
         for (ArrayList<Cell> cellList : cells) {
             for (Cell cell : cellList) {
-                /* calculates the distance between the coordinates and the current cell */
+                /* Calculates the distance between the coordinates and the current cell */
                 double comp = Math.sqrt(Math.pow(x - cell.posCenterX, 2) + Math.pow(y - cell.posCenterY, 2));
-                /* if it is inferior to the current minima */
+                /* If it is inferior to the current minima */
                 if (comp < dist) {
-                    /* we replace the minima with a new one and the closest cell with the current cell */
+                    /* We replace the minima with a new one and the closest cell with the current cell */
                     dist = comp;
                     closestCell = cell;
                 }
             }
         }
-        /* return the closest cell found*/
+        /* Returns the closest cell found*/
         return closestCell;
     }
 }
