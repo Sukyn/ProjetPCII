@@ -56,7 +56,7 @@ public class GameView extends JPanel {
         g.drawImage(wallpaper, 0, 0, WIDTH, HEIGHT, this);
         drawGrid(g);
         g.setColor(Color.white);
-        g.fillRect(0,0,200,14);
+        g.fillRect(0,0,230,14);
         g.setColor(Color.BLACK);
         g.drawString("Flower:" + model.getGlobalFlower() + "   Iron:" + model.getGlobalIron() + "   Powder:" + model.getGlobalPowder() + "    Gold:"+model.getGlobalGold() , 2, 12);
 
@@ -74,8 +74,6 @@ public class GameView extends JPanel {
         } else {
             g.drawImage(image, (hexagon.posX - 1) * Model.cellSize-hexagon.posX *12+hexagon.posX *shift + Model.cellSize / 2-(6-shift/2), (3 * Model.cellSize / 4) * (hexagon.posY - 1)+hexagon.posY *shift/2, this);
         }
-        g.fillRect(hexagon.posCenterX, hexagon.posCenterY, 2, 2);
-        g.drawString(hexagon.posX + "," + hexagon.posY, hexagon.posCenterX-2, hexagon.posCenterY-2);
     }
 
     /** Method drawGrid

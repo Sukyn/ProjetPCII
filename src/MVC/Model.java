@@ -29,6 +29,7 @@ public class Model {
     public int globalPowder;
     public int globalGold;
     public ArrayList<CellContent> items = new ArrayList<>();
+    
     public Model(int height, int width) {
         grid = new Grid(height, width);
         ressourcesCoords = new ArrayList<>();

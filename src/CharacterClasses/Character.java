@@ -178,7 +178,7 @@ public class Character extends CellContent {
             switch (r.getRessourceType()) {
                 /* case flower */
                 case flower -> {
-                    if (flowerInv < maxIronInv) {
+                    if (flowerInv < maxFlowerInv) {
                         /* decrease amount for this ressources and increases in character inventory */
                         r.takeRessource(1);
                         flowerInv++;
